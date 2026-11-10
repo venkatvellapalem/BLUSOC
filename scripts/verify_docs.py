@@ -13,10 +13,12 @@ import os
 import re
 import sys
 
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 DOC_FILES = [
-    os.path.abspath(r"C:\Users\keert\Desktop\Projects\BLUSOC\README.md"),
-    os.path.abspath(r"C:\Users\keert\Desktop\Projects\BLUSOC\docs\architecture.md"),
-    os.path.abspath(r"C:\Users\keert\Desktop\Projects\BLUSOC\docs\incident_response_playbook.md"),
+    os.path.join(REPO_ROOT, "README.md"),
+    os.path.join(REPO_ROOT, "docs", "architecture.md"),
+    os.path.join(REPO_ROOT, "docs", "incident_response_playbook.md"),
 ]
 
 def check_file(path: str) -> bool:

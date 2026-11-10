@@ -223,19 +223,19 @@ Test node selection, drawer toggles, and animation controls in `web/src/app/pipe
 - Consumes: The 67 sanitized attack alerts and guest session tokens
 - Produces: Live triage investigation interface and verdict submission endpoints
 
-- [ ] **Step 1: Build alert queue with search and category filters**
+- [x] **Step 1: Build alert queue with search and category filters**
 Create `AlertList.tsx` featuring real-time search, category tabs (Threat Intel, Brute Force, Web Exploit, Recon), and severity badges.
 
-- [ ] **Step 2: Build comprehensive alert detail inspector**
+- [x] **Step 2: Build comprehensive alert detail inspector**
 Create `AlertDetail.tsx` displaying raw JSON event logs, GeoIP origin, attack taxonomy, target ports, and MITRE technique tags.
 
-- [ ] **Step 3: Implement interactive ticket closing and verdict submission**
+- [x] **Step 3: Implement interactive ticket closing and verdict submission**
 Create `VerdictModal.tsx` and API route `app/api/workbench/route.ts` allowing visitors to submit True/False positive classifications, record investigative notes, and persist actions to Neon PostgreSQL.
 
-- [ ] **Step 4: Add reset workspace capability**
+- [x] **Step 4: Add reset workspace capability**
 Implement a "Reset to Factory State" button allowing visitors to clear their submissions and restore the default 67-alert queue.
 
-- [ ] **Step 5: Verify workbench functionality and commit**
+- [x] **Step 5: Verify workbench functionality and commit**
 Test alert selection, filter switching, payload inspection, and verdict submissions. Commit changes.
 
 ---
@@ -296,14 +296,14 @@ Verify that all links, badges, diagrams, and tables render cleanly without place
 **Interfaces:**
 - Produces: Production-ready build artifacts deployable to Vercel
 
-- [ ] **Step 1: Run comprehensive lint and type check**
+- [x] **Step 1: Run comprehensive lint and type check**
 Run `npm run lint` and `tsc --noEmit` across `web/` to ensure zero errors.
 
-- [ ] **Step 2: Run production Next.js build**
+- [x] **Step 2: Run production Next.js build**
 Execute `npm run build` in `web/` and verify that all static and dynamic pages compile cleanly.
 
-- [ ] **Step 3: Verify data masking across entire repository**
+- [x] **Step 3: Verify data masking across entire repository**
 Perform an automated regex scan across all files in `C:\Users\keert\Desktop\Projects\BLUSOC` to confirm zero internal emails, passwords, or company private IPs exist.
 
-- [ ] **Step 4: Final repository commit**
+- [x] **Step 4: Final repository commit**
 Create the final cohesive git commit ready for pushing to GitHub.

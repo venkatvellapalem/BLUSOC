@@ -1200,7 +1200,7 @@
       "T1046",
       "T1082"
     ],
-    "raw_log": "[Windows Event 4738 Security] \"A user account was changed. Subject: Security ID: S-1-5-18 Account Name: XIAOMI$ Account Domain: WORKGROUP Logon ID: 0x3E7 Target Account: Security ID: S-1-5-21-2819418891-1243367660-3427814927-1001 Account Name: keert Account Domain: XIAOMI Changed Attributes: SAM Account Name: - Display Name: Keerthi Reddy Vellapalem User Principal Name: - Home Directory: - Home Drive: - Script Path: - Profile Path: - User Workstations: - Password Last Set: - Account Expires: - Primary Group ID: - AllowedToDelegateTo: - Old UAC Value: - New UAC Value: - User Account Control: - User Parameters: - SID History: - Logon Hours: - Additional Information: Privileges: -\"",
+    "raw_log": "[Windows Event 4738 Security] \"A user account was changed. Subject: Security ID: S-1-5-18 Account Name: CORP-WS117$ Account Domain: BLUSOC Logon ID: 0x3E7 Target Account: Security ID: S-1-5-21-2819418891-1243367660-3427814927-1001 Account Name: jdoe Account Domain: BLUSOC Changed Attributes: SAM Account Name: - Display Name: John Doe User Principal Name: - Home Directory: - Home Drive: - Script Path: - Profile Path: - User Workstations: - Password Last Set: - Account Expires: - Primary Group ID: - AllowedToDelegateTo: - Old UAC Value: - New UAC Value: - User Account Control: - User Parameters: - SID History: - Logon Hours: - Additional Information: Privileges: -\"",
     "triage_questions": [
       {
         "num": 1,

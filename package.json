@@ -11,12 +11,19 @@
   "scripts": {
     "dev": "npm run dev --workspace=web",
     "build": "npm run build --workspace=web",
+    "build:all": "npm run build --workspace=web",
     "start": "npm run start --workspace=web",
     "lint": "npm run lint --workspace=web",
     "lint:all": "npm run lint --workspace=web",
+    "typecheck": "npm run typecheck --workspace=web",
     "deploy": "bash deployment/deploy.sh",
     "test:rules": "python detection-engineering/wazuh/tests/validate_rules.py",
-    "verify:data": "python scripts/verify_data.py"
+    "test:integrations": "python integrations/tests/test_integrations.py",
+    "test:deployment": "python deployment/tests/validate_deployment_suite.py",
+    "verify:data": "python scripts/verify_data.py",
+    "verify:docs": "python scripts/verify_docs.py",
+    "verify:sanitization": "python scripts/audit_repository_sanitization.py",
+    "verify:all": "python detection-engineering/wazuh/tests/validate_rules.py && python integrations/tests/test_integrations.py && python deployment/tests/validate_deployment_suite.py && python scripts/verify_data.py && python scripts/audit_repository_sanitization.py && npm run typecheck --workspace=web && npm run build --workspace=web"
   },
   "keywords": [
     "blue-team",

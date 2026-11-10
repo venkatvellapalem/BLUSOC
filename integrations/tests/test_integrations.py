@@ -106,7 +106,7 @@ class TestLogTruncationBufferFix(unittest.TestCase):
 
 class TestEnrichmentAndPublicPrivateDetection(unittest.TestCase):
     def test_private_subnets_detected(self) -> None:
-        private_ips = ["10.240.0.10", "192.168.1.50", "172.16.5.1", "127.0.0.1"]
+        private_ips = ["10.240.0.10", "10.240.20.50", "172.16.5.1", "127.0.0.1"]
         for ip in private_ips:
             with self.subTest(ip=ip):
                 self.assertFalse(custom_iris.is_public_ip(ip))

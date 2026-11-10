@@ -61,13 +61,13 @@ MOCK_GEOIP_DB: Dict[str, Dict[str, str]] = {
         "city": "Test City",
         "asn": "AS64496 TEST-NET-2",
     },
-    "103.211.36.242": {
+    "198.51.100.242": {
         "country": "India",
         "country_code": "IN",
         "city": "Mumbai",
         "asn": "AS133929 Corporate Gateway",
     },
-    "124.123.14.2": {
+    "203.0.113.42": {
         "country": "India",
         "country_code": "IN",
         "city": "Hyderabad",
