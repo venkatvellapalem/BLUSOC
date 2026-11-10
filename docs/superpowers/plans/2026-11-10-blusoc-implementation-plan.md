@@ -252,16 +252,16 @@ Test alert selection, filter switching, payload inspection, and verdict submissi
 - Consumes: Baseline vs tuned alert metrics and rule suppression parameters
 - Produces: Interactive simulation lab proving 80%+ noise reduction
 
-- [ ] **Step 1: Build the Before vs After interactive switch**
+- [x] **Step 1: Build the Before vs After interactive switch**
 Create `BeforeAfterToggle.tsx` with smooth transitions demonstrating the operational difference between the unoptimized SIEM and the tuned BLUSOC pipeline.
 
-- [ ] **Step 2: Build dynamic impact metric counters**
+- [x] **Step 2: Build dynamic impact metric counters**
 Create `ImpactCounterGrid.tsx` showing daily alert volume (14,280 down to 184), MTTR (42 min down to 8 min), and analyst hours saved (32 hours/day).
 
-- [ ] **Step 3: Build interactive rule optimizer matrix**
+- [x] **Step 3: Build interactive rule optimizer matrix**
 Create `RuleOptimizerMatrix.tsx` allowing visitors to toggle individual tuning rules (O365 proxy filter, CrowdStrike null-host filter, Suricata ethertype suppressor) and watch the volume charts adjust dynamically.
 
-- [ ] **Step 4: Verify lab interactivity and commit**
+- [x] **Step 4: Verify lab interactivity and commit**
 Test toggle interactions, dynamic count recalculations, and mobile responsiveness. Commit changes.
 
 ---
