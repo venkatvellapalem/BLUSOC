@@ -20,6 +20,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { BeforeAfterToggle } from "@/components/fatigue/BeforeAfterToggle";
+import { NoiseStormSimulator } from "@/components/fatigue/NoiseStormSimulator";
 import { ImpactCounterGrid } from "@/components/fatigue/ImpactCounterGrid";
 import {
   RuleOptimizerMatrix,
@@ -199,6 +200,17 @@ export default function FatigueLabPage() {
             onSelectMode={handleSelectMode}
             activeRuleCount={activeRuleCount}
             totalRuleCount={totalRuleCount}
+          />
+        </section>
+
+        {/* Deliverable 1B: Real-Time Noise Deflection & Particle Simulator */}
+        <section aria-labelledby="simulator-heading">
+          <h2 id="simulator-heading" className="sr-only">
+            Noise Deflection Particle Simulator
+          </h2>
+          <NoiseStormSimulator
+            isTuned={isTuned}
+            suppressionRatio={isTuned ? 87.1 : Number(((suppressedVolume / totalNoiseMax) * 87.1).toFixed(1))}
           />
         </section>
 

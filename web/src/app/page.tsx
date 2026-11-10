@@ -12,29 +12,36 @@ import {
   Activity,
   Layers,
   Lock,
+  Radio,
+  FileCode,
+  Sparkles,
 } from "lucide-react";
+import { NetworkTopologyRadar } from "@/components/home/NetworkTopologyRadar";
 
 const HEADLINE_METRICS = [
   {
     value: "67",
     label: "Confirmed True Positives",
-    detail: "High-fidelity attacks preserved from CINS, DROP, GPL RCE, and Cloudflare WAF",
-    badge: "Verified IOCs",
-    badgeColor: "bg-red-50 text-red-700 border-red-200",
+    detail: "High-fidelity attack IOCs preserved from CINS, DROP, GPL RCE, and Cloudflare WAF",
+    badge: "Verified Attacks",
+    badgeColor: "bg-rose-50 text-rose-700 border-rose-200",
+    gradient: "from-rose-500/10 to-transparent",
   },
   {
     value: "14,280 → 184",
     label: "Daily Alert Volume",
-    detail: "Dramatic reduction of daily unactionable alert noise via XML ruleset tuning",
+    detail: "Dramatic reduction of unactionable noise floods via 3-tier Wazuh XML ruleset tuning",
     badge: "-98.7% Fatigue",
     badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+    gradient: "from-amber-500/10 to-transparent",
   },
   {
     value: "87.1%",
     label: "Noise Suppression Ratio",
-    detail: "Calculated event reduction across CrowdStrike storms and Suricata QinQ frames",
+    detail: "Calculated event reduction across CrowdStrike null-hosts and Suricata QinQ frames",
     badge: "Active Filter",
     badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    gradient: "from-emerald-500/10 to-transparent",
   },
   {
     value: "4",
@@ -42,6 +49,7 @@ const HEADLINE_METRICS = [
     detail: "Suricata DPI, CrowdStrike Falcon, Wazuh HIDS, and DFIR-IRIS SOAR platform",
     badge: "Synchronized",
     badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
+    gradient: "from-blue-500/10 to-transparent",
   },
 ];
 
@@ -51,13 +59,14 @@ const MODULE_SPOTLIGHTS = [
     path: "/pipeline",
     icon: GitFork,
     badge: "Interactive Topology",
+    tagline: "Live Telemetry Flow Engine",
     description:
       "Inspect the live 5-stage telemetry ingestion DAG. Trace packet streams from network taps through Wazuh XML decoders and custom Python middleware into DFIR-IRIS case tickets.",
     highlights: [
-      "Animated packet flow simulator",
-      "Inspectable Wazuh XML rules (91578, 100010)",
-      "4,000-char buffer overflow prevention logic",
-      "Per-stage latency and drop telemetry",
+      "Animated packet flow simulator with live packet injection",
+      "Inspectable Wazuh XML rules (91578, 100010, 86611)",
+      "4000-char buffer overflow prevention logic",
+      "Per-stage latency and drop telemetry monitors",
     ],
     actionText: "Launch Pipeline Canvas",
   },
@@ -66,13 +75,14 @@ const MODULE_SPOTLIGHTS = [
     path: "/workbench",
     icon: Shield,
     badge: "67 Attack Incidents",
+    tagline: "Forensic Investigation HUD",
     description:
       "Step into the shoes of a Tier-2 SOC Analyst. Investigate sanitized real-world attacks, inspect complete raw JSON event logs, review MITRE tactics, and submit ticket classifications.",
     highlights: [
-      "67 real attacks across 5 categories",
-      "Full raw JSON logs with GeoIP origin",
-      "Zero-friction guest session sandbox",
-      "Multi-level investigative triage questions",
+      "67 confirmed attacks across 4 major threat categories",
+      "Full raw JSON logs with GeoIP origin attribution",
+      "Zero-friction guest session sandbox with factory reset",
+      "Interactive 3-question investigative triage checks",
     ],
     actionText: "Open Triage Workbench",
   },
@@ -81,363 +91,224 @@ const MODULE_SPOTLIGHTS = [
     path: "/fatigue-lab",
     icon: Sliders,
     badge: "Impact Simulation",
+    tagline: "Rule Optimization Studio",
     description:
       "Quantify the operational ROI of precision detection engineering. Toggle custom suppression rules and watch alert volume, MTTR, and analyst work hours update in real time.",
     highlights: [
-      "Interactive Before vs After comparison",
-      "Toggle individual Wazuh tuning rules",
-      "Calculate saved analyst work hours",
-      "Live MTTR reduction modeling",
+      "Interactive Before vs After master comparison switch",
+      "Toggle individual Wazuh suppression rules dynamically",
+      "Live MTTR reduction modeling (42 min down to 8 min)",
+      "Interactive Noise Storm visual particle simulator",
     ],
     actionText: "Explore Fatigue Lab",
   },
 ];
 
-const ARCHITECTURE_STAGES = [
-  {
-    step: "01",
-    name: "Telemetry Ingestion",
-    role: "Sensor Grid",
-    description: "Suricata DPI network sniffers, CrowdStrike Falcon EDR logs, Cloudflare WAF events, and Microsoft 365 cloud audit feeds.",
-    tech: "Suricata 7 / Syslog / APIs",
-  },
-  {
-    step: "02",
-    name: "Wazuh Analysis Engine",
-    role: "Detection and Tuning",
-    description: "Multi-tier XML ruleset evaluating threat feeds, suppressing null-host floods, and correlating corporate egress proxy traffic.",
-    tech: "Wazuh 4.8 Core Engine",
-  },
-  {
-    step: "03",
-    name: "Python Middleware",
-    role: "Enrichment & Truncation Fix",
-    description: "4,000-character custom stdout buffering script, GeoIP geolocation enrichment, severity mapping, and payload formatting.",
-    tech: "custom-iris.py / Python 3.11",
-  },
-  {
-    step: "04",
-    name: "DFIR-IRIS SOAR",
-    role: "Incident Ticketing",
-    description: "Automated case creation, evidence persistence, status synchronization daemon, and student triage assignments.",
-    tech: "DFIR-IRIS 2.4 / PostgreSQL",
-  },
-];
-
-const ENGINEERING_TEARDOWNS = [
-  {
-    ruleId: "Rule 91578",
-    title: "Office 365 Egress Proxy IP Correlation",
-    component: "Wazuh / Microsoft 365",
-    problem:
-      "Corporate employees authenticating to cloud SaaS via egress proxy block 198.51.100.0/24 triggered 3,140 false-positive brute-force alerts every day.",
-    solution:
-      "Authored custom rule logic in 02_proxy_egress_tuning.xml that whitelists authorized gateway CIDRs from generic velocity thresholds while preserving external credential stuffing rules.",
-    outcome: "Eliminated 3,098 false alarms daily (98.7% reduction) with zero missed credential stuffing attacks.",
-  },
-  {
-    ruleId: "Rule 100010",
-    title: "CrowdStrike Null-Hostname Heartbeat Storm Suppression",
-    component: "Wazuh / CrowdStrike Falcon",
-    problem:
-      "Unregistered workstation agents and temporary containers generated 8,420 malformed empty hostname registration heartbeats, flooding SIEM memory queues.",
-    solution:
-      "Implemented rule 100010 in 01_suppression_rules.xml with pre-decoding regex filtering out events with null or empty host attributes at wire speed.",
-    outcome: "Dropped 8,408 junk events daily (99.85% suppression) and stabilized manager CPU utilization.",
-  },
-  {
-    ruleId: "custom-iris",
-    title: "4,000-Character Raw Log Truncation Fix",
-    component: "Integration Middleware",
-    problem:
-      "Standard Wazuh-to-IRIS integration truncated long Suricata HTTP packet dumps at 1,024 characters, stripping out critical payload hex and exploit headers.",
-    solution:
-      "Engineered custom-iris.py with a 4,000-character buffered transport handler, robust JSON stream parsing, and graceful error fallback.",
-    outcome: "Restored 100% full-fidelity forensic evidence inside DFIR-IRIS alert cases without log truncation.",
-  },
-];
-
 export default function HomePage() {
   return (
-    <div className="space-y-16 py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div className="space-y-16 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Hero Section */}
-      <section className="space-y-8 pt-4">
-        <div className="space-y-4 max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-brand-surface px-3 py-1 shadow-subtle">
-            <span className="flex h-2 w-2 rounded-full bg-blue-600"></span>
-            <span className="font-mono text-xs font-semibold text-brand-text-secondary uppercase tracking-wider">
-              Production SOC Optimization Showcase
-            </span>
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-brand-text-primary leading-tight">
-            Enterprise Blue-Team Engineering &amp; Real-World Detection Operations
-          </h1>
-
-          <p className="text-base sm:text-lg text-brand-text-secondary leading-relaxed">
-            A battle-tested security operations engineering platform demonstrating how precision Wazuh XML rule tuning,
-            custom Python integration middleware, and RFC-compliant telemetry correlation transformed an unmanageable
-            14,280 daily alert storm into 184 actionable, high-fidelity security incidents with 67 verified true-positive attacks.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-3 pt-2">
-            <Link
-              href="/pipeline"
-              className="inline-flex items-center gap-2 rounded-lg bg-brand-text-primary px-5 py-3 text-sm font-semibold text-white shadow-subtle hover:bg-slate-800 transition-colors"
-            >
-              <GitFork className="h-4 w-4 text-blue-400" />
-              <span>Explore Pipeline Orchestrator</span>
-              <ArrowRight className="h-4 w-4 ml-1" />
-            </Link>
-            <Link
-              href="/workbench"
-              className="inline-flex items-center gap-2 rounded-lg border border-brand-border bg-brand-surface px-5 py-3 text-sm font-semibold text-brand-text-primary shadow-subtle hover:bg-slate-50 transition-colors"
-            >
-              <Shield className="h-4 w-4 text-blue-600" />
-              <span>Investigate 67 Incidents</span>
-            </Link>
-            <Link
-              href="/fatigue-lab"
-              className="inline-flex items-center gap-2 rounded-lg border border-transparent px-4 py-3 text-sm font-medium text-brand-text-secondary hover:text-brand-text-primary transition-colors"
-            >
-              <Sliders className="h-4 w-4" />
-              <span>Fatigue Reduction Lab</span>
-            </Link>
-          </div>
-        </div>
-
-        {/* Live Headline Metrics Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6">
-          {HEADLINE_METRICS.map((metric, i) => (
-            <div
-              key={i}
-              className="flex flex-col justify-between rounded-xl border border-brand-border bg-brand-surface p-5 shadow-card hover:border-slate-300 transition-colors"
-            >
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className={`inline-flex items-center rounded px-2 py-0.5 font-mono text-xs font-semibold border ${metric.badgeColor}`}>
-                    {metric.badge}
-                  </span>
-                  <Activity className="h-4 w-4 text-brand-text-muted" />
-                </div>
-                <div>
-                  <div className="font-mono text-2xl sm:text-3xl font-extrabold text-brand-text-primary tracking-tight">
-                    {metric.value}
-                  </div>
-                  <div className="text-sm font-semibold text-brand-text-primary mt-1">
-                    {metric.label}
-                  </div>
-                </div>
-              </div>
-              <p className="text-xs text-brand-text-secondary mt-3 border-t border-brand-border pt-3 leading-normal">
-                {metric.detail}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Interactive Feature Spotlight Cards */}
-      <section className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-brand-border pb-4">
-          <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-brand-text-primary tracking-tight">
-              Interactive Operational Modules
-            </h2>
-            <p className="text-sm text-brand-text-secondary mt-1">
-              Explore the end-to-end detection lifecycle across interactive simulation environments.
-            </p>
-          </div>
-          <span className="font-mono text-xs text-brand-text-muted">
-            3 ACTIVE MODULES
+      <section className="relative text-center pt-8 pb-4">
+        {/* Modern Pill Badge */}
+        <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-white/90 px-4 py-1.5 shadow-xs mb-6 backdrop-blur-md">
+          <span className="flex h-2 w-2 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+          </span>
+          <span className="font-mono text-xs font-bold text-slate-800 tracking-tight">
+            BLUE-TEAM DETECTION OPERATIONS &amp; SIEM OPTIMIZATION
           </span>
         </div>
 
+        {/* Display Headline */}
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 max-w-4xl mx-auto leading-[1.12]">
+          Enterprise Detection Engineering.{" "}
+          <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-600 bg-clip-text text-transparent">
+            Zero Alert Fatigue.
+          </span>
+        </h1>
+
+        {/* Subtitle */}
+        <p className="mt-5 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          Production-grade Wazuh rules, Python middleware integrations with 4000-character payload expansion, and an interactive light-themed SOC telemetry lab built on 67 confirmed real-world attack incidents.
+        </p>
+
+        {/* Primary CTA Buttons */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
+          <Link
+            href="/pipeline"
+            className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-slate-900/10 hover:bg-slate-800 hover:shadow-lg transition-all"
+          >
+            <GitFork className="h-4 w-4 text-blue-400" />
+            <span>Explore Pipeline DAG</span>
+            <ArrowRight className="h-4 w-4 ml-0.5" />
+          </Link>
+          <Link
+            href="/workbench"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 shadow-xs hover:border-slate-400 hover:bg-slate-50 transition-all"
+          >
+            <Shield className="h-4 w-4 text-blue-600" />
+            <span>Launch Triage Workbench</span>
+          </Link>
+          <Link
+            href="/fatigue-lab"
+            className="inline-flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50/80 px-5 py-3 text-sm font-semibold text-emerald-800 shadow-xs hover:bg-emerald-100/80 transition-all"
+          >
+            <Sliders className="h-4 w-4 text-emerald-600" />
+            <span>Fatigue Lab (-87% Noise)</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* Interactive Network Topology Radar Component */}
+      <section>
+        <NetworkTopologyRadar />
+      </section>
+
+      {/* KPI Headline Metrics Grid */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {HEADLINE_METRICS.map((metric, idx) => (
+          <div
+            key={idx}
+            className="relative rounded-2xl border border-slate-200/90 bg-white/90 p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-md overflow-hidden group hover:border-slate-300 hover:shadow-md transition-all"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${metric.badgeColor}`}>
+                {metric.badge}
+              </span>
+              <span className="text-xs font-mono text-slate-400">0{idx + 1}</span>
+            </div>
+            <div className="text-2xl lg:text-3xl font-extrabold font-mono tracking-tight text-slate-900">
+              {metric.value}
+            </div>
+            <div className="text-xs font-bold text-slate-800 mt-1">
+              {metric.label}
+            </div>
+            <p className="text-[11px] text-slate-500 mt-2 leading-relaxed">
+              {metric.detail}
+            </p>
+          </div>
+        ))}
+      </section>
+
+      {/* Interactive Module Showcase Cards */}
+      <section className="space-y-6">
+        <div className="text-center max-w-xl mx-auto">
+          <span className="text-xs font-mono font-bold text-blue-600 tracking-wider uppercase">
+            LIVE SHOWCASE CAPABILITIES
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
+            Explore the BLUSOC Architecture
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 mt-2">
+            Click into any of the interactive operational modules to evaluate real telemetry and triage real incidents
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {MODULE_SPOTLIGHTS.map((mod, i) => {
-            const Icon = mod.icon;
+          {MODULE_SPOTLIGHTS.map((module) => {
+            const Icon = module.icon;
             return (
               <div
-                key={i}
-                className="flex flex-col justify-between rounded-xl border border-brand-border bg-brand-surface p-6 shadow-card hover:border-blue-300 hover:shadow-dropdown transition-all group"
+                key={module.path}
+                className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white/95 p-6 shadow-[0_4px_20px_rgb(0,0,0,0.04)] backdrop-blur-md hover:border-blue-400/80 hover:shadow-xl transition-all duration-300 group"
               >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-muted text-brand-text-primary border border-brand-border group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 border border-blue-200/60 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-xs">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <span className="font-mono text-xs font-semibold rounded bg-brand-muted px-2 py-0.5 text-brand-text-secondary border border-brand-border">
-                      {mod.badge}
+                    <span className="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                      {module.badge}
                     </span>
                   </div>
 
-                  <div>
-                    <h3 className="text-lg font-bold text-brand-text-primary group-hover:text-blue-600 transition-colors">
-                      {mod.title}
-                    </h3>
-                    <p className="text-xs text-brand-text-secondary mt-2 leading-relaxed">
-                      {mod.description}
-                    </p>
-                  </div>
+                  <span className="text-[11px] font-mono text-blue-600 font-semibold uppercase tracking-wider block">
+                    {module.tagline}
+                  </span>
+                  <h3 className="text-lg font-bold text-slate-900 tracking-tight mt-0.5">
+                    {module.title}
+                  </h3>
 
-                  <ul className="space-y-2 pt-2 border-t border-brand-border">
-                    {mod.highlights.map((h, j) => (
-                      <li key={j} className="flex items-center gap-2 text-xs text-brand-text-secondary">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                    {module.description}
+                  </p>
+
+                  <ul className="mt-4 space-y-2 border-t border-slate-100 pt-4">
+                    {module.highlights.map((h, i) => (
+                      <li key={i} className="flex items-start gap-2 text-[11px] text-slate-700">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0 mt-0.5" />
                         <span>{h}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="pt-6">
-                  <Link
-                    href={mod.path}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-brand-border bg-white px-4 py-2.5 text-xs font-semibold text-brand-text-primary shadow-subtle hover:bg-brand-muted hover:border-slate-300 transition-colors"
-                  >
-                    <span>{mod.actionText}</span>
-                    <ArrowRight className="h-3.5 w-3.5 text-brand-text-muted group-hover:translate-x-0.5 transition-transform" />
-                  </Link>
-                </div>
+                <Link
+                  href={module.path}
+                  className="mt-6 flex items-center justify-between rounded-xl bg-slate-50 border border-slate-200 px-4 py-2.5 text-xs font-bold text-slate-800 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-all"
+                >
+                  <span>{module.actionText}</span>
+                  <ArrowRight className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
             );
           })}
         </div>
       </section>
 
-      {/* High-Level Architecture Summary Card */}
-      <section className="rounded-xl border border-brand-border bg-brand-surface p-6 sm:p-8 shadow-card space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-border pb-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <Layers className="h-5 w-5 text-blue-600" />
-              <h2 className="text-lg sm:text-xl font-bold text-brand-text-primary">
-                End-to-End SOC Architecture: Telemetry to Resolution
-              </h2>
+      {/* Forensic Case Study Highlight: How We Tuned Out 14,096 Noisy Logs */}
+      <section className="rounded-2xl border border-slate-200/90 bg-gradient-to-br from-slate-50 via-white to-blue-50/40 p-8 shadow-[0_4px_24px_rgb(0,0,0,0.03)] backdrop-blur-md">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          <div className="max-w-2xl space-y-4">
+            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+              <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
+              <span>MEASURED ENGINEERING IMPACT</span>
             </div>
-            <p className="text-xs sm:text-sm text-brand-text-secondary mt-1">
-              Deterministic four-stage data pipeline bridging raw sensor taps with automated case ticketing.
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Eliminating Alert Fatigue via 3-Tier Rule Correlation
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              When standard SIEM deployments ingest raw firewall and endpoint feeds, analysts drown in repetitive false positives. BLUSOC tackled 14,280 daily noisy events by deploying custom parent-level suppression rules in Wazuh, whitelisting corporate egress proxy IPs in Microsoft 365 login rules, and enforcing a 4000-character payload transport buffer into DFIR-IRIS.
             </p>
-          </div>
-          <span className="font-mono text-xs font-semibold rounded bg-emerald-50 px-2.5 py-1 text-emerald-700 border border-emerald-200">
-            ZERO BUFFER TRUNCATION
-          </span>
-        </div>
-
-        {/* 4-Stage Architecture Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {ARCHITECTURE_STAGES.map((stage, idx) => (
-            <div
-              key={idx}
-              className="relative flex flex-col justify-between rounded-lg border border-brand-border bg-brand-canvas p-4"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-blue-600">
-                    STAGE {stage.step}
-                  </span>
-                  <span className="font-mono text-[10px] text-brand-text-muted">
-                    {stage.role}
-                  </span>
-                </div>
-                <h4 className="text-sm font-bold text-brand-text-primary">
-                  {stage.name}
-                </h4>
-                <p className="text-xs text-brand-text-secondary leading-relaxed">
-                  {stage.description}
-                </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
+              <div className="rounded-xl border border-slate-200 bg-white p-3">
+                <span className="text-[10px] font-mono text-slate-400 block uppercase">Noise Reduction</span>
+                <span className="text-xl font-extrabold font-mono text-emerald-600">87.1%</span>
               </div>
-              <div className="mt-4 pt-3 border-t border-brand-border/60">
-                <span className="font-mono text-[11px] font-medium text-brand-text-muted">
-                  {stage.tech}
-                </span>
+              <div className="rounded-xl border border-slate-200 bg-white p-3">
+                <span className="text-[10px] font-mono text-slate-400 block uppercase">MTTR Reduction</span>
+                <span className="text-xl font-extrabold font-mono text-blue-600">42m &rarr; 8m</span>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-white p-3">
+                <span className="text-[10px] font-mono text-slate-400 block uppercase">Daily Hours Saved</span>
+                <span className="text-xl font-extrabold font-mono text-indigo-600">32.5 hrs</span>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Detection Engineering Case Study Teardowns */}
-      <section className="space-y-6">
-        <div className="border-b border-brand-border pb-4">
-          <h2 className="text-xl sm:text-2xl font-bold text-brand-text-primary tracking-tight">
-            Detection Engineering Case Studies
-          </h2>
-          <p className="text-sm text-brand-text-secondary mt-1">
-            Real production challenges solved through precision rule logic and middleware optimization.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {ENGINEERING_TEARDOWNS.map((item, idx) => (
-            <div
-              key={idx}
-              className="rounded-xl border border-brand-border bg-brand-surface p-6 shadow-card space-y-4"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 rounded px-2 py-0.5">
-                  {item.ruleId}
-                </span>
-                <span className="font-mono text-[11px] text-brand-text-muted">
-                  {item.component}
-                </span>
-              </div>
-
-              <h3 className="text-base font-bold text-brand-text-primary">
-                {item.title}
-              </h3>
-
-              <div className="space-y-3 text-xs leading-relaxed">
-                <div>
-                  <span className="font-semibold text-red-600 block mb-0.5 font-mono uppercase text-[10px]">
-                    The Challenge
-                  </span>
-                  <p className="text-brand-text-secondary">{item.problem}</p>
-                </div>
-                <div>
-                  <span className="font-semibold text-blue-600 block mb-0.5 font-mono uppercase text-[10px]">
-                    Engineered Solution
-                  </span>
-                  <p className="text-brand-text-secondary">{item.solution}</p>
-                </div>
-                <div className="pt-2 border-t border-brand-border">
-                  <span className="font-semibold text-emerald-600 block mb-0.5 font-mono uppercase text-[10px]">
-                    Operational Impact
-                  </span>
-                  <p className="font-medium text-brand-text-primary">{item.outcome}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Quick Launch Callout */}
-      <section className="rounded-xl border border-brand-border bg-slate-900 text-white p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-dropdown">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Terminal className="h-5 w-5 text-blue-400" />
-            <h3 className="text-lg font-bold">Ready to Start Investigating?</h3>
           </div>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
-            All 67 real-world attack incidents are pre-loaded in the Analyst Workbench with full raw event logs,
-            GeoIP tracking, and interactive verdict submissions. No signup required.
-          </p>
-        </div>
-        <div className="flex items-center gap-3 shrink-0">
-          <Link
-            href="/workbench"
-            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white hover:bg-blue-500 transition-colors shadow-sm"
-          >
-            <span>Launch Workbench</span>
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-          <Link
-            href="/pipeline"
-            className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-4 py-2.5 text-xs font-semibold text-slate-200 hover:bg-slate-700 transition-colors"
-          >
-            <span>View Architecture</span>
-          </Link>
+
+          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm w-full lg:w-96 shrink-0 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <span className="text-xs font-mono font-bold text-slate-800">Rule 91578 Tuning</span>
+              <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-semibold border border-emerald-200">
+                L0 Egress Filter
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Whitelists sanitized egress IPs (198.51.100.14, 198.51.100.242) so authenticated internal staff logins never alert as brute force, while escalating real credential stuffing to Level 10.
+            </p>
+            <div className="flex items-center justify-between text-xs font-mono text-slate-600 bg-slate-50 rounded-lg p-2.5 border border-slate-100">
+              <span>Saved Alerts/Day:</span>
+              <span className="font-bold text-slate-900">+2,980 alerts</span>
+            </div>
+            <Link
+              href="/fatigue-lab"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 text-white py-2 text-xs font-semibold hover:bg-slate-800 transition-colors"
+            >
+              <span>Test in Fatigue Lab</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
         </div>
       </section>
     </div>

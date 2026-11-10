@@ -202,6 +202,40 @@ export function AlertDetail({ alert, onVerdictSubmitted }: AlertDetailProps) {
 
       {/* Main Scrollable Content */}
       <div className="flex-1 overflow-y-auto p-5 space-y-6 bg-white min-h-0">
+        {/* Visual Attack Flow Banner */}
+        <div className="p-3.5 bg-gradient-to-r from-rose-50/60 via-slate-50 to-blue-50/60 border border-slate-200/80 rounded-xl">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+            {/* Origin Node */}
+            <div className="flex items-center gap-2">
+              <span className="flex h-2 w-2 rounded-full bg-rose-500 animate-ping" />
+              <div>
+                <span className="text-[10px] font-mono uppercase text-slate-400 block">Attacker Origin</span>
+                <span className="font-mono font-bold text-slate-900">{alert.src_ip}</span>
+                <span className="text-[10px] text-slate-500 ml-1.5 font-medium">({alert.country || "External"})</span>
+              </div>
+            </div>
+
+            {/* Ingress Vector / Wire */}
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 shadow-2xs">
+              <span className="text-[10px] font-mono font-bold text-blue-700">{alert.protocol || "TCP"}</span>
+              <span className="text-slate-300">&rarr;</span>
+              <span className="text-[10px] font-mono text-slate-700">Port {alert.dest_port || 443}</span>
+            </div>
+
+            {/* Target Asset Node */}
+            <div className="flex items-center gap-2 text-right">
+              <div>
+                <span className="text-[10px] font-mono uppercase text-slate-400 block">Victim Endpoint</span>
+                <span className="font-mono font-bold text-slate-900">{alert.dest_ip}</span>
+                <span className="text-[10px] text-slate-500 block truncate max-w-[160px]">{alert.sensor || "corp-gateway-01.blusoc.internal"}</span>
+              </div>
+              <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <ShieldAlert className="h-4 w-4" />
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Telemetry Grid */}
         <section className="space-y-2.5">
           <div className="flex items-center justify-between">
