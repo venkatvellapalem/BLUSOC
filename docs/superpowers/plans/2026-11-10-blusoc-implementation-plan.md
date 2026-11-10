@@ -196,16 +196,16 @@ Run `npm run build` in `web/` to confirm zero compilation errors. Commit changes
 - Consumes: Pipeline stages, rule definitions, and telemetry states
 - Produces: Interactive animated SVG DAG showing packet flows and inspectable nodes
 
-- [ ] **Step 1: Build interactive SVG pipeline canvas**
+- [x] **Step 1: Build interactive SVG pipeline canvas**
 Create `PipelineCanvas.tsx` rendering five orchestrated stages: Telemetry Ingestion, Wazuh Analysis Engine, Python Enricher, DFIR-IRIS Ticketing, and Analyst Workbench.
 
-- [ ] **Step 2: Implement node inspection slide-over drawer**
+- [x] **Step 2: Implement node inspection slide-over drawer**
 Create `NodeDetailDrawer.tsx` displaying real XML decoders, active Python code snippets, payload transformation buffers, and real-time processing metrics when a node is clicked.
 
-- [ ] **Step 3: Add animated event flow simulation**
+- [x] **Step 3: Add animated event flow simulation**
 Create `TelemetryPacketSimulator.tsx` using Framer Motion to visualize live packets traversing the pipeline, highlighting dropped noise vs forwarded alerts.
 
-- [ ] **Step 4: Verify interactive page rendering**
+- [x] **Step 4: Verify interactive page rendering**
 Test node selection, drawer toggles, and animation controls in `web/src/app/pipeline/page.tsx`. Commit changes.
 
 ---
