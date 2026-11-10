@@ -1,0 +1,94 @@
+<group name="threat_intel,high_fidelity,">
+
+  <!--
+    BLUSOC Detection Engineering: High-Fidelity Threat Intelligence and Exploit Detection Ruleset
+    Target Platform: Wazuh Manager 4.x Analysis Engine
+    Scope: High-confidence indicators, verified threat intel hits, EDR malware detections, and active exploits
+    Levels: Level 5 (Informational Security), Level 8 (Confirmed EDR Threats), Level 10 (Threat Intel / WAF Blocks), Level 12 (Critical RCE / Rootcheck)
+  -->
+
+  <!-- Rule 100011: CrowdStrike Falcon true positive threat detection (Level 8) -->
+  <rule id="100011" level="8">
+    <decoded_as>json</decoded_as>
+    <field name="vendor">^CrowdStrike$</field>
+    <field name="severity">^HIGH$|^CRITICAL$</field>
+    <description>CrowdStrike Falcon: Confirmed malware detection or malicious binary execution on endpoint</description>
+    <mitre>
+      <id>T1204.002</id>
+      <id>T1059</id>
+    </mitre>
+    <group>crowdstrike,malware,endpoint_edr,</group>
+  </rule>
+
+  <!-- Rule 100019: CrowdStrike Falcon lateral movement indicator (Level 8) -->
+  <rule id="100019" level="8">
+    <decoded_as>json</decoded_as>
+    <field name="vendor">^CrowdStrike$</field>
+    <field name="technique">^Lateral Movement$|^Remote Services$|^T1021$|^T1077$</field>
+    <description>CrowdStrike Falcon: Lateral movement indicator detected via remote execution or credential abuse</description>
+    <mitre>
+      <id>T1021.002</id>
+      <id>T1077</id>
+    </mitre>
+    <group>crowdstrike,lateral_movement,</group>
+  </rule>
+
+  <!-- Rule 100013: CrowdStrike Falcon informational security telemetry event (Level 5) -->
+  <rule id="100013" level="5">
+    <decoded_as>json</decoded_as>
+    <field name="vendor">^CrowdStrike$</field>
+    <field name="severity">^LOW$|^INFORMATIONAL$|^MEDIUM$</field>
+    <description>CrowdStrike Falcon: Informational security telemetry event or host containment status change</description>
+    <mitre>
+      <id>T1082</id>
+    </mitre>
+    <group>crowdstrike,informational,sensor_event,</group>
+  </rule>
+
+  <!-- Rule 86601: Suricata DPI confirmed ET DROP / CINS threat actor IP (Level 10) -->
+  <rule id="86601" level="10">
+    <match>ET DROP|ET CINS|Spamhaus DROP|Dshield</match>
+    <description>Suricata: Confirmed ET DROP or CINS Army threat actor IP address detected on perimeter interface</description>
+    <mitre>
+      <id>T1071.001</id>
+      <id>T1595</id>
+    </mitre>
+    <group>suricata,threat_intel,blocklist,</group>
+  </rule>
+
+  <!-- Rule 100400: Suricata / Snort critical Remote Code Execution payload (Level 12) -->
+  <rule id="100400" level="12">
+    <match>GPL ATTACK_RESPONSE|PHP code injection|Remote Code Execution|Apache exploit|CVE-</match>
+    <description>Suricata: High-severity Remote Code Execution payload detected targeting web application</description>
+    <mitre>
+      <id>T1190</id>
+      <id>T1059</id>
+    </mitre>
+    <group>suricata,rce,exploit,</group>
+  </rule>
+
+  <!-- Rule 100800: Cloudflare WAF confirmed malicious payload injection blocked (Level 10) -->
+  <rule id="100800" level="10">
+    <decoded_as>json</decoded_as>
+    <field name="source">^cloudflare$|^CLOUDFLARE WAF$</field>
+    <field name="action">^block$</field>
+    <description>Cloudflare WAF: Confirmed malicious payload injection blocked at edge gateway</description>
+    <mitre>
+      <id>T1190</id>
+      <id>T1059.007</id>
+    </mitre>
+    <group>cloudflare,waf,exploit_prevention,</group>
+  </rule>
+
+  <!-- Rule 100031: Wazuh Rootcheck active privilege escalation / rootkit indicator (Level 12) -->
+  <rule id="100031" level="12">
+    <match>Trojaned version of file|Rootcheck|rootkit|Trojaned</match>
+    <description>Wazuh Rootcheck: Active privilege escalation or trojaned system binary detected on host</description>
+    <mitre>
+      <id>T1068</id>
+      <id>T1548</id>
+    </mitre>
+    <group>wazuh_syscheck,rootcheck,privilege_escalation,</group>
+  </rule>
+
+</group>

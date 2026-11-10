@@ -1,0 +1,297 @@
+[
+  {
+    "test_id": "TC-NOISE-001",
+    "description": "CrowdStrike null hostname agent telemetry flood",
+    "category": "noise_suppression",
+    "expected_rule_id": "100010",
+    "expected_level": 0,
+    "expected_status": "suppressed",
+    "payload": {
+      "vendor": "CrowdStrike",
+      "hostname": "",
+      "event_simpleName": "AgentPing",
+      "log": "CrowdStrike agent ping without registered hostname"
+    }
+  },
+  {
+    "test_id": "TC-NOISE-002",
+    "description": "CrowdStrike hyphen placeholder hostname heartbeat flood",
+    "category": "noise_suppression",
+    "expected_rule_id": "100010",
+    "expected_level": 0,
+    "expected_status": "suppressed",
+    "payload": {
+      "vendor": "CrowdStrike",
+      "hostname": "-",
+      "event_simpleName": "Heartbeat",
+      "log": "CrowdStrike unassigned sensor heartbeat ping"
+    }
+  },
+  {
+    "test_id": "TC-NOISE-003",
+    "description": "Suricata ethertype unknown framing anomaly on sensor interface",
+    "category": "noise_suppression",
+    "expected_rule_id": "86611",
+    "expected_level": 0,
+    "expected_status": "suppressed",
+    "payload": {
+      "event_type": "alert",
+      "log": "SURICATA Ethertype unknown 0x88f7 on interface enp2s0",
+      "src_ip": "10.240.2.5"
+    }
+  },
+  {
+    "test_id": "TC-NOISE-004",
+    "description": "Suricata hardware TCP checksum offload warning",
+    "category": "noise_suppression",
+    "expected_rule_id": "86612",
+    "expected_level": 0,
+    "expected_status": "suppressed",
+    "payload": {
+      "event_type": "alert",
+      "log": "SURICATA TCP invalid checksum on wire frame from 10.240.0.15",
+      "src_ip": "10.240.0.15"
+    }
+  },
+  {
+    "test_id": "TC-NOISE-005",
+    "description": "Suricata asymmetric flow protocol warning from DMZ mirror",
+    "category": "noise_suppression",
+    "expected_rule_id": "86613",
+    "expected_level": 0,
+    "expected_status": "suppressed",
+    "payload": {
+      "event_type": "alert",
+      "log": "SURICATA Applayer Detect protocol only one direction flow id 1098231",
+      "sensor": "corp-gateway-01.blusoc.internal"
+    }
+  },
+  {
+    "test_id": "TC-NOISE-006",
+    "description": "Cloudflare automated synthetic health check request",
+    "category": "noise_suppression",
+    "expected_rule_id": "100550",
+    "expected_level": 0,
+    "expected_status": "suppressed",
+    "payload": {
+      "source": "cloudflare",
+      "user_agent": "Cloudflare-Health-Checks/1.0",
+      "client_ip": "172.68.1.1",
+      "action": "allow",
+      "log": "Cloudflare synthetic health check loop to origin gateway"
+    }
+  },
+  {
+    "test_id": "TC-NOISE-007",
+    "description": "Cloudflare synthetic monitoring probe loop",
+    "category": "noise_suppression",
+    "expected_rule_id": "100550",
+    "expected_level": 0,
+    "expected_status": "suppressed",
+    "payload": {
+      "source": "CLOUDFLARE WAF",
+      "user_agent": "synthetic-probe-monitor",
+      "client_ip": "172.68.2.5",
+      "action": "allow",
+      "log": "Cloudflare edge synthetic probe polling origin endpoint"
+    }
+  },
+  {
+    "test_id": "TC-NOISE-008",
+    "description": "Barracuda ESG periodic appliance cluster heartbeat",
+    "category": "noise_suppression",
+    "expected_rule_id": "100700",
+    "expected_level": 0,
+    "expected_status": "suppressed",
+    "payload": {
+      "facility": "daemon",
+      "log": "Barracuda ESG: Heartbeat status OK from primary cluster node edge-fw-01"
+    }
+  },
+  {
+    "test_id": "TC-PROXY-001",
+    "description": "Office 365 benign login through corporate egress proxy primary",
+    "category": "proxy_tuning",
+    "expected_rule_id": "91578",
+    "expected_level": 0,
+    "expected_status": "suppressed",
+    "payload": {
+      "integration": "office365",
+      "office365": {
+        "ClientIP": "198.51.100.14",
+        "Workload": "AzureActiveDirectory",
+        "ResultStatus": "Success"
+      },
+      "src_ip": "198.51.100.14",
+      "log": "MS 365: User login via primary egress proxy 198.51.100.14"
+    }
+  },
+  {
+    "test_id": "TC-PROXY-002",
+    "description": "Office 365 benign login through corporate egress proxy secondary",
+    "category": "proxy_tuning",
+    "expected_rule_id": "91578",
+    "expected_level": 0,
+    "expected_status": "suppressed",
+    "payload": {
+      "integration": "office365",
+      "office365": {
+        "ClientIP": "198.51.100.242",
+        "Workload": "AzureActiveDirectory",
+        "ResultStatus": "Success"
+      },
+      "src_ip": "198.51.100.242",
+      "log": "MS 365: User login via secondary egress proxy 198.51.100.242"
+    }
+  },
+  {
+    "test_id": "TC-PROXY-003",
+    "description": "Office 365 credential stuffing attack from untrusted foreign ASN",
+    "category": "account_takeover",
+    "expected_rule_id": "91580",
+    "expected_level": 10,
+    "expected_status": "actionable_alert",
+    "payload": {
+      "integration": "office365",
+      "office365": {
+        "ClientIP": "185.220.101.5",
+        "Workload": "AzureActiveDirectory",
+        "ResultStatus": "Failed"
+      },
+      "src_ip": "185.220.101.5",
+      "log": "MS 365: Failed authentication flood from untrusted ASN exit node 185.220.101.5"
+    }
+  },
+  {
+    "test_id": "TC-THREAT-001",
+    "description": "CrowdStrike Falcon high severity malware binary detection",
+    "category": "endpoint_edr",
+    "expected_rule_id": "100011",
+    "expected_level": 8,
+    "expected_status": "actionable_alert",
+    "payload": {
+      "vendor": "CrowdStrike",
+      "hostname": "corp-endpoint-115",
+      "filename": "BadPotato.exe",
+      "severity": "HIGH",
+      "event_simpleName": "DetectionSummaryEvent",
+      "log": "CrowdStrike Falcon: BadPotato.exe flagged by ML on-sensor protection"
+    }
+  },
+  {
+    "test_id": "TC-THREAT-002",
+    "description": "CrowdStrike Falcon critical ransomware payload detection",
+    "category": "endpoint_edr",
+    "expected_rule_id": "100011",
+    "expected_level": 8,
+    "expected_status": "actionable_alert",
+    "payload": {
+      "vendor": "CrowdStrike",
+      "hostname": "corp-endpoint-042",
+      "filename": "hoic2.1.exe",
+      "severity": "CRITICAL",
+      "event_simpleName": "DetectionSummaryEvent",
+      "log": "CrowdStrike Falcon: FileAnalysis ML algorithm high-confidence malware match"
+    }
+  },
+  {
+    "test_id": "TC-THREAT-003",
+    "description": "CrowdStrike Falcon lateral movement indicator via remote execution",
+    "category": "lateral_movement",
+    "expected_rule_id": "100019",
+    "expected_level": 8,
+    "expected_status": "actionable_alert",
+    "payload": {
+      "vendor": "CrowdStrike",
+      "hostname": "corp-endpoint-088",
+      "technique": "Lateral Movement",
+      "event_simpleName": "ProcessRollup2",
+      "log": "CrowdStrike Falcon: Lateral Movement PsExec invocation detected"
+    }
+  },
+  {
+    "test_id": "TC-THREAT-004",
+    "description": "CrowdStrike Falcon informational host containment telemetry",
+    "category": "sensor_event",
+    "expected_rule_id": "100013",
+    "expected_level": 5,
+    "expected_status": "actionable_alert",
+    "payload": {
+      "vendor": "CrowdStrike",
+      "hostname": "corp-endpoint-021",
+      "severity": "INFORMATIONAL",
+      "event_type": "containment_status",
+      "log": "CrowdStrike Falcon: Host network containment state toggled to active"
+    }
+  },
+  {
+    "test_id": "TC-THREAT-005",
+    "description": "Suricata real-time DPI detection of ET DROP blocklist source",
+    "category": "threat_intel",
+    "expected_rule_id": "86601",
+    "expected_level": 10,
+    "expected_status": "actionable_alert",
+    "payload": {
+      "event_type": "alert",
+      "log": "Suricata Real-Time DPI Threat Detected: ET DROP Dshield Block Listed Source group 1 on corp-gateway-01.blusoc.internal",
+      "src_ip": "64.62.156.159",
+      "dest_ip": "10.240.0.10"
+    }
+  },
+  {
+    "test_id": "TC-THREAT-006",
+    "description": "Suricata real-time DPI detection of CINS Army reputation threat",
+    "category": "threat_intel",
+    "expected_rule_id": "86601",
+    "expected_level": 10,
+    "expected_status": "actionable_alert",
+    "payload": {
+      "event_type": "alert",
+      "log": "Suricata Real-Time DPI Threat Detected: ET CINS Active Threat Intelligence Poor Reputation IP group 127 on corp-gateway-01.blusoc.internal",
+      "src_ip": "85.217.149.3",
+      "dest_ip": "10.240.0.10"
+    }
+  },
+  {
+    "test_id": "TC-THREAT-007",
+    "description": "Suricata critical remote code execution GPL attack response",
+    "category": "exploit_rce",
+    "expected_rule_id": "100400",
+    "expected_level": 12,
+    "expected_status": "actionable_alert",
+    "payload": {
+      "event_type": "alert",
+      "log": "Suricata Real-Time DPI Threat Detected: GPL ATTACK_RESPONSE id check returned root on corp-linux-07.blusoc.internal",
+      "src_ip": "108.157.238.122",
+      "dest_ip": "10.240.0.216"
+    }
+  },
+  {
+    "test_id": "TC-THREAT-008",
+    "description": "Cloudflare WAF blocked exploit injection targeting internal domain",
+    "category": "waf_block",
+    "expected_rule_id": "100800",
+    "expected_level": 10,
+    "expected_status": "actionable_alert",
+    "payload": {
+      "source": "CLOUDFLARE WAF",
+      "action": "block",
+      "client_ip": "62.60.130.199",
+      "host": "blusoc.internal",
+      "user_agent": "wp2shell",
+      "log": "Cloudflare WAF: Request blocked from 62.60.130.199 targeting blusoc.internal"
+    }
+  },
+  {
+    "test_id": "TC-THREAT-009",
+    "description": "Wazuh Rootcheck trojaned system utility detection",
+    "category": "privilege_escalation",
+    "expected_rule_id": "100031",
+    "expected_level": 12,
+    "expected_status": "actionable_alert",
+    "payload": {
+      "hostname": "corp-linux-02.blusoc.internal",
+      "log": "Host-based anomaly detection: Trojaned version of file '/usr/bin/md5sum' detected."
+    }
+  }
+]

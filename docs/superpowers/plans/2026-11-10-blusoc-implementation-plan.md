@@ -29,19 +29,19 @@
 **Interfaces:**
 - Produces: Sanitized incident records used by both detection rules and the web triage workbench
 
-- [ ] **Step 1: Initialize git repository and root files**
+- [x] **Step 1: Initialize git repository and root files**
 Initialize git repository in `C:\Users\keert\Desktop\Projects\BLUSOC` with `.gitignore` and MIT License.
 
-- [ ] **Step 2: Build the sanitized 67-alert dataset**
+- [x] **Step 2: Build the sanitized 67-alert dataset**
 Extract and sanitize the 67 confirmed attack alerts from the training database. Ensure all internal IPs map to RFC 1918/5737 ranges (`10.240.0.0/16`, `198.51.100.0/24`), hostnames map to synthetic assets (`siem-core-01.blusoc.internal`), and real threat IOCs (CINS, DROP, GPL RCE, Cloudflare WAF) are preserved with full raw logs.
 
-- [ ] **Step 3: Define enterprise network topology and alert taxonomy**
+- [x] **Step 3: Define enterprise network topology and alert taxonomy**
 Create `data/enterprise_topology.json` mapping sensor locations, firewall interfaces, and internal assets. Create `data/alert_taxonomy.json` mapping categories, severities, and MITRE ATT&CK technique IDs.
 
-- [ ] **Step 4: Verify dataset formatting**
+- [x] **Step 4: Verify dataset formatting**
 Run a validation check ensuring all 67 alerts parse as valid JSON with required fields (`id`, `title`, `category`, `severity`, `timestamp`, `src_ip`, `dest_ip`, `raw_log`, `triage_questions`).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 `git add . && git commit -m "feat: initialize repository and sanitized threat telemetry"`
 
 ---
@@ -60,19 +60,19 @@ Run a validation check ensuring all 67 alerts parse as valid JSON with required 
 - Consumes: Raw event formats and suppression logic
 - Produces: Production-ready XML rules for Wazuh Manager
 
-- [ ] **Step 1: Author noise suppression ruleset**
+- [x] **Step 1: Author noise suppression ruleset**
 Write `01_suppression_rules.xml` containing rule 100010 (CrowdStrike null-hostname storm suppression), rule 86611 (Suricata ethertype noise suppression), and rule 100550 (Cloudflare validation loop suppression).
 
-- [ ] **Step 2: Author O365 proxy egress tuning ruleset**
+- [x] **Step 2: Author O365 proxy egress tuning ruleset**
 Write `02_proxy_egress_tuning.xml` containing rule 91578 with proxy IP filtering logic that separates authentic corporate egress traffic from legitimate brute-force campaigns.
 
-- [ ] **Step 3: Author high-fidelity threat intelligence ruleset**
+- [x] **Step 3: Author high-fidelity threat intelligence ruleset**
 Write `03_threat_intel_rules.xml` containing rules 100011, 100019, 86601, and 100400 for L8 to L12 confirmed threats.
 
-- [ ] **Step 4: Create automated rule validation test script**
+- [x] **Step 4: Create automated rule validation test script**
 Write `validate_rules.py` to parse XML syntax, verify rule IDs, check level thresholds, and evaluate test payloads from `sample_events.json`.
 
-- [ ] **Step 5: Run rule validator and commit**
+- [x] **Step 5: Run rule validator and commit**
 Run `python detection-engineering/wazuh/tests/validate_rules.py` to confirm 100% pass rate. Commit changes.
 
 ---

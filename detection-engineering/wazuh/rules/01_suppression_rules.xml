@@ -1,0 +1,56 @@
+<group name="blusoc,suppression,noise_reduction,">
+
+  <!--
+    BLUSOC Detection Engineering: Telemetry Noise Suppression Suite
+    Target Platform: Wazuh Manager 4.x Analysis Engine
+    Scope: Benign health probes, sensor heartbeats, and malformed telemetry flooding indexers
+    Constraint: Sanitized RFC 1918 / RFC 5737 compliant
+  -->
+
+  <!-- Rule 100010: CrowdStrike Falcon parent telemetry and null-hostname suppression -->
+  <rule id="100010" level="0">
+    <decoded_as>json</decoded_as>
+    <field name="vendor">^CrowdStrike$</field>
+    <field name="hostname">^$|^-$|^UNKNOWN$|^null$</field>
+    <description>CrowdStrike Falcon: Suppress parent telemetry stream and null-hostname agent status floods</description>
+    <group>crowdstrike,noise_suppression,parent_rule,</group>
+  </rule>
+
+  <!-- Rule 86611: Suricata ethertype unknown framing anomaly suppression -->
+  <rule id="86611" level="0">
+    <match>SURICATA Ethertype unknown</match>
+    <description>Suricata: Suppress benign ethertype unknown and non-standard link-layer frame warnings</description>
+    <group>suricata,noise_suppression,link_layer,</group>
+  </rule>
+
+  <!-- Rule 86612: Suricata hardware checksum offload artifact suppression -->
+  <rule id="86612" level="0">
+    <match>SURICATA TCP invalid checksum|SURICATA UDP invalid checksum</match>
+    <description>Suricata: Suppress hardware checksum offload artifacts on high-throughput sensor interfaces</description>
+    <group>suricata,noise_suppression,interface_artifacts,</group>
+  </rule>
+
+  <!-- Rule 86613: Suricata asymmetric flow protocol detection suppression -->
+  <rule id="86613" level="0">
+    <match>SURICATA Applayer Detect protocol only one direction</match>
+    <description>Suricata: Suppress single-direction flow detection anomalies from asymmetric perimeter routing</description>
+    <group>suricata,noise_suppression,asymmetric_routing,</group>
+  </rule>
+
+  <!-- Rule 100550: Cloudflare automated origin health checks and synthetic loop suppression -->
+  <rule id="100550" level="0">
+    <decoded_as>json</decoded_as>
+    <field name="source">^cloudflare$|^CLOUDFLARE WAF$</field>
+    <field name="user_agent">^Cloudflare-Health-Checks|^synthetic-probe|^UptimeRobot|^BetterUptime</field>
+    <description>Cloudflare: Silence automated edge health checks and synthetic validation probe loops</description>
+    <group>cloudflare,noise_suppression,synthetic_monitoring,</group>
+  </rule>
+
+  <!-- Rule 100700: Barracuda generic appliance cluster heartbeat syslog suppression -->
+  <rule id="100700" level="0">
+    <match>Heartbeat status OK|heartbeat_ping|periodic_keepalive|system_heartbeat_ack</match>
+    <description>Barracuda: Suppress periodic appliance cluster heartbeat and health check syslogs</description>
+    <group>barracuda,noise_suppression,heartbeat,</group>
+  </rule>
+
+</group>

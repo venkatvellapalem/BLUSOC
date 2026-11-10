@@ -1,0 +1,33 @@
+<group name="office365,proxy_tuning,">
+
+  <!--
+    BLUSOC Detection Engineering: Office 365 Corporate Egress Proxy Tuning
+    Target Platform: Wazuh Manager 4.x Analysis Engine
+    Scope: Differentiate authorized corporate proxy traffic from foreign account takeover attacks
+    Corporate Egress Proxy Pool: 198.51.100.14 (Primary), 198.51.100.242 (Secondary)
+  -->
+
+  <!-- Rule 91578: Overwrite default M365 rule - silence logins from authorized corporate egress proxies -->
+  <rule id="91578" level="0" overwrite="yes">
+    <decoded_as>json</decoded_as>
+    <field name="integration">^office365$</field>
+    <field name="office365.ClientIP">^198\.51\.100\.14$|^198\.51\.100\.242$</field>
+    <description>Office 365: Benign corporate egress login from authorized proxy (198.51.100.14, 198.51.100.242) silenced to level 0</description>
+    <group>office365,proxy_tuning,suppression,</group>
+  </rule>
+
+  <!-- Rule 91580: Escalate logins from untrusted foreign ASNs to Level 10 -->
+  <rule id="91580" level="10">
+    <decoded_as>json</decoded_as>
+    <field name="integration">^office365$</field>
+    <field name="office365.ClientIP" negate="yes">^198\.51\.100\.</field>
+    <field name="office365.ResultStatus">^Failed$|^Anomalous$|^Failure$</field>
+    <description>Office 365: Suspicious authentication anomaly or credential stuffing from untrusted foreign ASN</description>
+    <mitre>
+      <id>T1078</id>
+      <id>T1110</id>
+    </mitre>
+    <group>office365,credential_access,account_takeover,</group>
+  </rule>
+
+</group>
