@@ -64,10 +64,31 @@ export interface GuestSession {
   last_active?: string;
 }
 
+export type AlertStatus = 'NEW' | 'INVESTIGATING' | 'CLOSED';
+
+export interface EnrichedAlert extends Alert {
+  status: AlertStatus;
+  country?: string;
+  userVerdict?: {
+    verdict: string;
+    notes?: string;
+    root_cause?: string;
+    timestamp: string;
+  };
+}
+
+export interface WorkbenchMetrics {
+  total: number;
+  triaged: number;
+  pending: number;
+  critical: number;
+}
+
 export interface VerdictSubmission {
   alert_id: string;
-  verdict: 'True Positive' | 'False Positive' | 'Suspicious' | string;
+  verdict: 'True Positive' | 'False Positive' | 'Inconclusive' | string;
   notes: string;
+  root_cause?: string;
   timestamp: string;
   session_id?: string;
 }

@@ -282,6 +282,7 @@ export async function saveVerdict(submission: VerdictSubmission): Promise<void> 
         alertId: submission.alert_id,
         verdict: submission.verdict,
         notes: submission.notes,
+        rootCause: submission.root_cause,
         timestamp: new Date(submission.timestamp || Date.now()),
       });
     } catch (err) {
@@ -302,6 +303,7 @@ export async function getVerdictsBySession(sessionId: string): Promise<VerdictSu
           alert_id: r.alertId,
           verdict: r.verdict,
           notes: r.notes,
+          root_cause: r.rootCause ?? undefined,
           timestamp: r.timestamp.toISOString(),
           session_id: r.sessionId,
         }));

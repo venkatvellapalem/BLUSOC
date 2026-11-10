@@ -51,6 +51,7 @@ export const triageVerdicts = pgTable("triage_verdicts", {
   alertId: text("alert_id").notNull(),
   verdict: text("verdict").notNull(),
   notes: text("notes").default("").notNull(),
+  rootCause: text("root_cause"),
   timestamp: timestamp("timestamp").defaultNow().notNull(),
 });
 
