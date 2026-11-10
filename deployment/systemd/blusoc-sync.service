@@ -1,0 +1,26 @@
+[Unit]
+Description=BLUSOC DFIR-IRIS Real-Time State Synchronization Daemon
+Documentation=https://github.com/blusoc/blusoc
+After=network.target network-online.target docker.service wazuh-manager.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/blusoc
+EnvironmentFile=-/etc/blusoc/blusoc.env
+ExecStart=/usr/bin/python3 /opt/blusoc/bin/iris_status_daemon.py --endpoint ${IRIS_ENDPOINT} --api-key ${IRIS_API_KEY} --interval ${IRIS_POLL_INTERVAL} --db-url ${DATABASE_URL} --audit-file ${IRIS_AUDIT_LOG}
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=10s
+TimeoutStartSec=30s
+TimeoutStopSec=15s
+KillMode=process
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=blusoc-sync
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

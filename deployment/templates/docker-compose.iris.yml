@@ -1,0 +1,169 @@
+version: "3.8"
+
+# ==============================================================================
+# BLUSOC DFIR-IRIS Container Stack
+# Services: PostgreSQL, RabbitMQ, IRIS App (Django), IRIS Worker (Celery), Nginx
+# Subnet: 10.240.50.0/24 (RFC 1918)
+# ==============================================================================
+
+services:
+  iris-db:
+    image: postgres:16-alpine
+    container_name: blusoc-iris-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-iris_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Placeholder_IrisPostgresPassword_ChangeMe!}
+      POSTGRES_DB: ${POSTGRES_DB:-iris_db}
+    volumes:
+      - iris_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-iris_user} -d ${POSTGRES_DB:-iris_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    networks:
+      blusoc-net:
+        ipv4_address: 10.240.50.11
+
+  iris-rabbitmq:
+    image: rabbitmq:3.13-alpine
+    container_name: blusoc-iris-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-iris_mq}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-Placeholder_IrisRabbitMqPassword_ChangeMe!}
+    volumes:
+      - iris_rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    networks:
+      blusoc-net:
+        ipv4_address: 10.240.50.12
+
+  iris-app:
+    image: dfiriris/iris-web:v2.4.15
+    container_name: blusoc-iris-app
+    restart: unless-stopped
+    depends_on:
+      iris-db:
+        condition: service_healthy
+      iris-rabbitmq:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: iris-db
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER:-iris_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Placeholder_IrisPostgresPassword_ChangeMe!}
+      POSTGRES_DB: ${POSTGRES_DB:-iris_db}
+      RABBITMQ_HOST: iris-rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: ${RABBITMQ_DEFAULT_USER:-iris_mq}
+      RABBITMQ_PASS: ${RABBITMQ_DEFAULT_PASS:-Placeholder_IrisRabbitMqPassword_ChangeMe!}
+      SECRET_KEY: ${IRIS_SECRET_KEY:-Placeholder_IrisDjangoSecretKey_64CharsRandom!}
+      IRIS_SERVER_NAME: ${IRIS_SERVER_NAME:-soar-iris-01.blusoc.internal}
+    volumes:
+      - iris_user_data:/iriswebapp/dependencies
+      - iris_logs:/var/log/iris
+      - /opt/blusoc/iris/overlays:/iriswebapp/overlays:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/alerts/filter || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    networks:
+      blusoc-net:
+        ipv4_address: 10.240.50.13
+
+  iris-worker:
+    image: dfiriris/iris-web:v2.4.15
+    container_name: blusoc-iris-worker
+    restart: unless-stopped
+    command: ["celery", "-A", "iriswebapp", "worker", "-l", "INFO", "--concurrency=4"]
+    depends_on:
+      iris-app:
+        condition: service_started
+      iris-rabbitmq:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: iris-db
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER:-iris_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Placeholder_IrisPostgresPassword_ChangeMe!}
+      POSTGRES_DB: ${POSTGRES_DB:-iris_db}
+      RABBITMQ_HOST: iris-rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: ${RABBITMQ_DEFAULT_USER:-iris_mq}
+      RABBITMQ_PASS: ${RABBITMQ_DEFAULT_PASS:-Placeholder_IrisRabbitMqPassword_ChangeMe!}
+      SECRET_KEY: ${IRIS_SECRET_KEY:-Placeholder_IrisDjangoSecretKey_64CharsRandom!}
+    volumes:
+      - iris_user_data:/iriswebapp/dependencies
+      - iris_logs:/var/log/iris
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    networks:
+      blusoc-net:
+        ipv4_address: 10.240.50.14
+
+  iris-nginx:
+    image: nginx:1.25-alpine
+    container_name: blusoc-iris-nginx
+    restart: unless-stopped
+    depends_on:
+      - iris-app
+    ports:
+      - "${IRIS_APP_PORT:-443}:443"
+      - "80:80"
+    volumes:
+      - /opt/blusoc/iris/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /opt/blusoc/iris/certs:/etc/nginx/certs:ro
+      - iris_logs:/var/log/nginx
+    healthcheck:
+      test: ["CMD-SHELL", "curl -k -f https://localhost/health || curl -f http://localhost:80/ || exit 0"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    networks:
+      blusoc-net:
+        ipv4_address: 10.240.50.10
+
+volumes:
+  iris_postgres_data:
+    name: blusoc_iris_postgres_data
+  iris_rabbitmq_data:
+    name: blusoc_iris_rabbitmq_data
+  iris_user_data:
+    name: blusoc_iris_user_data
+  iris_logs:
+    name: blusoc_iris_logs
+
+networks:
+  blusoc-net:
+    name: blusoc-net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.240.50.0/24
+          gateway: 10.240.50.1

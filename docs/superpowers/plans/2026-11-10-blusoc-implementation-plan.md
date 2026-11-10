@@ -127,19 +127,19 @@ Run unit tests passing sample Wazuh alert JSON through `custom-iris.py` to verif
 - Consumes: Environment variables from `.env`
 - Produces: Fully deployed SOC server running Wazuh, IRIS, integrations, and sensor listeners
 
-- [ ] **Step 1: Write comprehensive `.env.example`**
+- [x] **Step 1: Write comprehensive `.env.example`**
 Include documented variables for Wazuh Manager, IRIS API, CrowdStrike Falcon, Sophos Central, Barracuda CloudGen, Cloudflare WAF, and Neon PostgreSQL.
 
-- [ ] **Step 2: Author modular provisioning scripts**
+- [x] **Step 2: Author modular provisioning scripts**
 Write scripts 01 through 05 covering prerequisite packages, Wazuh manager setup, IRIS container deployment, integration binding (`/var/ossec/integrations`), and syslog forwarders.
 
-- [ ] **Step 3: Author health check and master deploy orchestrator**
+- [x] **Step 3: Author health check and master deploy orchestrator**
 Write `06_health_check.sh` and `deploy.sh` with interactive flags, root permission validation, step-by-step progress logging, and rollback safety.
 
-- [ ] **Step 4: Create systemd unit and templates**
+- [x] **Step 4: Create systemd unit and templates**
 Add `blusoc-sync.service`, `ossec.conf.template`, and `docker-compose.iris.yml`. Document sizing, port maps, and firewall rules in `deployment/README.md`.
 
-- [ ] **Step 5: Verify script permissions and syntax**
+- [x] **Step 5: Verify script permissions and syntax**
 Verify bash script syntax using dry-run linting. Commit changes.
 
 ---
