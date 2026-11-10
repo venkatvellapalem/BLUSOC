@@ -1,0 +1,236 @@
+{
+  "organization": {
+    "name": "BLUSOC Global Defense Lab",
+    "domain": "blusoc.internal",
+    "public_domain": "blusoc.com",
+    "rfc1918_space": "10.240.0.0/16",
+    "rfc5737_egress": "198.51.100.0/24",
+    "cloud_interconnect": "172.16.50.0/24"
+  },
+  "subnets": [
+    {
+      "name": "Perimeter & Ingress Gateway",
+      "cidr": "10.240.0.0/24",
+      "zone": "Perimeter DMZ",
+      "description": "Public-facing ingress interface pool, reverse proxies, and edge perimeter routing."
+    },
+    {
+      "name": "Core Security Operations",
+      "cidr": "10.240.1.0/24",
+      "zone": "Secure Core",
+      "description": "SIEM manager, SOAR orchestrator, database clusters, and domain controllers."
+    },
+    {
+      "name": "Distributed Sensor Grid",
+      "cidr": "10.240.2.0/24",
+      "zone": "Sensor DMZ",
+      "description": "Suricata network DPI sniffers, Zeek analyzers, and CrowdSec sensor aggregators."
+    },
+    {
+      "name": "Corporate Workstation LAN",
+      "cidr": "10.240.10.0/24",
+      "zone": "Internal LAN",
+      "description": "Corporate employee desktop, laptop endpoints protected by CrowdStrike Falcon EDR."
+    },
+    {
+      "name": "Authorized Egress Proxy Pool",
+      "cidr": "198.51.100.0/24",
+      "zone": "Public Egress",
+      "description": "Sanctioned corporate exit gateways routing outbound SaaS and Microsoft 365 traffic."
+    },
+    {
+      "name": "Hybrid Cloud Interconnect",
+      "cidr": "172.16.50.0/24",
+      "zone": "Cloud VPC",
+      "description": "Dedicated AWS/GCP interconnect for telemetry ingestion and cold evidence storage."
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "ASSET-FW-01",
+      "hostname": "edge-fw-01",
+      "fqdn": "edge-fw-01.blusoc.internal",
+      "ip_address": "10.240.0.1",
+      "role": "Perimeter Next-Gen Firewall",
+      "zone": "Perimeter DMZ",
+      "os": "FortiOS / pfSense Hardened",
+      "description": "Primary edge gateway handling NAT, ingress state inspection, and flow logging."
+    },
+    {
+      "asset_id": "ASSET-GW-01",
+      "hostname": "corp-gateway-01",
+      "fqdn": "corp-gateway-01.blusoc.internal",
+      "ip_address": "10.240.0.10",
+      "role": "Ingress DPI & Web Gateway",
+      "zone": "Perimeter DMZ",
+      "os": "Ubuntu 24.04 LTS Hardened",
+      "description": "Primary perimeter monitoring host running Suricata DPI wire inspection and NGINX reverse proxy."
+    },
+    {
+      "asset_id": "ASSET-SIEM-01",
+      "hostname": "siem-core-01",
+      "fqdn": "siem-core-01.blusoc.internal",
+      "ip_address": "10.240.1.10",
+      "role": "Wazuh SIEM Manager & Analysis Engine",
+      "zone": "Secure Core",
+      "os": "Ubuntu 22.04 LTS Enterprise",
+      "description": "Central Wazuh cluster node executing rule decoders, noise suppression filters, and rootcheck."
+    },
+    {
+      "asset_id": "ASSET-SOAR-01",
+      "hostname": "soar-iris-01",
+      "fqdn": "soar-iris-01.blusoc.internal",
+      "ip_address": "10.240.1.15",
+      "role": "DFIR-IRIS Security Orchestration Platform",
+      "zone": "Secure Core",
+      "os": "Debian 12 Bookworm Container Host",
+      "description": "Automated incident response platform receiving forwarded Wazuh alerts via custom-iris integration daemon."
+    },
+    {
+      "asset_id": "ASSET-DC-01",
+      "hostname": "dc-01",
+      "fqdn": "dc-01.blusoc.internal",
+      "ip_address": "10.240.1.20",
+      "role": "Enterprise Directory Services",
+      "zone": "Secure Core",
+      "os": "Windows Server 2022 Datacenter",
+      "description": "Active Directory primary domain controller handling Kerberos authentication and LDAP queries."
+    },
+    {
+      "asset_id": "ASSET-PROXY-01",
+      "hostname": "corp-proxy-01",
+      "fqdn": "corp-proxy-01.blusoc.internal",
+      "ip_address": "198.51.100.14",
+      "role": "Corporate Outbound Proxy Primary",
+      "zone": "Public Egress",
+      "os": "Debian 12 Hardened Squid/HAProxy",
+      "description": "Sanctioned corporate exit node routing authenticated user traffic to Microsoft 365 services."
+    },
+    {
+      "asset_id": "ASSET-PROXY-02",
+      "hostname": "corp-proxy-02",
+      "fqdn": "corp-proxy-02.blusoc.internal",
+      "ip_address": "198.51.100.242",
+      "role": "Corporate Outbound Proxy Secondary",
+      "zone": "Public Egress",
+      "os": "Debian 12 Hardened Squid/HAProxy",
+      "description": "Secondary corporate exit gateway for failover and remote branch office egress."
+    },
+    {
+      "asset_id": "ASSET-SENSOR-DMZ",
+      "hostname": "sensor-dmz-01",
+      "fqdn": "sensor-dmz-01.blusoc.internal",
+      "ip_address": "10.240.2.5",
+      "role": "DMZ Wire Sniffer Sensor",
+      "zone": "Sensor DMZ",
+      "os": "Ubuntu 22.04 LTS Sniffer Appliance",
+      "description": "Suricata real-time DPI sensor tapping DMZ port mirrors, tracking external threat feeds."
+    },
+    {
+      "asset_id": "ASSET-SENSOR-EAST",
+      "hostname": "sensor-us-east-01",
+      "fqdn": "sensor-us-east-01.blusoc.internal",
+      "ip_address": "10.240.2.10",
+      "role": "US-East Telemetry Forwarder",
+      "zone": "Sensor DMZ",
+      "os": "Alpine Linux Container Node",
+      "description": "Distributed log forwarder shipping syslog and NetFlow telemetry to siem-core-01."
+    },
+    {
+      "asset_id": "ASSET-SENSOR-WEST",
+      "hostname": "sensor-eu-west-01",
+      "fqdn": "sensor-eu-west-01.blusoc.internal",
+      "ip_address": "10.240.2.20",
+      "role": "EU-West Telemetry Forwarder",
+      "zone": "Sensor DMZ",
+      "os": "Alpine Linux Container Node",
+      "description": "European region log aggregator streaming encrypted Wazuh agent events across WireGuard tunnel."
+    },
+    {
+      "asset_id": "ASSET-SRV-LINUX-02",
+      "hostname": "corp-linux-02",
+      "fqdn": "corp-linux-02.blusoc.internal",
+      "ip_address": "10.240.0.211",
+      "role": "Application Services Host 02",
+      "zone": "Internal LAN",
+      "os": "Ubuntu 24.04 LTS",
+      "description": "Internal application server hosting microservices and API gateways."
+    },
+    {
+      "asset_id": "ASSET-SRV-LINUX-03",
+      "hostname": "corp-linux-03",
+      "fqdn": "corp-linux-03.blusoc.internal",
+      "ip_address": "10.240.0.212",
+      "role": "Application Services Host 03",
+      "zone": "Internal LAN",
+      "os": "Ubuntu 24.04 LTS",
+      "description": "Internal application server hosting staging microservices."
+    },
+    {
+      "asset_id": "ASSET-SRV-LINUX-04",
+      "hostname": "corp-linux-04",
+      "fqdn": "corp-linux-04.blusoc.internal",
+      "ip_address": "10.240.0.213",
+      "role": "Internal Storage Node",
+      "zone": "Internal LAN",
+      "os": "Ubuntu 24.04 LTS",
+      "description": "NFS/CIFS internal backup repository and cold artifact storage."
+    },
+    {
+      "asset_id": "ASSET-SRV-LINUX-07",
+      "hostname": "corp-linux-07",
+      "fqdn": "corp-linux-07.blusoc.internal",
+      "ip_address": "10.240.0.216",
+      "role": "File Integrity Monitoring Node",
+      "zone": "Internal LAN",
+      "os": "Ubuntu 24.04 LTS",
+      "description": "Critical fileserver with Wazuh syscheck active real-time auditing."
+    },
+    {
+      "asset_id": "ASSET-WKSTN-115",
+      "hostname": "corp-endpoint-115",
+      "fqdn": "corp-endpoint-115.blusoc.internal",
+      "ip_address": "10.240.10.115",
+      "role": "Developer Workstation",
+      "zone": "Internal LAN",
+      "os": "Windows 11 Enterprise 23H2",
+      "description": "Engineering workstation running CrowdStrike Falcon sensor."
+    }
+  ],
+  "analysts": [
+    {
+      "username": "analyst.chen",
+      "full_name": "Marcus Chen",
+      "role": "Lead Blue Team Engineer",
+      "tier": "Tier 3",
+      "email": "marcus.chen@blusoc.internal"
+    },
+    {
+      "username": "analyst.vance",
+      "full_name": "Elena Vance",
+      "role": "Senior SOC Detection Analyst",
+      "tier": "Tier 2",
+      "email": "elena.vance@blusoc.internal"
+    },
+    {
+      "username": "analyst.ross",
+      "full_name": "David Ross",
+      "role": "Incident Response Investigator",
+      "tier": "Tier 1",
+      "email": "david.ross@blusoc.internal"
+    },
+    {
+      "username": "security-ops",
+      "full_name": "Security Operations Center",
+      "role": "SOC Automated Dispatch & Notification",
+      "tier": "Tier 1",
+      "email": "security-ops@blusoc.internal"
+    }
+  ],
+  "sanitization_strategy": {
+    "network_masking": "All legacy private subnets translated to 10.240.0.0/16 enterprise architecture.",
+    "egress_masking": "Corporate outbound gateways translated to RFC 5737 198.51.100.0/24 test net blocks.",
+    "domain_masking": "Internal namespace normalized to blusoc.internal.",
+    "identity_masking": "All analyst and employee references anonymized to role-based operational personas."
+  }
+}

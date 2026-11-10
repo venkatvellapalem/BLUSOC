@@ -164,22 +164,22 @@ Verify bash script syntax using dry-run linting. Commit changes.
 - Consumes: Neon PostgreSQL connection string and guest cookies
 - Produces: Responsive light-themed UI shell and database client
 
-- [ ] **Step 1: Scaffold Next.js application**
+- [x] **Step 1: Scaffold Next.js application**
 Initialize `web/` with Next.js 14 App Router, Tailwind CSS, TypeScript, and required packages (`@neondatabase/serverless`, `drizzle-orm`, `framer-motion`, `lucide-react`, `clsx`, `tailwind-merge`).
 
-- [ ] **Step 2: Configure light design system tokens**
+- [x] **Step 2: Configure light design system tokens**
 Configure `tailwind.config.ts` with the approved color tokens (`#F8FAFC` background, Slate typography hierarchy, crisp borders, and semantic status accents). Load Plus Jakarta Sans and JetBrains Mono fonts.
 
-- [ ] **Step 3: Define database schema and Neon serverless client**
+- [x] **Step 3: Define database schema and Neon serverless client**
 Write `src/lib/schema.ts` defining tables for `alerts`, `tuning_rules`, `guest_sessions`, and `triage_verdicts`. Configure `src/lib/db.ts` with connection pooling and local fallback mode.
 
-- [ ] **Step 4: Build guest workspace session manager**
+- [x] **Step 4: Build guest workspace session manager**
 Write `src/lib/session.ts` to issue and verify signed guest workspace cookies for ephemeral visitor state.
 
-- [ ] **Step 5: Build global navigation and executive landing page**
+- [x] **Step 5: Build global navigation and executive landing page**
 Create `Navbar.tsx`, `Footer.tsx`, and `app/page.tsx` featuring platform metrics, architecture summary cards, and quick navigation into the live modules.
 
-- [ ] **Step 6: Verify build and commit**
+- [x] **Step 6: Verify build and commit**
 Run `npm run build` in `web/` to confirm zero compilation errors. Commit changes.
 
 ---
