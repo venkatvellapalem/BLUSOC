@@ -17,6 +17,7 @@ import {
 import type { EnrichedAlert, WorkbenchMetrics } from "@/lib/types";
 import { AlertList } from "@/components/workbench/AlertList";
 import { AlertDetail } from "@/components/workbench/AlertDetail";
+import { SecOpsDial } from "@/components/dials/SecOpsDial";
 
 export default function WorkbenchPage() {
   const [alerts, setAlerts] = useState<EnrichedAlert[]>([]);
@@ -219,78 +220,60 @@ export default function WorkbenchPage() {
           </div>
         )}
 
-        {/* Top Queue Metrics Banner */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
-          {/* Total Ingested Alerts */}
-          <div className="p-4 bg-white border border-slate-200 rounded-xl shadow-card">
-            <div className="flex items-center justify-between text-slate-500 mb-1">
-              <span className="text-xs font-semibold uppercase tracking-wider">
-                Total Incident Queue
+        {/* TRIAGE INSTRUMENTATION DECK */}
+        <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_8px_30px_rgb(0,0,0,0.03)] backdrop-blur-md">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-4">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs font-bold text-blue-600 uppercase tracking-wider">
+                TIER-2 TRIAGE GAUGES &amp; QUEUE DISPOSITION
               </span>
-              <Layers className="w-4 h-4 text-blue-600" />
+              <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold">
+                67 ATTACK RECORDS
+              </span>
             </div>
-            <div className="text-2xl font-bold text-slate-900">
-              {metrics.total}
-            </div>
-            <div className="text-[11px] text-slate-500 mt-1">
-              Confirmed attack telemetry records
+            <div className="text-xs font-mono text-slate-500">
+              QUEUE STATUS: <span className="font-bold text-slate-800">{metrics.triaged} CLOSED</span> / {metrics.total} TOTAL
             </div>
           </div>
 
-          {/* Triaged Count & Progress */}
-          <div className="p-4 bg-white border border-slate-200 rounded-xl shadow-card">
-            <div className="flex items-center justify-between text-slate-500 mb-1">
-              <span className="text-xs font-semibold uppercase tracking-wider">
-                Triaged Tickets
-              </span>
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-            </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-emerald-700">
-                {metrics.triaged}
-              </span>
-              <span className="text-xs text-slate-400 font-mono">
-                / {metrics.total} ({progressPercent}%)
-              </span>
-            </div>
-            <div className="w-full bg-slate-100 rounded-full h-1.5 mt-2 overflow-hidden">
-              <div
-                className="bg-emerald-500 h-1.5 rounded-full transition-all duration-300"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
-          </div>
-
-          {/* Pending Triage */}
-          <div className="p-4 bg-white border border-slate-200 rounded-xl shadow-card">
-            <div className="flex items-center justify-between text-slate-500 mb-1">
-              <span className="text-xs font-semibold uppercase tracking-wider">
-                Pending Investigation
-              </span>
-              <Clock className="w-4 h-4 text-amber-600" />
-            </div>
-            <div className="text-2xl font-bold text-slate-900">
-              {metrics.pending}
-            </div>
-            <div className="text-[11px] text-slate-500 mt-1">
-              Awaiting analyst disposition
-            </div>
-          </div>
-
-          {/* Critical Severity */}
-          <div className="p-4 bg-white border border-slate-200 rounded-xl shadow-card">
-            <div className="flex items-center justify-between text-slate-500 mb-1">
-              <span className="text-xs font-semibold uppercase tracking-wider">
-                Critical Threats
-              </span>
-              <AlertTriangle className="w-4 h-4 text-red-600" />
-            </div>
-            <div className="text-2xl font-bold text-red-700">
-              {metrics.critical}
-            </div>
-            <div className="text-[11px] text-slate-500 mt-1">
-              Priority L10 to L12 detections
-            </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center">
+            <SecOpsDial
+              value={metrics.triaged}
+              min={0}
+              max={metrics.total || 67}
+              label="Triaged Disposition"
+              unit="CLOSED"
+              sublabel={`${progressPercent}% Queue Completed`}
+              size={165}
+            />
+            <SecOpsDial
+              value={metrics.pending}
+              min={0}
+              max={metrics.total || 67}
+              label="Pending Investigation"
+              unit="TICKETS"
+              sublabel="Active Analyst Queue"
+              size={165}
+            />
+            <SecOpsDial
+              value={metrics.critical}
+              min={0}
+              max={25}
+              label="Critical Priority"
+              unit="ALERTS"
+              sublabel="L10 to L12 Attack Vectors"
+              size={165}
+            />
+            <SecOpsDial
+              value={8}
+              min={0}
+              max={60}
+              label="Triage Target SLA"
+              unit="MINUTES"
+              sublabel="Sub-15m Target Met"
+              formatValue={(v) => `${v}m`}
+              size={165}
+            />
           </div>
         </div>
 

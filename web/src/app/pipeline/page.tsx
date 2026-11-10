@@ -21,6 +21,7 @@ import {
 import PipelineCanvas from '@/components/pipeline/PipelineCanvas';
 import NodeDetailDrawer from '@/components/pipeline/NodeDetailDrawer';
 import TelemetryPacketSimulator from '@/components/pipeline/TelemetryPacketSimulator';
+import { SecOpsDial } from '@/components/dials/SecOpsDial';
 import {
   SIMULATION_PRESETS,
   PIPELINE_STAGES,
@@ -188,74 +189,60 @@ export default function PipelinePage() {
           </div>
         </div>
 
-        {/* SUMMARY METRICS BAR */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="rounded-xl border border-brand-border bg-white p-5 shadow-card space-y-1">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-brand-text-muted uppercase tracking-wider">
-                Daily Ingestion
+        {/* SEC-OPS DIAL INSTRUMENTATION DECK */}
+        <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.03)] backdrop-blur-md">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs font-bold text-blue-600 uppercase tracking-wider">
+                LIVE PIPELINE TELEMETRY INSTRUMENTS
               </span>
-              <span className="rounded bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-700 border border-blue-200">
-                Gross Ingress
+              <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
+                CALIBRATED SENSORS
               </span>
             </div>
-            <p className="font-mono text-2xl font-extrabold text-brand-text-primary tracking-tight">
-              14,280
-            </p>
-            <p className="text-xs text-brand-text-secondary">
-              Telemetry events ingested across Suricata, CrowdStrike, and Cloudflare.
-            </p>
+            <span className="text-xs font-mono text-slate-400">
+              FIFO QUEUE: 142/65536 PKTS
+            </span>
           </div>
 
-          <div className="rounded-xl border border-brand-border bg-white p-5 shadow-card space-y-1">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-brand-text-muted uppercase tracking-wider">
-                Noise Suppressed
-              </span>
-              <span className="rounded bg-amber-50 px-2 py-0.5 text-[10px] font-bold text-amber-700 border border-amber-200">
-                -98.7% Fatigue
-              </span>
-            </div>
-            <p className="font-mono text-2xl font-extrabold text-amber-600 tracking-tight">
-              14,096
-            </p>
-            <p className="text-xs text-brand-text-secondary">
-              Benign events silenced at Wazuh Level 0 before generating SOAR cases.
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-brand-border bg-white p-5 shadow-card space-y-1">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-brand-text-muted uppercase tracking-wider">
-                Actionable Forwarded
-              </span>
-              <span className="rounded bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200">
-                High Fidelity
-              </span>
-            </div>
-            <p className="font-mono text-2xl font-extrabold text-emerald-600 tracking-tight">
-              184
-            </p>
-            <p className="text-xs text-brand-text-secondary">
-              Confirmed threat alerts enriched with GeoIP and forwarded to DFIR-IRIS.
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-brand-border bg-white p-5 shadow-card space-y-1">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-brand-text-muted uppercase tracking-wider">
-                Pipeline Latency
-              </span>
-              <span className="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-700 border border-slate-200">
-                Sub-3ms End-to-End
-              </span>
-            </div>
-            <p className="font-mono text-2xl font-extrabold text-brand-text-primary tracking-tight">
-              &lt; 2.8 ms
-            </p>
-            <p className="text-xs text-brand-text-secondary">
-              Total transit time from sensor tap through Wazuh rules to SOAR queue.
-            </p>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
+            <SecOpsDial
+              value={14280}
+              min={0}
+              max={15000}
+              label="Ingress Volume"
+              unit="EPS"
+              sublabel="14,280 Daily Ingress"
+              size={175}
+            />
+            <SecOpsDial
+              value={14096}
+              min={0}
+              max={15000}
+              label="Suppressed Noise"
+              unit="EPS"
+              sublabel="14,096 Dropped L0"
+              size={175}
+            />
+            <SecOpsDial
+              value={184}
+              min={0}
+              max={500}
+              label="Actionable SOAR"
+              unit="ALERTS"
+              sublabel="184 Clean Incidents"
+              size={175}
+            />
+            <SecOpsDial
+              value={2.8}
+              min={0}
+              max={10}
+              label="Pipeline Latency"
+              unit="MS"
+              sublabel="< 2.8ms Wire to IRIS"
+              formatValue={(v) => `${v.toFixed(1)}ms`}
+              size={175}
+            />
           </div>
         </div>
 
