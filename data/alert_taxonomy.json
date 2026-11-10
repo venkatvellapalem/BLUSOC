@@ -1,0 +1,167 @@
+{
+  "version": "2026.1",
+  "taxonomy_name": "BLUSOC Enterprise Telemetry & Threat Taxonomy",
+  "severity_scale": {
+    "levels": [
+      {
+        "level": 1,
+        "name": "INFORMATIONAL",
+        "color": "#64748B",
+        "description": "Routine diagnostic events, heartbeat signals, and healthy system status changes with zero operational impact.",
+        "wazuh_level_range": "0-3",
+        "iris_severity_id": 1,
+        "sla_response_minutes": 1440
+      },
+      {
+        "level": 2,
+        "name": "LOW",
+        "color": "#3B82F6",
+        "description": "Low-priority anomalous traffic, baseline deviations, or noisy automated scans absorbed by edge perimeter controls.",
+        "wazuh_level_range": "4-6",
+        "iris_severity_id": 2,
+        "sla_response_minutes": 480
+      },
+      {
+        "level": 3,
+        "name": "MEDIUM",
+        "color": "#F59E0B",
+        "description": "Suspicious internal activity, failed authentication thresholds, unverified external senders, or package state drifts.",
+        "wazuh_level_range": "7-8",
+        "iris_severity_id": 3,
+        "sla_response_minutes": 120
+      },
+      {
+        "level": 4,
+        "name": "HIGH",
+        "color": "#F97316",
+        "description": "Confirmed threat intelligence hits from reputation feeds, known offensive tool hashes, or targeted exploit payloads.",
+        "wazuh_level_range": "9-11",
+        "iris_severity_id": 4,
+        "sla_response_minutes": 30
+      },
+      {
+        "level": 5,
+        "name": "CRITICAL",
+        "color": "#EF4444",
+        "description": "Active remote code execution attempts, confirmed credential stuffing, malware execution bypasses, or C2 handshakes.",
+        "wazuh_level_range": "12-14",
+        "iris_severity_id": 5,
+        "sla_response_minutes": 15
+      },
+      {
+        "level": 6,
+        "name": "EMERGENCY",
+        "color": "#991B1B",
+        "description": "Enterprise-wide compromise, domain controller privilege elevation, or confirmed multi-host lateral movement.",
+        "wazuh_level_range": "15-16",
+        "iris_severity_id": 6,
+        "sla_response_minutes": 5
+      }
+    ]
+  },
+  "categories": [
+    {
+      "key": "malicious_ip",
+      "display_name": "Threat Intelligence",
+      "description": "Real-time DPI detections matching verified malicious IP reputation lists including ET CINS, Spamhaus DROP, and DShield feeds.",
+      "primary_sensors": ["Suricata", "CrowdSec", "Edge Firewall"],
+      "default_severity": "HIGH",
+      "mitre_attack_tactics": ["TA0001", "TA0011"],
+      "mitre_attack_techniques": ["T1071", "T1595"]
+    },
+    {
+      "key": "reconnaissance",
+      "display_name": "Reconnaissance & Probing",
+      "description": "Port scanning, service enumeration, aggressive banners probing, and host discovery hitting boundary listening interfaces.",
+      "primary_sensors": ["Suricata", "Wazuh Agent", "Zeek"],
+      "default_severity": "MEDIUM",
+      "mitre_attack_tactics": ["TA0043"],
+      "mitre_attack_techniques": ["T1595", "T1046", "T1082"]
+    },
+    {
+      "key": "malware",
+      "display_name": "Malware & Endpoint EDR",
+      "description": "Machine learning antivirus detections, malicious script invocations, credential dumper executions, and persistence events.",
+      "primary_sensors": ["CrowdStrike Falcon", "Sophos Central", "Wazuh Syscheck"],
+      "default_severity": "HIGH",
+      "mitre_attack_tactics": ["TA0002", "TA0003", "TA0005"],
+      "mitre_attack_techniques": ["T1204.002", "T1059", "T1218", "T1053"]
+    },
+    {
+      "key": "phishing",
+      "display_name": "Phishing & Email Security",
+      "description": "Inbound malicious email campaigns, credential-harvesting lures, domain impersonations, and weaponized attachment headers.",
+      "primary_sensors": ["Barracuda ESG", "Proofpoint", "Cloudflare Email Routing"],
+      "default_severity": "MEDIUM",
+      "mitre_attack_tactics": ["TA0001"],
+      "mitre_attack_techniques": ["T1566.001", "T1566.002"]
+    },
+    {
+      "key": "waf",
+      "display_name": "Web Application Firewall",
+      "description": "Layer 7 inspection blocking SQL injection, directory traversal, remote code execution, and cross-site scripting attacks.",
+      "primary_sensors": ["Cloudflare WAF", "AWS WAF", "NGINX ModSecurity"],
+      "default_severity": "HIGH",
+      "mitre_attack_tactics": ["TA0001"],
+      "mitre_attack_techniques": ["T1190", "T1059.004"]
+    }
+  ],
+  "mitre_attack_matrix": [
+    {
+      "id": "T1595",
+      "name": "Active Scanning",
+      "tactic": "Reconnaissance",
+      "subtechniques": ["T1595.001 Scanning IP Blocks", "T1595.002 Vulnerability Scanning"],
+      "detection": "Suricata signatures for rapid TCP SYN sweeps and unusual ICMP echoes."
+    },
+    {
+      "id": "T1190",
+      "name": "Exploit Public-Facing Application",
+      "tactic": "Initial Access",
+      "subtechniques": [],
+      "detection": "WAF request inspection targeting URI paths, command injection payloads, and SQL syntax patterns."
+    },
+    {
+      "id": "T1566",
+      "name": "Phishing",
+      "tactic": "Initial Access",
+      "subtechniques": ["T1566.001 Spearphishing Attachment", "T1566.002 Spearphishing Link"],
+      "detection": "Inbound email gateway score heuristics, DMARC/SPF authentication failures, and URL sandbox detonation."
+    },
+    {
+      "id": "T1059",
+      "name": "Command and Scripting Interpreter",
+      "tactic": "Execution",
+      "subtechniques": ["T1059.001 PowerShell", "T1059.004 Unix Shell"],
+      "detection": "EDR process tree parentage tracking, command line parameter decoding, and script-block logging."
+    },
+    {
+      "id": "T1110",
+      "name": "Brute Force",
+      "tactic": "Credential Access",
+      "subtechniques": ["T1110.001 Password Guessing", "T1110.003 Password Spraying"],
+      "detection": "Wazuh correlation rules tracking authentication failure rates per originating IP and tenant."
+    },
+    {
+      "id": "T1204",
+      "name": "User Execution",
+      "tactic": "Execution",
+      "subtechniques": ["T1204.002 Malicious File"],
+      "detection": "CrowdStrike on-sensor machine learning AV and file hash comparison against known malicious datasets."
+    },
+    {
+      "id": "T1046",
+      "name": "Network Service Discovery",
+      "tactic": "Discovery",
+      "subtechniques": [],
+      "detection": "Flow log analysis tracking connection attempts to uncommon listening ports across internal subnets."
+    },
+    {
+      "id": "T1071",
+      "name": "Application Layer Protocol",
+      "tactic": "Command and Control",
+      "subtechniques": ["T1071.001 Web Protocols", "T1071.004 DNS"],
+      "detection": "DPI protocol inspection matching known threat intel C2 servers, beaconing periodicity, and anomalous user-agents."
+    }
+  ]
+}

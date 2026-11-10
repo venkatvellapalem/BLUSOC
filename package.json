@@ -1,0 +1,35 @@
+{
+  "name": "blusoc",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Enterprise Blue-Team Engineering Monorepo and Interactive Threat Intelligence Platform",
+  "author": "BLUSOC Engineering Team",
+  "license": "MIT",
+  "workspaces": [
+    "web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=web",
+    "build": "npm run build --workspace=web",
+    "start": "npm run start --workspace=web",
+    "lint": "npm run lint --workspace=web",
+    "lint:all": "npm run lint --workspace=web",
+    "deploy": "bash deployment/deploy.sh",
+    "test:rules": "python detection-engineering/wazuh/tests/validate_rules.py",
+    "verify:data": "python scripts/verify_data.py"
+  },
+  "keywords": [
+    "blue-team",
+    "soc",
+    "detection-engineering",
+    "wazuh",
+    "dfir-iris",
+    "threat-intelligence",
+    "mitre-attack",
+    "nextjs"
+  ],
+  "engines": {
+    "node": ">=18.18.0",
+    "npm": ">=9.0.0"
+  }
+}

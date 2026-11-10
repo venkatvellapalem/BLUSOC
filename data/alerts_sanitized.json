@@ -1,0 +1,3316 @@
+[
+  {
+    "id": "521799",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET DROP Dshield Block Listed Source group 1 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "DSHIELD",
+    "timestamp": "2026-08-24T05:08:29.688229+0000",
+    "src_ip": "64.62.156.159",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49181,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  DSHIELD flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\": \"2026-08-24T05:08:29.688229+0000\", \"flow_id\": 1548548530988220.0, \"in_iface\": \"enp2s0\", \"event_type\": \"alert\", \"src_ip\": \"64.62.156.159\", \"src_port\": 49181, \"dest_ip\": \"10.240.0.10\", \"dest_port\": 20443, \"proto\": \"TCP\", \"ip_v\": 4, \"pkt_src\": \"wire/pcap\", \"metadata\": {\"flowbits\": [\"ET.Evil\", \"ET.DshieldIP\"]}, \"alert\": {\"action\": \"allowed\", \"gid\": 1, \"signature_id\": 2402000, \"rev\": 7823, \"signature\": \"ET DROP Dshield Block Listed Source group 1\", \"category\": \"Misc Attack\", \"severity\": 2, \"metadata\": {\"affected_product\": [\"Any\"], \"attack_target\": [\"Any\"], \"created_at\": [\"2010_12_30\"], \"deployment\": [\"Perimeter\"], \"signature_severity\": [\"Major\"], \"tag\": [\"Dshield\"], \"updated_at\": [\"2026_08_06\"]}}, \"direction\": \"to_server\", \"flow\": {\"pkts_toserver\": 1, \"pkts_toclient\": 0, \"bytes_toserver\": 60, \"bytes_toclient\": 0, \"start\": \"2026-08-24T05:08:29.688229+0000\", \"src_ip\": \"64.62.156.159\", \"dest_ip\": \"10.240.0.10\", \"src_port\": 49181, \"dest_port\": 20443}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the attacker's source IP address?",
+        "answer": "United States of America",
+        "variants": [
+          "United States",
+          "United States of America",
+          "USA",
+          "US",
+          "U.S.",
+          "U.S.A."
+        ]
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #521799?",
+        "answer": "20443"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "SIGNATURE ID",
+        "text": "What is the Suricata Rule Signature ID (signature_id) recorded in the raw JSON payload for alert #521799?",
+        "answer": "2402000"
+      }
+    ]
+  },
+  {
+    "id": "521134",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET DROP Dshield Block Listed Source group 1 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "DSHIELD",
+    "timestamp": "2026-08-24T04:27:50.690181+0000",
+    "src_ip": "85.217.149.3",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49028,
+    "dest_port": 6514,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  DSHIELD flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\": \"2026-08-24T04:27:50.690181+0000\", \"flow_id\": 1838407062673181, \"in_iface\": \"enp2s0\", \"event_type\": \"alert\", \"src_ip\": \"85.217.149.3\", \"src_port\": 49028, \"dest_ip\": \"10.240.0.10\", \"dest_port\": 6514, \"proto\": \"TCP\", \"ip_v\": 4, \"pkt_src\": \"wire/pcap\", \"metadata\": {\"flowbits\": [\"ET.Evil\", \"ET.DshieldIP\"]}, \"alert\": {\"action\": \"allowed\", \"gid\": 1, \"signature_id\": 2402000, \"rev\": 7823, \"signature\": \"ET DROP Dshield Block Listed Source group 1\", \"category\": \"Misc Attack\", \"severity\": 2, \"metadata\": {\"affected_product\": [\"Any\"], \"attack_target\": [\"Any\"], \"created_at\": [\"2010_12_30\"], \"deployment\": [\"Perimeter\"], \"signature_severity\": [\"Major\"], \"tag\": [\"Dshield\"], \"updated_at\": [\"2026_08_06\"]}}, \"direction\": \"to_server\", \"flow\": {\"pkts_toserver\": 1, \"pkts_toclient\": 0, \"bytes_toserver\": 74, \"bytes_toclient\": 0, \"start\": \"2026-08-24T04:27:50.690181+0000\", \"src_ip\": \"85.217.149.3\", \"dest_ip\": \"10.240.0.10\", \"src_port\": 49028, \"dest_port\": 6514}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOSTNAME",
+        "text": "What is the hostname of the victim system being targeted?",
+        "answer": "corp-gateway-01.blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the attacker's source IP address?",
+        "answer": "Canada",
+        "variants": [
+          "Canada",
+          "CA"
+        ]
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #521134?",
+        "answer": "6514"
+      }
+    ]
+  },
+  {
+    "id": "521820",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET DROP Dshield Block Listed Source group 1 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "DSHIELD",
+    "timestamp": "2026-08-24T05:09:55.629815+0000",
+    "src_ip": "64.62.156.154",
+    "dest_ip": "10.240.0.10",
+    "src_port": 13237,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  DSHIELD flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\": \"2026-08-24T05:09:55.629815+0000\", \"flow_id\": 1016186036715974, \"in_iface\": \"enp2s0\", \"event_type\": \"alert\", \"src_ip\": \"64.62.156.154\", \"src_port\": 13237, \"dest_ip\": \"10.240.0.10\", \"dest_port\": 20443, \"proto\": \"TCP\", \"ip_v\": 4, \"pkt_src\": \"wire/pcap\", \"metadata\": {\"flowbits\": [\"ET.Evil\", \"ET.DshieldIP\"]}, \"alert\": {\"action\": \"allowed\", \"gid\": 1, \"signature_id\": 2402000, \"rev\": 7823, \"signature\": \"ET DROP Dshield Block Listed Source group 1\", \"category\": \"Misc Attack\", \"severity\": 2, \"metadata\": {\"affected_product\": [\"Any\"], \"attack_target\": [\"Any\"], \"created_at\": [\"2010_12_30\"], \"deployment\": [\"Perimeter\"], \"signature_severity\": [\"Major\"], \"tag\": [\"Dshield\"], \"updated_at\": [\"2026_08_06\"]}}, \"direction\": \"to_server\", \"flow\": {\"pkts_toserver\": 1, \"pkts_toclient\": 0, \"bytes_toserver\": 62, \"bytes_toclient\": 0, \"start\": \"2026-08-24T05:09:55.629815+0000\", \"src_ip\": \"64.62.156.154\", \"dest_ip\": \"10.240.0.10\", \"src_port\": 13237, \"dest_port\": 20443}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "TRUE/FALSE",
+        "text": "Does VirusTotal flag this attacker IP as malicious?",
+        "answer": "True"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What is the private IP address of the victim system?",
+        "answer": "10.240.0.10"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #521820?",
+        "answer": "20443"
+      }
+    ]
+  },
+  {
+    "id": "522859",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET CINS Active Threat Intelligence Poor Reputation IP group 127 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "CINS ARMY",
+    "timestamp": "2026-08-24T06:00:19.497452+0000",
+    "src_ip": "91.231.89.15",
+    "dest_ip": "10.240.0.10",
+    "src_port": 41581,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CINS ARMY flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\": \"2026-08-24T06:00:19.497452+0000\", \"flow_id\": 1010642238933971, \"in_iface\": \"enp2s0\", \"event_type\": \"alert\", \"src_ip\": \"91.231.89.15\", \"src_port\": 41581, \"dest_ip\": \"10.240.0.10\", \"dest_port\": 20443, \"proto\": \"TCP\", \"ip_v\": 4, \"pkt_src\": \"wire/pcap\", \"alert\": {\"action\": \"allowed\", \"gid\": 1, \"signature_id\": 2403426, \"rev\": 110790, \"signature\": \"ET CINS Active Threat Intelligence Poor Reputation IP group 127\", \"category\": \"Misc Attack\", \"severity\": 2, \"metadata\": {\"affected_product\": [\"Any\"], \"attack_target\": [\"Any\"], \"created_at\": [\"2013_10_08\"], \"deployment\": [\"Perimeter\"], \"signature_severity\": [\"Major\"], \"tag\": [\"CINS\"], \"updated_at\": [\"2026_08_06\"]}}, \"direction\": \"to_server\", \"flow\": {\"pkts_toserver\": 1, \"pkts_toclient\": 0, \"bytes_toserver\": 74, \"bytes_toclient\": 0, \"start\": \"2026-08-24T06:00:19.497452+0000\", \"src_ip\": \"91.231.89.15\", \"dest_ip\": \"10.240.0.10\", \"src_port\": 41581, \"dest_port\": 20443}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "PORT NUMBER",
+        "text": "What is the destination port on the victim being targeted?",
+        "answer": "20443"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "SIGNATURE ID",
+        "text": "What is the Suricata Rule Signature ID (signature_id) recorded in the raw JSON payload for alert #522859?",
+        "answer": "2403426"
+      },
+      {
+        "num": 3,
+        "level": "Easy",
+        "format": "TRUE/FALSE",
+        "text": "Does VirusTotal flag this attacker IP as malicious?",
+        "answer": "True"
+      }
+    ]
+  },
+  {
+    "id": "481669",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET CINS Active Threat Intelligence Poor Reputation IP group 194 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "CINS ARMY",
+    "timestamp": "2026-08-22T12:40:53.996325+0000",
+    "src_ip": "152.32.243.98",
+    "dest_ip": "10.240.0.10",
+    "src_port": 35503,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CINS ARMY flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\": \"2026-08-22T12:40:53.996325+0000\", \"flow_id\": 1464437059297699, \"in_iface\": \"enp2s0\", \"event_type\": \"alert\", \"src_ip\": \"152.32.243.98\", \"src_port\": 35503, \"dest_ip\": \"10.240.0.10\", \"dest_port\": 20443, \"proto\": \"TCP\", \"ip_v\": 4, \"pkt_src\": \"wire/pcap\", \"alert\": {\"action\": \"allowed\", \"gid\": 1, \"signature_id\": 2403493, \"rev\": 110790, \"signature\": \"ET CINS Active Threat Intelligence Poor Reputation IP group 194\", \"category\": \"Misc Attack\", \"severity\": 2, \"metadata\": {\"affected_product\": [\"Any\"], \"attack_target\": [\"Any\"], \"created_at\": [\"2013_10_08\"], \"deployment\": [\"Perimeter\"], \"signature_severity\": [\"Major\"], \"tag\": [\"CINS\"], \"updated_at\": [\"2026_08_06\"]}}, \"direction\": \"to_server\", \"flow\": {\"pkts_toserver\": 1, \"pkts_toclient\": 0, \"bytes_toserver\": 60, \"bytes_toclient\": 0, \"start\": \"2026-08-22T12:40:53.996325+0000\", \"src_ip\": \"152.32.243.98\", \"dest_ip\": \"10.240.0.10\", \"src_port\": 35503, \"dest_port\": 20443}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "TRUE/FALSE",
+        "text": "Does VirusTotal flag this attacker IP as malicious?",
+        "answer": "True"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #481669?",
+        "answer": "20443"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "GROUP NUMBER",
+        "text": "What is the threat-intel block-list group number assigned to this source IP?",
+        "answer": "194"
+      }
+    ]
+  },
+  {
+    "id": "272522",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET CINS Active Threat Intelligence Poor Reputation IP group 105 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "CINS ARMY",
+    "timestamp": "2026-08-18T08:07:42.501429+0000",
+    "src_ip": "65.49.1.96",
+    "dest_ip": "10.240.0.10",
+    "src_port": 61569,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CINS ARMY flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\": \"2026-08-18T08:07:42.501429+0000\", \"flow_id\": 1872148595647986, \"in_iface\": \"enp2s0\", \"event_type\": \"alert\", \"src_ip\": \"65.49.1.96\", \"src_port\": 61569, \"dest_ip\": \"10.240.0.10\", \"dest_port\": 20443, \"proto\": \"TCP\", \"ip_v\": 4, \"pkt_src\": \"wire/pcap\", \"alert\": {\"action\": \"allowed\", \"gid\": 1, \"signature_id\": 2403404, \"rev\": 110790, \"signature\": \"ET CINS Active Threat Intelligence Poor Reputation IP group 105\", \"category\": \"Misc Attack\", \"severity\": 2, \"metadata\": {\"affected_product\": [\"Any\"], \"attack_target\": [\"Any\"], \"created_at\": [\"2013_10_08\"], \"deployment\": [\"Perimeter\"], \"signature_severity\": [\"Major\"], \"tag\": [\"CINS\"], \"updated_at\": [\"2026_08_06\"]}}, \"direction\": \"to_server\", \"flow\": {\"pkts_toserver\": 1, \"pkts_toclient\": 0, \"bytes_toserver\": 62, \"bytes_toclient\": 0, \"start\": \"2026-08-18T08:07:42.501429+0000\", \"src_ip\": \"65.49.1.96\", \"dest_ip\": \"10.240.0.10\", \"src_port\": 61569, \"dest_port\": 20443}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "TRUE/FALSE",
+        "text": "Does VirusTotal flag this attacker IP as malicious?",
+        "answer": "True"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #272522?",
+        "answer": "20443"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "GROUP NUMBER",
+        "text": "What is the threat-intel block-list group number assigned to this source IP?",
+        "answer": "105"
+      }
+    ]
+  },
+  {
+    "id": "185742",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET DROP Dshield Block Listed Source group 1 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "DSHIELD",
+    "timestamp": "2026-08-15T04:56:42.811142+0000",
+    "src_ip": "64.62.156.123",
+    "dest_ip": "10.240.0.10",
+    "src_port": 63443,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  DSHIELD flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-15T04:56:42.811142+0000\",\"event_type\":\"alert\",\"src_ip\":\"64.62.156.123\",\"src_port\":63443,\"dest_ip\":\"10.240.0.10\",\"dest_port\":20443,\"proto\":\"TCP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"threat_intel_provider\":\"Dshield\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "PORT NUMBER",
+        "text": "What is the destination port on the victim being targeted?",
+        "answer": "20443"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the attacker's source IP address?",
+        "answer": "United States of America",
+        "variants": [
+          "United States",
+          "United States of America",
+          "USA",
+          "US",
+          "U.S.",
+          "U.S.A."
+        ]
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "PORT NUMBER",
+        "text": "What source port (src_port) did the external attacker connect from for alert #185742?",
+        "answer": "63443"
+      }
+    ]
+  },
+  {
+    "id": "525060",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: GPL ATTACK_RESPONSE id check returned root on corp-linux-07.blusoc.internal",
+    "short_title": "Suspicious Response from External Host",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "SURICATA GPL",
+    "timestamp": "2026-08-24T07:28:05.168176+0000",
+    "src_ip": "108.157.238.122",
+    "dest_ip": "10.240.0.216",
+    "src_port": 80,
+    "dest_port": 60610,
+    "protocol": "TCP",
+    "sensor": "corp-linux-07.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  SURICATA GPL flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-24T07:28:05.168176+0000\",\"event_type\":\"alert\",\"src_ip\":\"108.157.238.122\",\"src_port\":80,\"dest_ip\":\"10.240.0.216\",\"dest_port\":60610,\"proto\":\"TCP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"signature\":\"GPL ATTACK_RESPONSE id check returned root\",\"threat_intel_provider\":\"Suricata GPL (RCE response)\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "RULE FAMILY",
+        "text": "Which Emerging Threats (ET) rule family flagged this source IP?",
+        "answer": "GPL"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "TRUE/FALSE",
+        "text": "Does VirusTotal flag this attacker IP as malicious?",
+        "answer": "True"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #525060?",
+        "answer": "60610"
+      }
+    ]
+  },
+  {
+    "id": "464535",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET DROP Spamhaus DROP Listed Traffic Inbound group 11 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "SPAMHAUS",
+    "timestamp": "2026-08-21T22:19:28.427123+0000",
+    "src_ip": "79.124.62.134",
+    "dest_ip": "10.240.0.10",
+    "src_port": 46384,
+    "dest_port": 6514,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  SPAMHAUS flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\": \"2026-08-21T22:19:28.427123+0000\", \"flow_id\": 145633011896291, \"in_iface\": \"enp2s0\", \"event_type\": \"alert\", \"src_ip\": \"79.124.62.134\", \"src_port\": 46384, \"dest_ip\": \"10.240.0.10\", \"dest_port\": 6514, \"proto\": \"TCP\", \"ip_v\": 4, \"pkt_src\": \"wire/pcap\", \"metadata\": {\"flowbits\": [\"ET.Evil\", \"ET.DROPIP\"]}, \"alert\": {\"action\": \"allowed\", \"gid\": 1, \"signature_id\": 2400010, \"rev\": 4791, \"signature\": \"ET DROP Spamhaus DROP Listed Traffic Inbound group 11\", \"category\": \"Misc Attack\", \"severity\": 2, \"metadata\": {\"affected_product\": [\"Any\"], \"attack_target\": [\"Any\"], \"created_at\": [\"2010_12_30\"], \"deployment\": [\"Perimeter\"], \"signature_severity\": [\"Minor\"], \"tag\": [\"Dshield\"], \"updated_at\": [\"2026_08_06\"]}}, \"direction\": \"to_server\", \"flow\": {\"pkts_toserver\": 1, \"pkts_toclient\": 0, \"bytes_toserver\": 60, \"bytes_toclient\": 0, \"start\": \"2026-08-21T22:19:28.427123+0000\", \"src_ip\": \"79.124.62.134\", \"dest_ip\": \"10.240.0.10\", \"src_port\": 46384, \"dest_port\": 6514}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the attacker's source IP address?",
+        "answer": "United Kingdom",
+        "variants": [
+          "United Kingdom",
+          "UK",
+          "U.K.",
+          "Great Britain",
+          "GB",
+          "United Kingdom of Great Britain and Northern Ireland",
+          "Seychelles",
+          "SC"
+        ]
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What is the private IP address of the victim system?",
+        "answer": "10.240.0.10"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "GROUP NUMBER",
+        "text": "What is the threat-intel block-list group number assigned to this source IP?",
+        "answer": "11"
+      }
+    ]
+  },
+  {
+    "id": "521819",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET DROP Dshield Block Listed Source group 1 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "DSHIELD",
+    "timestamp": "2026-08-24T05:09:24.427906+0000",
+    "src_ip": "64.62.156.152",
+    "dest_ip": "10.240.0.10",
+    "src_port": 33194,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  DSHIELD flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\": \"2026-08-24T05:09:24.427906+0000\", \"flow_id\": 1274892806947925, \"in_iface\": \"enp2s0\", \"event_type\": \"alert\", \"src_ip\": \"64.62.156.152\", \"src_port\": 33194, \"dest_ip\": \"10.240.0.10\", \"dest_port\": 20443, \"proto\": \"TCP\", \"ip_v\": 4, \"pkt_src\": \"wire/pcap\", \"metadata\": {\"flowbits\": [\"ET.Evil\", \"ET.DshieldIP\"]}, \"alert\": {\"action\": \"allowed\", \"gid\": 1, \"signature_id\": 2402000, \"rev\": 7823, \"signature\": \"ET DROP Dshield Block Listed Source group 1\", \"category\": \"Misc Attack\", \"severity\": 2, \"metadata\": {\"affected_product\": [\"Any\"], \"attack_target\": [\"Any\"], \"created_at\": [\"2010_12_30\"], \"deployment\": [\"Perimeter\"], \"signature_severity\": [\"Major\"], \"tag\": [\"Dshield\"], \"updated_at\": [\"2026_08_06\"]}}, \"direction\": \"to_server\", \"flow\": {\"pkts_toserver\": 1, \"pkts_toclient\": 0, \"bytes_toserver\": 62, \"bytes_toclient\": 0, \"start\": \"2026-08-24T05:09:24.427906+0000\", \"src_ip\": \"64.62.156.152\", \"dest_ip\": \"10.240.0.10\", \"src_port\": 33194, \"dest_port\": 20443}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "RULE FAMILY",
+        "text": "Which Emerging Threats (ET) rule family flagged this source IP?",
+        "answer": "DROP"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the attacker's source IP address?",
+        "answer": "United States of America",
+        "variants": [
+          "United States",
+          "United States of America",
+          "USA",
+          "US",
+          "U.S.",
+          "U.S.A."
+        ]
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #521819?",
+        "answer": "20443"
+      }
+    ]
+  },
+  {
+    "id": "525058",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: GPL ATTACK_RESPONSE id check returned root on corp-linux-07.blusoc.internal",
+    "short_title": "Suspicious Response from External Host",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "SURICATA GPL",
+    "timestamp": "2026-08-24T07:28:04.097297+0000",
+    "src_ip": "108.157.238.4",
+    "dest_ip": "10.240.0.216",
+    "src_port": 80,
+    "dest_port": 46090,
+    "protocol": "TCP",
+    "sensor": "corp-linux-07.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  SURICATA GPL flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-24T07:28:04.097297+0000\",\"event_type\":\"alert\",\"src_ip\":\"108.157.238.4\",\"src_port\":80,\"dest_ip\":\"10.240.0.216\",\"dest_port\":46090,\"proto\":\"TCP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"signature\":\"GPL ATTACK_RESPONSE id check returned root\",\"threat_intel_provider\":\"Suricata GPL (RCE response)\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What is the source (attacker) public IP address?",
+        "answer": "108.157.238.4"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the attacker's source IP address?",
+        "answer": "India",
+        "variants": [
+          "India",
+          "IN"
+        ]
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #525058?",
+        "answer": "46090"
+      }
+    ]
+  },
+  {
+    "id": "526410",
+    "title": "[Wazuh L7] Cloudflare WAF: Request blocked from 62.60.130.199 (country: GB) targeting blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Web Application Firewall - Blocked Request",
+    "category": "malicious_ip",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CLOUDFLARE WAF",
+    "timestamp": "2026-08-24T08:40:00Z",
+    "src_ip": "62.60.130.199",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CLOUDFLARE WAF flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-24T08:40:00Z\",\"src_ip\":\"62.60.130.199\",\"client_ip\":\"62.60.130.199\",\"country\":\"GB\",\"host\":\"blusoc.internal\",\"action\":\"block\",\"user_agent\":\"wp2shell\",\"count\":2,\"source\":\"cloudflare\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "TRUE/FALSE",
+        "text": "Does VirusTotal flag this attacker IP as malicious?",
+        "answer": "True"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "USER AGENT",
+        "text": "What HTTP User-Agent string was used by the attacker in alert #526410?",
+        "answer": "wp2shell"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "TARGET HOST",
+        "text": "What target hostname was requested by the attacker in alert #526410?",
+        "answer": "blusoc.internal"
+      }
+    ]
+  },
+  {
+    "id": "5100",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET DROP Spamhaus DROP Listed Traffic Inbound group 7 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "SPAMHAUS",
+    "timestamp": "2026-08-09T18:11:01.561994+0000",
+    "src_ip": "45.135.194.60",
+    "dest_ip": "10.240.0.10",
+    "src_port": 52580,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  SPAMHAUS flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-09T18:11:01.561994+0000\",\"event_type\":\"alert\",\"src_ip\":\"45.135.194.60\",\"src_port\":52580,\"dest_ip\":\"10.240.0.10\",\"dest_port\":20443,\"proto\":\"TCP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"threat_intel_provider\":\"Spamhaus\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "RULE FAMILY",
+        "text": "Which Emerging Threats (ET) rule family flagged this source IP?",
+        "answer": "DROP"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #5100?",
+        "answer": "20443"
+      },
+      {
+        "num": 3,
+        "level": "Easy",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the attacker's source IP address?",
+        "answer": "Germany",
+        "variants": [
+          "Germany",
+          "DE",
+          "Deutschland"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "602582",
+    "title": "[Wazuh L7] Cloudflare WAF: Request blocked from 196.18.166.188 (country: BR) targeting blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Web Application Firewall - Blocked Request",
+    "category": "malicious_ip",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CLOUDFLARE WAF",
+    "timestamp": "2026-08-24T11:35:00Z",
+    "src_ip": "196.18.166.188",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CLOUDFLARE WAF flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-24T11:35:00Z\",\"src_ip\":\"196.18.166.188\",\"client_ip\":\"196.18.166.188\",\"country\":\"BR\",\"host\":\"blusoc.internal\",\"action\":\"block\",\"user_agent\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\",\"count\":1,\"source\":\"cloudflare\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "PROVIDER NAME",
+        "text": "Which security provider flagged this alert?",
+        "answer": "Cloudflare WAF"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "ALLOW/BLOCK",
+        "text": "What is the action performed in for the request by the security provider? [Allow/block]",
+        "answer": "Block"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "Domain name",
+        "text": "What is the domain that the attacker has targeted?",
+        "answer": "blusoc.internal"
+      }
+    ]
+  },
+  {
+    "id": "61061",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET DROP Dshield Block Listed Source group 1 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "DSHIELD",
+    "timestamp": "2026-08-13T12:22:04.211828+0000",
+    "src_ip": "85.217.149.44",
+    "dest_ip": "10.240.0.10",
+    "src_port": 52328,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  DSHIELD flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-13T12:22:04.211828+0000\",\"event_type\":\"alert\",\"src_ip\":\"85.217.149.44\",\"src_port\":52328,\"dest_ip\":\"10.240.0.10\",\"dest_port\":20443,\"proto\":\"TCP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"threat_intel_provider\":\"Dshield\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the attacker's source IP address?",
+        "answer": "Canada",
+        "variants": [
+          "Canada",
+          "CA"
+        ]
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What is the private IP address of the victim system?",
+        "answer": "10.240.0.10"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #61061?",
+        "answer": "20443"
+      }
+    ]
+  },
+  {
+    "id": "242044",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET CINS Active Threat Intelligence Poor Reputation IP group 127 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "CINS ARMY",
+    "timestamp": "2026-08-17T20:27:43.457515+0000",
+    "src_ip": "91.231.89.152",
+    "dest_ip": "10.240.0.10",
+    "src_port": 47041,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CINS ARMY flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-17T20:27:43.457515+0000\",\"event_type\":\"alert\",\"src_ip\":\"91.231.89.152\",\"src_port\":47041,\"dest_ip\":\"10.240.0.10\",\"dest_port\":20443,\"proto\":\"TCP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"threat_intel_provider\":\"CINS Army\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the attacker's source IP address?",
+        "answer": "France",
+        "variants": [
+          "France",
+          "FR"
+        ]
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "TCP/UDP",
+        "text": "What transport protocol did the attacker use to reach the victim?",
+        "answer": "TCP"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "GROUP NUMBER",
+        "text": "What is the threat-intel block-list group number assigned to this source IP?",
+        "answer": "127"
+      }
+    ]
+  },
+  {
+    "id": "185653",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET DROP Dshield Block Listed Source group 1 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "DSHIELD",
+    "timestamp": "2026-08-15T04:55:20.269210+0000",
+    "src_ip": "64.62.156.131",
+    "dest_ip": "10.240.0.10",
+    "src_port": 52972,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  DSHIELD flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-15T04:55:20.269210+0000\",\"event_type\":\"alert\",\"src_ip\":\"64.62.156.131\",\"src_port\":52972,\"dest_ip\":\"10.240.0.10\",\"dest_port\":20443,\"proto\":\"TCP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"threat_intel_provider\":\"Dshield\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the attacker's source IP address?",
+        "answer": "United States of America",
+        "variants": [
+          "United States",
+          "United States of America",
+          "USA",
+          "US",
+          "U.S.",
+          "U.S.A."
+        ]
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What is the private IP address of the victim system?",
+        "answer": "10.240.0.10"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #185653?",
+        "answer": "20443"
+      }
+    ]
+  },
+  {
+    "id": "4110",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET DROP Dshield Block Listed Source group 1 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "DSHIELD",
+    "timestamp": "2026-08-07T19:55:33.782183+0000",
+    "src_ip": "85.217.149.60",
+    "dest_ip": "10.240.0.10",
+    "src_port": 52028,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  DSHIELD flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-07T19:55:33.782183+0000\",\"event_type\":\"alert\",\"src_ip\":\"85.217.149.60\",\"src_port\":52028,\"dest_ip\":\"10.240.0.10\",\"dest_port\":20443,\"proto\":\"TCP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"threat_intel_provider\":\"Dshield\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What is the source (attacker) public IP address?",
+        "answer": "85.217.149.60"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "TRUE/FALSE",
+        "text": "Does VirusTotal flag this attacker IP as malicious?",
+        "answer": "True"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) on the internal sensor did the attacker target in alert #4110?",
+        "answer": "20443"
+      }
+    ]
+  },
+  {
+    "id": "522909",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET CINS Active Threat Intelligence Poor Reputation IP group 125 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "CINS ARMY",
+    "timestamp": "2026-08-24T06:03:15.531074+0000",
+    "src_ip": "91.196.152.17",
+    "dest_ip": "10.240.0.10",
+    "src_port": 52855,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CINS ARMY flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\": \"2026-08-24T06:03:15.531074+0000\", \"flow_id\": 873571094127636, \"in_iface\": \"enp2s0\", \"event_type\": \"alert\", \"src_ip\": \"91.196.152.17\", \"src_port\": 52855, \"dest_ip\": \"10.240.0.10\", \"dest_port\": 20443, \"proto\": \"TCP\", \"ip_v\": 4, \"pkt_src\": \"wire/pcap\", \"metadata\": {\"flowbits\": [\"ET.Evil\", \"ET.DshieldIP\"]}, \"alert\": {\"action\": \"allowed\", \"gid\": 1, \"signature_id\": 2403424, \"rev\": 110790, \"signature\": \"ET CINS Active Threat Intelligence Poor Reputation IP group 125\", \"category\": \"Misc Attack\", \"severity\": 2, \"metadata\": {\"affected_product\": [\"Any\"], \"attack_target\": [\"Any\"], \"created_at\": [\"2013_10_08\"], \"deployment\": [\"Perimeter\"], \"signature_severity\": [\"Major\"], \"tag\": [\"CINS\"], \"updated_at\": [\"2026_08_06\"]}}, \"direction\": \"to_server\", \"flow\": {\"pkts_toserver\": 1, \"pkts_toclient\": 0, \"bytes_toserver\": 74, \"bytes_toclient\": 0, \"start\": \"2026-08-24T06:03:15.531074+0000\", \"src_ip\": \"91.196.152.17\", \"dest_ip\": \"10.240.0.10\", \"src_port\": 52855, \"dest_port\": 20443}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOSTNAME",
+        "text": "What is the hostname of the victim system being targeted?",
+        "answer": "corp-gateway-01.blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "TRUE/FALSE",
+        "text": "Does VirusTotal flag this attacker IP as malicious?",
+        "answer": "True"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "GROUP NUMBER",
+        "text": "What is the threat-intel block-list group number assigned to this source IP?",
+        "answer": "125"
+      }
+    ]
+  },
+  {
+    "id": "112421",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET DROP Dshield Block Listed Source group 1 on corp-gateway-01.blusoc.internal",
+    "short_title": "Threat-Intel Blocklisted IP Detection",
+    "category": "malicious_ip",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "DSHIELD",
+    "timestamp": "2026-08-24T05:10:09.351604+0000",
+    "src_ip": "64.62.156.161",
+    "dest_ip": "10.240.0.10",
+    "src_port": 33921,
+    "dest_port": 20443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  DSHIELD flagged external attacker.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1071.001",
+      "T1595"
+    ],
+    "raw_log": "{\"timestamp\": \"2026-08-24T05:10:09.351604+0000\", \"flow_id\": 384227976528727, \"in_iface\": \"enp2s0\", \"event_type\": \"alert\", \"src_ip\": \"64.62.156.161\", \"src_port\": 33921, \"dest_ip\": \"10.240.0.10\", \"dest_port\": 20443, \"proto\": \"TCP\", \"ip_v\": 4, \"pkt_src\": \"wire/pcap\", \"metadata\": {\"flowbits\": [\"ET.Evil\", \"ET.DshieldIP\"]}, \"alert\": {\"action\": \"allowed\", \"gid\": 1, \"signature_id\": 2402000, \"rev\": 7823, \"signature\": \"ET DROP Dshield Block Listed Source group 1\", \"category\": \"Misc Attack\", \"severity\": 2, \"metadata\": {\"affected_product\": [\"Any\"], \"attack_target\": [\"Any\"], \"created_at\": [\"2010_12_30\"], \"deployment\": [\"Perimeter\"], \"signature_severity\": [\"Major\"], \"tag\": [\"Dshield\"], \"updated_at\": [\"2026_08_06\"]}}, \"direction\": \"to_server\", \"flow\": {\"pkts_toserver\": 1, \"pkts_toclient\": 0, \"bytes_toserver\": 62, \"bytes_toclient\": 0, \"start\": \"2026-08-24T05:10:09.351604+0000\", \"src_ip\": \"64.62.156.161\", \"dest_ip\": \"10.240.0.10\", \"src_port\": 33921, \"dest_port\": 20443}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOSTNAME",
+        "text": "What is the hostname of the victim system being targeted?",
+        "answer": "corp-gateway-01.blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "TCP/UDP",
+        "text": "What transport protocol did the attacker use to reach the victim?",
+        "answer": "TCP"
+      },
+      {
+        "num": 3,
+        "level": "Easy",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the attacker's source IP address?",
+        "answer": "United States of America",
+        "variants": [
+          "United States",
+          "United States of America",
+          "USA",
+          "US",
+          "U.S.",
+          "U.S.A."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "636707",
+    "title": "[Wazuh L7] Dpkg (Debian Package) half configured. on corp-linux-02.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "WAZUH SYSCHECK",
+    "timestamp": "2026-08-27 06:44:28",
+    "src_ip": "198.51.100.55",
+    "dest_ip": "10.240.0.211",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-linux-02.blusoc.internal",
+    "verdict": "TRUE POSITIVE.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "2026-08-27 06:44:24 status half-configured libc-bin:amd64 2.43-2ubuntu2.3",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOST",
+        "text": "What is the host name mentioned in the alert #636707?",
+        "answer": "corp-linux-02.blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "STATE",
+        "text": "What package state was described in the log for alert #636707?",
+        "answer": "half-configured"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "TAGS",
+        "text": "What are the tags assigned to this alert (Please answer all of the tags in the format - tag1, tag2, tag3, ..), for alert #636707?",
+        "answer": "wazuh, rule_2904, level_7, syslog, _dpkg, _config_changed"
+      }
+    ]
+  },
+  {
+    "id": "636708",
+    "title": "[Wazuh L7] New dpkg (Debian Package) installed. on corp-linux-02.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "WAZUH SYSCHECK",
+    "timestamp": "2026-08-27 06:44:28",
+    "src_ip": "198.51.100.55",
+    "dest_ip": "10.240.0.211",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-linux-02.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Review package install.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "2026-08-27 06:44:24 status installed libc-bin:amd64 2.43-2ubuntu2.3",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOST",
+        "text": "What is the host name mentioned in the alert #636708?",
+        "answer": "corp-linux-02.blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "EVENT",
+        "text": "What specific system event was recorded for this package alert for  the given alert #636708?",
+        "answer": "New dpkg (Debian Package) Installed"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "TAGS",
+        "text": "What are the tags assigned to this alert (Please answer all of the tags in the format - tag1, tag2, tag3, ..), for alert #636708?",
+        "answer": "wazuh, rule_2902, level_7, syslog, _dpkg, _config_changed"
+      }
+    ]
+  },
+  {
+    "id": "636449",
+    "title": "[Wazuh L7] Host-based anomaly detection event (rootcheck). on corp-linux-02.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "WAZUH SYSCHECK (Rootcheck)",
+    "timestamp": "2026-08-27 05:57:43",
+    "src_ip": "198.51.100.55",
+    "dest_ip": "10.240.0.211",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-linux-02.blusoc.internal",
+    "verdict": "TRUE POSITIVE.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "Trojaned version of file '/usr/bin/md5sum' detected. Signature used: 'bash|^/bin/sh|file\\.h|proc\\.h|/dev/[^cfhlnrstuw]|^/bin/.*sh' (Generic).",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOST",
+        "text": "What is the host name mentioned in the alert #636449?",
+        "answer": "corp-linux-02.blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "TYPE  -  Accepted: rootcheck, Rootcheck, ROOTCHECK  -  any case acceptable",
+        "text": "What detection type was reported? [rootcheck/syscheck/other] (Answer every tag if multiple  -  case-insensitive) for alert #636449?",
+        "answer": "rootcheck"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "TAGS",
+        "text": "What are the tags assigned to this alert (Please answer all of the tags in the format - tag1, tag2, tag3, ..) for alert #636449?",
+        "answer": "wazuh, rule_510, level_7, ossec, _rootcheck"
+      }
+    ]
+  },
+  {
+    "id": "636791",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET P2P BitTorrent DHT ping request on corp-linux-02.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "SURICATA DPI",
+    "timestamp": "2026-08-27T06:59:28.951740+0000",
+    "src_ip": "10.240.0.60",
+    "dest_ip": "227.197.44.173",
+    "src_port": 37000,
+    "dest_port": 24575,
+    "protocol": "UDP",
+    "sensor": "corp-linux-02.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  P2P BitTorrent DHT activity detected on corp-linux-02.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-27T06:59:28.951740+0000\",\"flow_id\":147045489593256,\"in_iface\":\"enp2s0\",\"event_type\":\"alert\",\"src_ip\":\"10.240.0.60\",\"src_port\":37000,\"dest_ip\":\"227.197.44.173\",\"dest_port\":24575,\"proto\":\"UDP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"alert\":{\"action\":\"allowed\",\"gid\":1,\"signature_id\":2008581,\"rev\":3,\"signature\":\"ET P2P BitTorrent DHT ping request\",\"category\":\"Potential Corporate Privacy Violation\",\"severity\":1,\"metadata\":{\"confidence\":[\"High\"],\"created_at\":[\"2010_07_30\"],\"signature_severity\":[\"Informational\"],\"tag\":[\"Description_Generated_By_Proofpoint_Nexus\"],\"updated_at\":[\"2019_07_26\"]}},\"app_proto\":\"bittorrent-dht\",\"direction\":\"to_server\",\"flow\":{\"pkts_toserver\":1,\"pkts_toclient\":0,\"bytes_toserver\":146,\"bytes_toclient\":0,\"start\":\"2026-08-27T06:59:28.951740+0000\",\"src_ip\":\"10.240.0.60\",\"dest_ip\":\"227.197.44.173\",\"src_port\":37000,\"dest_port\":24575}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOST",
+        "text": "Which host reported the P2P DHT ping request for alert #636791?",
+        "answer": "corp-linux-02.blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "RULE ID",
+        "text": "What is the Wazuh Rule ID for alert #636791?",
+        "answer": "86601"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "PROTOCOL",
+        "text": "What network protocol was inspected for alert #636791?",
+        "answer": "UDP"
+      }
+    ]
+  },
+  {
+    "id": "637479",
+    "title": "[Wazuh L8] User account changed on corp-endpoint-117",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "WAZUH SIEM (Windows)",
+    "timestamp": "2026-08-27 09:34:26",
+    "src_ip": "198.51.100.55",
+    "dest_ip": "10.240.0.133",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-endpoint-117",
+    "verdict": "TRUE POSITIVE  -  Review account change.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "[Windows Event 4738 Security] \"A user account was changed. Subject: Security ID: S-1-5-18 Account Name: XIAOMI$ Account Domain: WORKGROUP Logon ID: 0x3E7 Target Account: Security ID: S-1-5-21-2819418891-1243367660-3427814927-1001 Account Name: keert Account Domain: XIAOMI Changed Attributes: SAM Account Name: - Display Name: Keerthi Reddy Vellapalem User Principal Name: - Home Directory: - Home Drive: - Script Path: - Profile Path: - User Workstations: - Password Last Set: - Account Expires: - Primary Group ID: - AllowedToDelegateTo: - Old UAC Value: - New UAC Value: - User Account Control: - User Parameters: - SID History: - Logon Hours: - Additional Information: Privileges: -\"",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOST",
+        "text": "Which Windows host reported the account change event for alert #637479?",
+        "answer": "corp-endpoint-117"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "EVENT",
+        "text": "What specific Windows event was detected for alert #637479?",
+        "answer": "User account changed"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "RULE ID",
+        "text": "What is the associated Wazuh rule type/ID for this Windows account change alert #637479 (or N/A if generic Windows event)?",
+        "answer": "60110"
+      }
+    ]
+  },
+  {
+    "id": "637658",
+    "title": "[Wazuh L10] Suricata: Possible network reconnaissance/scan detected - ET DOS Possible SSDP Amplification Scan in Progress from 10.240.0.215 to 10.240.0.1:1900 on corp-linux-06.blusoc.internal  -  *Verified from log: src_ip 10.240.0.215, proto UDP, signature_id 2019102*",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "SURICATA RECON",
+    "timestamp": "2026-08-27T10:11:52.006321+0000",
+    "src_ip": "10.240.0.215",
+    "dest_ip": "10.240.0.1",
+    "src_port": 54553,
+    "dest_port": 1900,
+    "protocol": "UDP",
+    "sensor": "corp-linux-06.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Confirmed SSDP Amplification Scan.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-27T10:11:52.006321+0000\",\"flow_id\":27149452793810,\"in_iface\":\"enp0s31f6\",\"event_type\":\"alert\",\"src_ip\":\"10.240.0.215\",\"src_port\":54553,\"dest_ip\":\"10.240.0.1\",\"dest_port\":1900,\"proto\":\"UDP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"alert\":{\"action\":\"allowed\",\"gid\":1,\"signature_id\":2019102,\"rev\":1,\"signature\":\"ET DOS Possible SSDP Amplification Scan in Progress\",\"category\":\"Attempted Denial of Service\",\"severity\":2,\"metadata\":{\"confidence\":[\"Medium\"],\"created_at\":[\"2014_09_03\"],\"signature_severity\":[\"Major\"],\"tag\":[\"Description_Generated_By_Proofpoint_Nexus\"],\"updated_at\":[\"2019_07_26\"]}},\"app_proto\":\"failed\",\"direction\":\"to_server\",\"flow\":{\"pkts_toserver\":1,\"pkts_toclient\":0,\"bytes_toserver\":136,\"bytes_toclient\":0,\"start\":\"2026-08-27T10:11:52.006321+0000\",\"src_ip\":\"10.240.0.215\",\"dest_ip\":\"10.240.0.1\",\"src_port\":54553,\"dest_port\":1900}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "SIGNATURE ID",
+        "text": "What specific Suricata Rule Signature ID (signature_id) is recorded in the raw JSON payload for alert #637658?",
+        "answer": "2019102"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "PROTOCOL NAME",
+        "text": "What network protocol was inspected by the deep packet engine for alert #637658?",
+        "answer": "UDP"
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "PORT NUMBER",
+        "text": "What destination port (dest_port) was targeted by the SSDP amplification scan in alert #637658?",
+        "answer": "1900",
+        "variants": [
+          "port 1900"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "636818",
+    "title": "[Wazuh L7] Cloudflare WAF: Request blocked from 114.119.130.199 (country: SG) targeting www.blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CLOUDFLARE WAF",
+    "timestamp": "2026-08-27T07:00:00Z",
+    "src_ip": "114.119.130.199",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Confirmed reconnaissance scan.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-27T07:00:00Z\",\"client_ip\":\"114.119.130.199\",\"country\":\"SG\",\"host\":\"www.blusoc.internal\",\"action\":\"block\",\"user_agent\":\"Mozilla/5.0 (Linux; Android 7.0;) AppleWebKit/537.36 (HTML, like Gecko) Mobile Safari/537.36 (compatible; PetalBot;+https://webmaster.petalsearch.com/site/petalbot)\",\"count\":1,\"source\":\"cloudflare\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "SECURITY ENGINE",
+        "text": "What web security engine intercepted and dropped the suspicious external HTTP request for alert #636818?",
+        "answer": "Cloudflare WAF"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "TARGET DOMAIN",
+        "text": "What target domain URL was targeted by the external scanning probe for alert #636818?",
+        "answer": "www.blusoc.internal"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "USER AGENT",
+        "text": "\"What crawler bot is identified in the user-agent of alert #636818?",
+        "answer": "PetalBot"
+      }
+    ]
+  },
+  {
+    "id": "636591",
+    "title": "[Wazuh L12] Privilege Escalation: Successful sudo to root by blusoc-infra-06 on corp-linux-06.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "CRITICAL",
+    "severity_id": 5,
+    "provider": "WAZUH SYSCHECK",
+    "timestamp": "2026-08-27 06:22:19",
+    "src_ip": "198.51.100.55",
+    "dest_ip": "10.240.0.215",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-linux-06.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Confirmed privilege escalation.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "Aug 27 06:22:16 corp-gateway-01.blusoc.internal6 sudo[4010806]: blusoc-infra-06 :  PWD=/home/blusoc-infra-06 ; USER=root ; COMMAND=/usr/bin/docker exec -i psql -U iris -d irisdb -c SELECT alert_id, alert_title FROM alert LIMIT 50;",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "USER@HOST",
+        "text": "Which user and host performed the privilege escalation for alert #636591 [USER@HOST]?",
+        "answer": "blusoc-infra-06@corp-linux-06.blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "PRIVILEGE",
+        "text": "Which target privilege was the escalation to for alert #636591?",
+        "answer": "root"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "TAGS",
+        "text": "What are the tags assigned to this alert (Please answer all of the tags in the format - tag1, tag2, tag3, ..) for alert #636591?",
+        "answer": "wazuh, rule_100400, level_12, privilege_escalation, _sudo"
+      }
+    ]
+  },
+  {
+    "id": "636233",
+    "title": "[Wazuh L9] Windows application error event. on corp-endpoint-117",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "WAZUH SIEM (Windows)",
+    "timestamp": "2026-08-27 05:24:31",
+    "src_ip": "198.51.100.55",
+    "dest_ip": "10.240.0.133",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-endpoint-117",
+    "verdict": "TRUE POSITIVE  -  Application error requires review.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "[Windows Event 1002 Application] \"The program dllhost.exe version 10.0.26100.8972 stopped interacting with Windows and was closed. To see if more information about the problem is available, check the problem history in the Security and Maintenance control panel. \"",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOST",
+        "text": "Which Windows host reported the application error event for alert #636233?",
+        "answer": "corp-endpoint-117"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "EVENT",
+        "text": "What specific application event was recorded for alert #636233?",
+        "answer": "Windows application error event"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "TAGS",
+        "text": "What are the tags assigned to this alert (Please answer all of the tags in the format - tag1, tag2, tag3, ..), for alert #636233?",
+        "answer": "wazuh, rule_60602, level_9, windows, _windows_application, _system_error"
+      }
+    ]
+  },
+  {
+    "id": "636789",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET P2P BitTorrent DHT ping request on corp-linux-04.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "SURICATA DPI",
+    "timestamp": "2026-08-27T06:59:28.951185+0000",
+    "src_ip": "10.240.0.60",
+    "dest_ip": "227.197.44.173",
+    "src_port": 37000,
+    "dest_port": 24575,
+    "protocol": "UDP",
+    "sensor": "corp-linux-04.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  P2P BitTorrent DHT activity detected on corp-linux-04.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-27T06:59:28.951185+0000\",\"flow_id\":144662019826305,\"in_iface\":\"enp2s0\",\"event_type\":\"alert\",\"src_ip\":\"10.240.0.60\",\"src_port\":37000,\"dest_ip\":\"227.197.44.173\",\"dest_port\":24575,\"proto\":\"UDP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"alert\":{\"action\":\"allowed\",\"gid\":1,\"signature_id\":2008581,\"rev\":3,\"signature\":\"ET P2P BitTorrent DHT ping request\",\"category\":\"Potential Corporate Privacy Violation\",\"severity\":1,\"metadata\":{\"confidence\":[\"High\"],\"created_at\":[\"2010_07_30\"],\"signature_severity\":[\"Informational\"],\"tag\":[\"Description_Generated_By_Proofpoint_Nexus\"],\"updated_at\":[\"2019_07_26\"]}},\"app_proto\":\"bittorrent-dht\",\"direction\":\"to_server\",\"flow\":{\"pkts_toserver\":1,\"pkts_toclient\":0,\"bytes_toserver\":146,\"bytes_toclient\":0,\"start\":\"2026-08-27T06:59:28.951185+0000\",\"src_ip\":\"10.240.0.60\",\"dest_ip\":\"227.197.44.173\",\"src_port\":37000,\"dest_port\":24575}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "VENDOR",
+        "text": "Which security vendor/tool flagged alert #636789?",
+        "answer": "Suricata"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "SIGNATURE",
+        "text": "What is the entire Suricata signature string for alert #636789?",
+        "answer": "ET P2P BitTorrent DHT ping request"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "DEST_IP",
+        "text": "What is the destination IP (dest_ip) for the P2P traffic in alert #636789?",
+        "answer": "227.197.44.173"
+      }
+    ]
+  },
+  {
+    "id": "636216",
+    "title": "[Wazuh L10] MS 365: Persistence - Mailbox rule/permission change by user@domain.local (Set-InboxRule) on corp-gateway-01.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "WAZUH SIEM (OFFICE365)",
+    "timestamp": "2026-08-27 05:20:57",
+    "src_ip": "198.51.100.55",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Persistence attempt (Set-InboxRule).",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "{\"integration\":\"office365\",\"office365\":{\"AppAccessContext\":{\"AADSessionId\":\"007add39-7ccb-e47b-5ce1-c9e4f814219c\",\"IssuedAtTime\":\"2026-08-26T11:22:06\",\"UniqueTokenId\":\"clXgN49j0UyTQ1xHYpKmAA\"},\"CreationTime\":\"2026-08-27T05:18:11\",\"Id\":\"335b4320-8726-4c10-6caf-08df03fa96ef\",\"Operation\":\"Set-InboxRule\",\"OrganizationId\":\"33e55384-5aab-485e-b4d8-827ed9d3080b\",\"RecordType\":1,\"ResultStatus\":\"True\",\"UserKey\":\"analyst.ross@blusoc.internal\",\"UserType\":2,\"Version\":1,\"Workload\":\"Exchange\",\"ClientIP\":\"198.51.100.14:17474\",\"ObjectId\":\"363a2714-962f-4eb2-a6fa-f46f13689a56\\\\13079001952711344129\",\"UserId\":\"analyst.ross@blusoc.internal\",\"AppId\":\"\",\"AppPoolName\":\"Microsoft.Exchange.Clients.Owa2.Server.NetCore\",\"ClientAppId\":\"\",\"CorrelationID\":\"\",\"DeviceId\":\"a80c47d7-0ad9-47e2-8203-f4bceec5850d\",\"ExternalAccess\":false,\"OrganizationName\":\"BLUCLOUDSOFTECH.onmicrosoft.com\",\"OriginatingServer\":\"MAUP287MB4894 (15.21.0360.006)\",\"Parameters\":[{\"Name\":\"AlwaysDeleteOutlookRulesBlob\",\"Value\":\"False\"},{\"Name\":\"Force\",\"Value\":\"False\"},{\"Name\":\"Identity\",\"Value\":\"Move all messages sent to Gem Inquiry to GEM\"},{\"Name\":\"From\",\"Value\":\"noreply@gem.gov.in;helpdesk-gem@gem.gov.in\"},{\"Name\":\"Name\",\"Value\":\"Move all messages sent to Gem Inquiry to GEM\"},{\"Name\":\"StopProcessingRules\",\"Value\":\"False\"}],\"RequestId\":\"63a8620b-9c21-a119-2989-70ab10a32444\",\"SessionId\":\"007add39-7ccb-e47b-5ce1-c9e4f814219c\",\"TokenObjectId\":\"363a2714-962f-4eb2-a6fa-f46f13689a56\",\"TokenTenantId\":\"33e55384-5aab-485e-b4d8-827ed9d3080b\",\"Subscription\":\"Audit.Exchange\"}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "SessionId",
+        "text": "What is the SessionId mentioned in the alert #636216 (SessionId)?",
+        "answer": "007add39-7ccb-e47b-5ce1-c9e4f814219c"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "CMDLET NAME",
+        "text": "What Exchange PowerShell cmdlet name was executed to create the mailbox rule for alert #636216?",
+        "answer": "Set-InboxRule"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "RULE ID",
+        "text": "What is the Wazuh Rule ID for alert #636216?",
+        "answer": "100303"
+      }
+    ]
+  },
+  {
+    "id": "637562",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET INFO Http Client Body contains pwd= in cleartext on corp-gateway-01.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "SURICATA DPI",
+    "timestamp": "2026-08-27T09:52:25.717503+0000",
+    "src_ip": "10.240.0.10",
+    "dest_ip": "10.240.0.211",
+    "src_port": 53600,
+    "dest_port": 5678,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Credential exposure in cleartext.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-27T09:52:25.717503+0000\",\"flow_id\":471796869548667,\"in_iface\":\"enp2s0\",\"event_type\":\"alert\",\"src_ip\":\"10.240.0.10\",\"src_port\":53600,\"dest_ip\":\"10.240.0.211\",\"dest_port\":5678,\"proto\":\"TCP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"tx_id\":0,\"alert\":{\"action\":\"allowed\",\"gid\":1,\"signature_id\":2012888,\"rev\":4,\"signature\":\"ET INFO Http Client Body contains pwd= in cleartext\",\"category\":\"Potential Corporate Privacy Violation\",\"severity\":1,\"metadata\":{\"confidence\":[\"High\"],\"created_at\":[\"2011_05_30\"],\"signature_severity\":[\"Informational\"],\"tag\":[\"Description_Generated_By_Proofpoint_Nexus\"],\"updated_at\":[\"2020_04_21\"]}},\"ts_progress\":\"request_complete\",\"tc_progress\":\"response_complete\",\"http\":{\"hostname\":\"10.240.0.211\",\"http_port\":5678,\"url\":\"/webhook/wazuh-alerts\",\"http_user_agent\":\"Python-urllib/3.14\",\"http_content_type\":\"application/json\",\"http_method\":\"POST\",\"protocol\":\"HTTP/1.1\",\"status\":200,\"length\":34},\"files\":[{\"filename\":\"/webhook/wazuh-alerts\",\"gaps\":false,\"state\":\"CLOSED\",\"stored\":false,\"size\":1009,\"tx_id\":0}],\"app_proto\":\"http\",\"direction\":\"to_server\",\"flow\":{\"pkts_toserver\":5,\"pkts_toclient\":4,\"bytes_toserver\":1544,\"bytes_toclient\":788,\"start\":\"2026-08-27T09:52:25.634136+0000\",\"src_ip\":\"10.240.0.10\",\"dest_ip\":\"10.240.0.211\",\"src_port\":53600,\"dest_port\":5678}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "SIGNATURE ID",
+        "text": "What specific Suricata Rule Signature ID (signature_id) is recorded in the raw JSON payload for alert #637562?",
+        "answer": "2012888"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "PROTOCOL NAME",
+        "text": "What network protocol was inspected by the deep packet engine for alert #637562?",
+        "answer": "HTTP"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "RULE FAMILY",
+        "text": "Which Emerging Threats (ET) rule family flagged this threat event for alert #637562?",
+        "answer": "INFO"
+      }
+    ]
+  },
+  {
+    "id": "637270",
+    "title": "[Wazuh L7] Cloudflare WAF: Request blocked from 114.119.134.152 (country: SG) targeting www.blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CLOUDFLARE WAF",
+    "timestamp": "2026-08-27T08:40:00Z",
+    "src_ip": "114.119.134.152",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Confirmed reconnaissance scan.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-27T08:40:00Z\",\"client_ip\":\"114.119.134.152\",\"country\":\"SG\",\"host\":\"www.blusoc.internal\",\"action\":\"block\",\"user_agent\":\"Mozilla/5.0 (Linux; Android 7.0;) AppleWebKit/537.36 (HTML, like Gecko) Mobile Safari/537.36 (compatible; PetalBot;+https://webmaster.petalsearch.com/site/petalbot)\",\"count\":1,\"source\":\"cloudflare\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "SECURITY ENGINE",
+        "text": "What web security engine intercepted and dropped the suspicious external HTTP request for alert #637270?",
+        "answer": "Cloudflare WAF"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "TARGET DOMAIN",
+        "text": "What target domain URL was targeted by the external scanning probe for alert #637270?",
+        "answer": "www.blusoc.internal"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "USER AGENT",
+        "text": "Which crawler bot is mentioned in the alert's log #637270?",
+        "answer": "PetalBot"
+      }
+    ]
+  },
+  {
+    "id": "636416",
+    "title": "[Wazuh L7] Host-based anomaly detection event (rootcheck). on corp-linux-04.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "WAZUH SYSCHECK (Rootcheck)",
+    "timestamp": "2026-08-27 05:54:46",
+    "src_ip": "198.51.100.55",
+    "dest_ip": "10.240.0.213",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-linux-04.blusoc.internal",
+    "verdict": "TRUE POSITIVE.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "Trojaned version of file '/usr/bin/md5sum' detected. Signature used: 'bash|^/bin/sh|file\\.h|proc\\.h|/dev/[^cfhlnrstuw]|^/bin/.*sh' (Generic).",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOST",
+        "text": "What is the host name mentioned in the alert #636416?",
+        "answer": "corp-linux-04.blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "TYPE",
+        "text": "What detection type was reported? [rootcheck/syscheck/other] (Answer every tag if multiple  -  case-insensitive) for alert #636416?",
+        "answer": "rootcheck"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "TAGS",
+        "text": "What are the tags assigned to this alert (Please answer all of the tags in the format - tag1, tag2, tag3, ..), for alert #636416?",
+        "answer": "wazuh, rule_510, level_7, ossec, _rootcheck"
+      }
+    ]
+  },
+  {
+    "id": "637661",
+    "title": "[Wazuh L12] MS 365: Persistence - Mailbox rule/permission change by user@domain.local (New-InboxRule) on corp-gateway-01.blusoc.internal  -  *Verified from log: Operation New-InboxRule, ClientIP 198.51.100.14*",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "WAZUH SIEM (OFFICE365)",
+    "timestamp": "2026-08-27 10:12:29",
+    "src_ip": "198.51.100.14",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Unauthorized Office 365 mailbox persistence via New-InboxRule from external IP 198.51.100.14.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "{\"integration\":\"office365\",\"office365\":{\"AppAccessContext\":{\"AADSessionId\":\"004e00da-d8d7-41c7-6103-9c7af0204ea8\",\"IssuedAtTime\":\"2026-08-27T03:15:16\",\"UniqueTokenId\":\"m5O6iw6iF0yQEKpAq3LuAA\"},\"CreationTime\":\"2026-08-27T10:08:35\",\"Id\":\"41597a15-3dbc-457f-8e0d-08df04232856\",\"Operation\":\"New-InboxRule\",\"OrganizationId\":\"33e55384-5aab-485e-b4d8-827ed9d3080b\",\"RecordType\":1,\"ResultStatus\":\"True\",\"UserKey\":\"analyst.vance@blusoc.internal\",\"UserType\":2,\"Version\":1,\"Workload\":\"Exchange\",\"ClientIP\":\"198.51.100.14:14386\",\"ObjectId\":\"INDP287A002.PROD.OUTLOOK.COM/Microsoft Exchange Hosted Organizations/BLUCLOUDSOFTECH.onmicrosoft.com/98e25fb8-4b34-4288-bfd4-02787e7b357f\\\\Move all messages from noreply@gem.gov.in to Deleted Items\",\"UserId\":\"analyst.vance@blusoc.internal\",\"AppId\":\"\",\"AppPoolName\":\"Microsoft.Exchange.Clients.Owa2.Server.NetCore\",\"ClientAppId\":\"\",\"CorrelationID\":\"\",\"DeviceId\":\"3b7c5c25-102b-41a6-97ed-ee4d9820ca64\",\"ExternalAccess\":false,\"OrganizationName\":\"BLUCLOUDSOFTECH.onmicrosoft.com\",\"OriginatingServer\":\"MAUP287MB4462 (15.21.0360.006)\",\"Parameters\":[{\"Name\":\"AlwaysDeleteOutlookRulesBlob\",\"Value\":\"False\"},{\"Name\":\"Force\",\"Value\":\"False\"},{\"Name\":\"From\",\"Value\":\"noreply@gem.gov.in\"},{\"Name\":\"MoveToFolder\",\"Value\":\"Deleted Items\"},{\"Name\":\"Name\",\"Value\":\"Move all messages from noreply@gem.gov.in to Deleted Items\"},{\"Name\":\"SubjectContainsWords\",\"Value\":\"\"},{\"Name\":\"StopProcessingRules\",\"Value\":\"True\"}],\"RequestId\":\"3af31bb4-a96e-6121-a69d-50afabed4083\",\"SessionId\":\"004e00da-d8d7-41c7-6103-9c7af0204ea8\",\"TokenObjectId\":\"98e25fb8-4b34-4288-bfd4-02787e7b357f\",\"TokenTenantId\":\"33e55384-5aab-485e-b4d8-827ed9d3080b\",\"Subscription\":\"Audit.Exchange\"}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What source IP is recorded for this alert #637661 in the IRIS payload (or N/A if host-based/service account)?",
+        "answer": "198.51.100.14"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "CMDLET NAME",
+        "text": "What Exchange PowerShell cmdlet name was executed to create the mailbox rule for alert #637661?",
+        "answer": "New-InboxRule"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "RULE ID",
+        "text": "What is the Wazuh Rule ID assigned to this Office365 mailbox persistence alert (#637661)?",
+        "answer": "100303"
+      }
+    ]
+  },
+  {
+    "id": "637458",
+    "title": "[Wazuh L7] Cloudflare WAF: Request blocked from 18.118.18.151 (country: US) targeting www.blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CLOUDFLARE WAF",
+    "timestamp": "2026-08-27T09:25:00Z",
+    "src_ip": "18.118.18.151",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Confirmed reconnaissance scan.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-27T09:25:00Z\",\"client_ip\":\"18.118.18.151\",\"country\":\"US\",\"host\":\"www.blusoc.internal\",\"action\":\"block\",\"user_agent\":\"CCBot/2.0 (https://commoncrawl.org/faq/)\",\"count\":33,\"source\":\"cloudflare\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "SECURITY ENGINE",
+        "text": "What web security engine intercepted and dropped the suspicious external HTTP request for alert #637458?",
+        "answer": "Cloudflare WAF"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "TARGET DOMAIN",
+        "text": "What target domain URL was targeted by the external scanning probe for alert #637458?",
+        "answer": "www.blusoc.internal"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "USER AGENT",
+        "text": "Which crawler bot's name is mentioned in the alert #637458?",
+        "answer": "CCBot"
+      }
+    ]
+  },
+  {
+    "id": "637561",
+    "title": "[Wazuh L10] Suricata Real-Time DPI Threat Detected: ET INFO Http Client Body contains pwd= in cleartext on corp-linux-02.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "SURICATA DPI",
+    "timestamp": "2026-08-27T09:52:25.714542+0000",
+    "src_ip": "10.240.0.10",
+    "dest_ip": "10.240.0.211",
+    "src_port": 53600,
+    "dest_port": 5678,
+    "protocol": "TCP",
+    "sensor": "corp-linux-02.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Credential exposure in cleartext.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-27T09:52:25.714542+0000\",\"flow_id\":459980901044857,\"in_iface\":\"enp2s0\",\"event_type\":\"alert\",\"src_ip\":\"10.240.0.10\",\"src_port\":53600,\"dest_ip\":\"10.240.0.211\",\"dest_port\":5678,\"proto\":\"TCP\",\"ip_v\":4,\"pkt_src\":\"wire/pcap\",\"tx_id\":0,\"alert\":{\"action\":\"allowed\",\"gid\":1,\"signature_id\":2012888,\"rev\":4,\"signature\":\"ET INFO Http Client Body contains pwd= in cleartext\",\"category\":\"Potential Corporate Privacy Violation\",\"severity\":1,\"metadata\":{\"confidence\":[\"High\"],\"created_at\":[\"2011_05_30\"],\"signature_severity\":[\"Informational\"],\"tag\":[\"Description_Generated_By_Proofpoint_Nexus\"],\"updated_at\":[\"2020_04_21\"]}},\"ts_progress\":\"request_complete\",\"tc_progress\":\"response_complete\",\"http\":{\"hostname\":\"10.240.0.211\",\"http_port\":5678,\"url\":\"/webhook/wazuh-alerts\",\"http_user_agent\":\"Python-urllib/3.14\",\"http_content_type\":\"application/json\",\"http_method\":\"POST\",\"protocol\":\"HTTP/1.1\",\"status\":200,\"length\":34},\"files\":[{\"filename\":\"/webhook/wazuh-alerts\",\"gaps\":false,\"state\":\"CLOSED\",\"stored\":false,\"size\":1009,\"tx_id\":0}],\"app_proto\":\"http\",\"direction\":\"to_server\",\"flow\":{\"pkts_toserver\":5,\"pkts_toclient\":4,\"bytes_toserver\":1544,\"bytes_toclient\":788,\"start\":\"2026-08-27T09:52:25.631385+0000\",\"src_ip\":\"10.240.0.10\",\"dest_ip\":\"10.240.0.211\",\"src_port\":53600,\"dest_port\":5678}}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "SIGNATURE ID",
+        "text": "What specific Suricata Rule Signature ID (signature_id) is recorded in the raw JSON payload for alert #637561?",
+        "answer": "2012888"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "PROTOCOL NAME",
+        "text": "What network protocol was inspected by the deep packet engine for alert #637561?",
+        "answer": "HTTP"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "RULE FAMILY",
+        "text": "Which Emerging Threats (ET) rule family flagged this threat event for alert #637561?",
+        "answer": "INFO"
+      }
+    ]
+  },
+  {
+    "id": "637573",
+    "title": "[Wazuh L7] Cloudflare WAF: Request blocked from 18.97.9.99 (country: US) targeting blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Reconnaissance / Persistence Activity",
+    "category": "reconnaissance",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CLOUDFLARE WAF",
+    "timestamp": "2026-08-27T09:50:00Z",
+    "src_ip": "18.97.9.99",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 80,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Confirmed reconnaissance scan.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1595.001",
+      "T1046",
+      "T1082"
+    ],
+    "raw_log": "{\"timestamp\":\"2026-08-27T09:50:00Z\",\"client_ip\":\"18.97.9.99\",\"country\":\"US\",\"host\":\"blusoc.internal\",\"action\":\"block\",\"user_agent\":\"Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; PerplexityBot/1.0; +https://perplexity.ai/perplexitybot)\",\"count\":1,\"source\":\"cloudflare\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "SECURITY ENGINE",
+        "text": "What web security engine intercepted and dropped the suspicious external HTTP request for alert #637573?",
+        "answer": "Cloudflare WAF"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "TARGET DOMAIN",
+        "text": "What target domain URL was targeted by the external scanning probe for alert #637573?",
+        "answer": "blusoc.internal"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "USER AGENT",
+        "text": "Which crawler bot's name is mentioned in the alert #637573?",
+        "answer": "PerplexityBot"
+      }
+    ]
+  },
+  {
+    "id": "443073",
+    "title": "[Wazuh L8] CrowdStrike EDR Alert [HIGH SEVERITY] on corp-gateway-01.blusoc.internal: AllTheThingsx64.dll - A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T08:06:13Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.10.115",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-co",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"AllTheThingsx64.dll\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1218.010\\\\bin\\\\AllTheThingsx64.dll\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T08:06:13Z\",\"sha256\":\"ecbf9e6d7b57cec66d5f42aca2ccf218c8dc29e9d132cdf0aa63a9d977a5cb15\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\",\"tactic\":\"Machine Learning\",\"technique\":\"Sensor-based ML\",\"source_ip\":\"10.240.10.115\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Moderate",
+        "format": "FILE PATH",
+        "text": "What is the full file path recorded for alert #443073?",
+        "answer": "C:\\SecurityEvaluation\\Caldera - MITRE\\caldera\\plugins\\atomic\\data\\atomic-red-team\\atomics\\T1218.010\\bin\\AllTheThingsx64.dll",
+        "variants": [
+          "E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1218.010\\\\bin\\\\AllTheThingsx64.dll"
+        ]
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "What is the CrowdStrike event timestamp logged inside alert #443073? (Format: YYYY-MM-DD HH:MM:SS)",
+        "answer": "2026-08-13 08:06:13",
+        "variants": [
+          "2026-08-13 08:06:13",
+          "2026-08-13 08:06:13 UTC",
+          "2026-08-13T08:06:13",
+          "2026-08-13T08:06:13Z",
+          "2026-08-13T08:06:13.000Z"
+        ]
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "HOSTNAME",
+        "text": "On which endpoint/hostname was the malware in alert #443073 detected?",
+        "answer": "corp-endpoint-115"
+      }
+    ]
+  },
+  {
+    "id": "443100",
+    "title": "[Wazuh L8] CrowdStrike EDR Alert [HIGH SEVERITY] on corp-gateway-01.blusoc.internal: AllTheThingsx64.dll - A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T08:06:13Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.10.115",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-co",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"AllTheThingsx64.dll\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1218.010\\\\bin\\\\AllTheThingsx64.dll\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T08:06:13Z\",\"sha256\":\"ecbf9e6d7b57cec66d5f42aca2ccf218c8dc29e9d132cdf0aa63a9d977a5cb15\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\",\"tactic\":\"Machine Learning\",\"technique\":\"Sensor-based ML\",\"source_ip\":\"10.240.10.115\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "What is the CrowdStrike event timestamp logged inside alert #443100? (Format: YYYY-MM-DD HH:MM:SS)",
+        "answer": "2026-08-13 08:06:13",
+        "variants": [
+          "2026-08-13 08:06:13",
+          "2026-08-13 08:06:13 UTC",
+          "2026-08-13T08:06:13",
+          "2026-08-13T08:06:13Z",
+          "2026-08-13T08:06:13.000Z"
+        ]
+      },
+      {
+        "num": 2,
+        "level": "High",
+        "format": "FILE PATH",
+        "text": "What is the full file path recorded for alert #443100?",
+        "answer": "C:\\SecurityEvaluation\\Caldera - MITRE\\caldera\\plugins\\atomic\\data\\atomic-red-team\\atomics\\T1218.010\\bin\\AllTheThingsx64.dll",
+        "variants": [
+          "E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1218.010\\\\bin\\\\AllTheThingsx64.dll"
+        ]
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "RULE ID",
+        "text": "What Wazuh rule ID corresponds to alert #443100?",
+        "answer": "100011"
+      }
+    ]
+  },
+  {
+    "id": "443035",
+    "title": "[Wazuh L8] CrowdStrike EDR Alert [HIGH SEVERITY] on corp-gateway-01.blusoc.internal: AllTheThingsx64.dll - A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T08:06:13Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.10.115",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-co",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"AllTheThingsx64.dll\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1218.010\\\\bin\\\\AllTheThingsx64.dll\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T08:06:13Z\",\"sha256\":\"ecbf9e6d7b57cec66d5f42aca2ccf218c8dc29e9d132cdf0aa63a9d977a5cb15\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\",\"tactic\":\"Machine Learning\",\"technique\":\"Sensor-based ML\",\"source_ip\":\"10.240.10.115\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOSTNAME",
+        "text": "On which endpoint/hostname was the malware in alert #443035 detected?",
+        "answer": "corp-endpoint-115"
+      },
+      {
+        "num": 2,
+        "level": "High",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "What is the CrowdStrike event timestamp logged inside alert #443035? (Format: YYYY-MM-DD HH:MM:SS)",
+        "answer": "2026-08-13 08:06:13",
+        "variants": [
+          "2026-08-13 08:06:13",
+          "2026-08-13 08:06:13 UTC",
+          "2026-08-13T08:06:13",
+          "2026-08-13T08:06:13Z",
+          "2026-08-13T08:06:13.000Z"
+        ]
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "SHA256 HASH",
+        "text": "What is the SHA256 hash of the detected malware file for alert #443035?",
+        "answer": "ecbf9e6d7b57cec66d5f42aca2ccf218c8dc29e9d132cdf0aa63a9d977a5cb15"
+      }
+    ]
+  },
+  {
+    "id": "443071",
+    "title": "[Wazuh L8] CrowdStrike EDR Alert [HIGH SEVERITY] on corp-gateway-01.blusoc.internal: AllTheThingsx86.dll - A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T08:06:13Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.10.115",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-co",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"AllTheThingsx86.dll\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1218.010\\\\bin\\\\AllTheThingsx86.dll\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T08:06:13Z\",\"sha256\":\"887085f157702c93fbe1c0e2f0186e07bce32da8f44c1b55b6c4d8c2fa66c5ae\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\",\"tactic\":\"Machine Learning\",\"technique\":\"Sensor-based ML\",\"source_ip\":\"10.240.10.115\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "HOSTNAME",
+        "text": "On which endpoint/hostname was the malware in alert #443071 detected?",
+        "answer": "corp-endpoint-115"
+      },
+      {
+        "num": 2,
+        "level": "High",
+        "format": "TAG LIST",
+        "text": "List the tags attached to malware alert #443071 in IRIS (Please answer all of the tags in the format - tag1, tag2, tag3, ..).",
+        "answer": "wazuh, rule_100011, level_8, crowdstrike, _edr"
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "FILE PATH",
+        "text": "What is the full file path recorded for alert #443071?",
+        "answer": "C:\\SecurityEvaluation\\Caldera - MITRE\\caldera\\plugins\\atomic\\data\\atomic-red-team\\atomics\\T1218.010\\bin\\AllTheThingsx86.dll",
+        "variants": [
+          "E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1218.010\\\\bin\\\\AllTheThingsx86.dll"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "338008",
+    "title": "[Wazuh L14] CrowdStrike Falcon: Malware detected - OD_stub.exe on corp-gateway-01.blusoc.internal: A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "CRITICAL",
+    "severity_id": 5,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T06:48:24Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-confidence malware flagged and VirusTotal confirms 45 detections.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"OD_stub.exe\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\LEVEL-3 TOOLS\\\\MITMf\\\\libs\\\\bdfactory\\\\onionduke\\\\OD_stub.exe\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T06:48:24Z\",\"sha256\":\"e3d0893ef55bea8f3fd377ca3275781560960986e6fbbf5d3fe579fa02aad620\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Moderate",
+        "format": "TRUE/FALSE",
+        "text": "Does VirusTotal flag the SHA256 of OD_stub.exe (alert #338008) as malicious? (True/False)",
+        "answer": "True"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "What is the CrowdStrike event timestamp logged inside alert #338008? (Format: YYYY-MM-DD HH:MM:SS)",
+        "answer": "2026-08-13 06:48:24",
+        "variants": [
+          "2026-08-13 06:48:24",
+          "2026-08-13 06:48:24 UTC",
+          "2026-08-13T06:48:24",
+          "2026-08-13T06:48:24Z",
+          "2026-08-13T06:48:24.000Z"
+        ]
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "HOSTNAME",
+        "text": "On which endpoint/hostname was the malware in alert #338008 detected?",
+        "answer": "corp-endpoint-115"
+      }
+    ]
+  },
+  {
+    "id": "451734",
+    "title": "[Wazuh L8] CrowdStrike EDR Alert [HIGH SEVERITY] on corp-gateway-01.blusoc.internal: BrowserCollector.exe - This file meets the File Analysis ML algorithm's high-confidence threshold for malware. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T08:06:15Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-co",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"BrowserCollector.exe\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1555.003\\\\bin\\\\BrowserCollector.exe\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T08:06:15Z\",\"sha256\":\"cf648c23c6d626c0331dd50ac0e513964e0ce77d9f1d65a1300efd43d8c350ef\",\"description\":\"This file meets the File Analysis ML algorithm's high-confidence threshold for malware.\",\"tactic\":\"Machine Learning\",\"technique\":\"File Analysis\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "High",
+        "format": "SHA256 HASH",
+        "text": "What is the SHA256 hash of the detected malware file for alert #451734?",
+        "answer": "cf648c23c6d626c0331dd50ac0e513964e0ce77d9f1d65a1300efd43d8c350ef"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "HOSTNAME",
+        "text": "On which endpoint/hostname was the malware in alert #451734 detected?",
+        "answer": "corp-endpoint-115"
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "FILE PATH",
+        "text": "What is the full file path recorded for alert #451734?",
+        "answer": "C:\\SecurityEvaluation\\Caldera - MITRE\\caldera\\plugins\\atomic\\data\\atomic-red-team\\atomics\\T1555.003\\bin\\BrowserCollector.exe",
+        "variants": [
+          "E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1555.003\\\\bin\\\\BrowserCollector.exe"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "44105",
+    "title": "[Wazuh L14] CrowdStrike Falcon: Malware detected - BadPotato.exe on corp-gateway-01.blusoc.internal: A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "CRITICAL",
+    "severity_id": 5,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-12T06:36:14Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.10.115",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-co",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"BadPotato.exe\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1134.001\\\\bin\\\\BadPotato.exe\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-12T06:36:14Z\",\"sha256\":\"d1247eed7631475e2f38c4446d679d35de0d9d060dc8f7a30c59263b189ecdcf\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\",\"tactic\":\"Machine Learning\",\"technique\":\"Sensor-based ML\",\"source_ip\":\"10.240.10.115\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Moderate",
+        "format": "SEVERITY",
+        "text": "What severity level is assigned to alert #44105 in the IRIS interface [Critical / High / Medium / Low / Info]?",
+        "answer": "Critical"
+      },
+      {
+        "num": 2,
+        "level": "High",
+        "format": "FILE PATH",
+        "text": "What is the full file path recorded for alert #44105?",
+        "answer": "C:\\SecurityEvaluation\\Caldera - MITRE\\caldera\\plugins\\atomic\\data\\atomic-red-team\\atomics\\T1134.001\\bin\\BadPotato.exe",
+        "variants": [
+          "E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1134.001\\\\bin\\\\BadPotato.exe"
+        ]
+      },
+      {
+        "num": 3,
+        "level": "Easy",
+        "format": "RULE ID",
+        "text": "What Wazuh rule ID corresponds to alert #44105?",
+        "answer": "100013"
+      }
+    ]
+  },
+  {
+    "id": "443052",
+    "title": "[Wazuh L8] CrowdStrike EDR Alert [HIGH SEVERITY] on corp-gateway-01.blusoc.internal: AllTheThingsx64.dll - A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T08:06:13Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.10.115",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-co",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"AllTheThingsx64.dll\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1218.010\\\\bin\\\\AllTheThingsx64.dll\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T08:06:13Z\",\"sha256\":\"ecbf9e6d7b57cec66d5f42aca2ccf218c8dc29e9d132cdf0aa63a9d977a5cb15\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\",\"tactic\":\"Machine Learning\",\"technique\":\"Sensor-based ML\",\"source_ip\":\"10.240.10.115\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "High",
+        "format": "FILENAME",
+        "text": "What is the malware/executable name flagged in alert #443052?",
+        "answer": "AllTheThingsx64.dll"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "RULE ID",
+        "text": "What Wazuh rule ID corresponds to alert #443052?",
+        "answer": "100011"
+      },
+      {
+        "num": 3,
+        "level": "Easy",
+        "format": "SHA256 HASH",
+        "text": "What is the SHA256 hash of the detected malware file for alert #443052?",
+        "answer": "ecbf9e6d7b57cec66d5f42aca2ccf218c8dc29e9d132cdf0aa63a9d977a5cb15"
+      }
+    ]
+  },
+  {
+    "id": "44111",
+    "title": "[Wazuh L14] CrowdStrike Falcon: Malware detected - BadPotato.exe on corp-gateway-01.blusoc.internal: A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "CRITICAL",
+    "severity_id": 5,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-12T06:36:14Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.10.115",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-co",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"BadPotato.exe\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1134.001\\\\bin\\\\BadPotato.exe\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-12T06:36:14Z\",\"sha256\":\"d1247eed7631475e2f38c4446d679d35de0d9d060dc8f7a30c59263b189ecdcf\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\",\"tactic\":\"Machine Learning\",\"technique\":\"Sensor-based ML\",\"source_ip\":\"10.240.10.115\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Moderate",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "When did IRIS ingest alert #44111 (creation timestamp, Format: YYYY-MM-DD HH:MM:SS)?",
+        "answer": "2026-08-13 06:35:52",
+        "variants": [
+          "2026-08-13 06:35:52",
+          "2026-08-13 06:35:52 UTC",
+          "2026-08-13T06:35:52",
+          "2026-08-13T06:35:52Z",
+          "2026-08-13T06:35:52.000Z"
+        ]
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "FILE PATH",
+        "text": "What is the full file path recorded for alert #44111?",
+        "answer": "C:\\SecurityEvaluation\\Caldera - MITRE\\caldera\\plugins\\atomic\\data\\atomic-red-team\\atomics\\T1134.001\\bin\\BadPotato.exe",
+        "variants": [
+          "E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1134.001\\\\bin\\\\BadPotato.exe"
+        ]
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "FILE EXTENSION",
+        "text": "What file extension does the malware in alert #44111 carry?",
+        "answer": "exe"
+      }
+    ]
+  },
+  {
+    "id": "269821",
+    "title": "[Wazuh L14] CrowdStrike Falcon: Malware detected - hoic2.1.exe on corp-gateway-01.blusoc.internal: This file meets the File Analysis ML algorithm's high-confidence threshold for malware. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "CRITICAL",
+    "severity_id": 5,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T06:48:23Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-confidence malware flagged and VirusTotal confirms 46 detections.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"hoic2.1.exe\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\LEVEL-3 TOOLS\\\\HOIC\\\\hoic2.1.exe\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T06:48:23Z\",\"sha256\":\"3c9806f8e132917ef85512505fadaca733e5523c271dd2e2a6925ddb9c3d0df0\",\"description\":\"This file meets the File Analysis ML algorithm's high-confidence threshold for malware.\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "What is the CrowdStrike event timestamp logged inside alert #269821? (Format: YYYY-MM-DD HH:MM:SS)",
+        "answer": "2026-08-13 06:48:23",
+        "variants": [
+          "2026-08-13 06:48:23",
+          "2026-08-13 06:48:23 UTC",
+          "2026-08-13T06:48:23",
+          "2026-08-13T06:48:23Z",
+          "2026-08-13T06:48:23.000Z"
+        ]
+      },
+      {
+        "num": 2,
+        "level": "High",
+        "format": "TAG LIST",
+        "text": "List the tags attached to malware alert #269821 in IRIS (please answer all the tags in the format - tag1, tage2, tage3, ..).",
+        "answer": "wazuh, rule_100013, level_14, crowdstrike, _edr, _malware, _crowdstrike, _edr"
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "SHA256 HASH",
+        "text": "What is the SHA256 hash of the detected malware file for alert #269821?",
+        "answer": "3c9806f8e132917ef85512505fadaca733e5523c271dd2e2a6925ddb9c3d0df0"
+      }
+    ]
+  },
+  {
+    "id": "60694",
+    "title": "[Wazuh L14] CrowdStrike Falcon: Malware detected - HelloWorldXll.xll on corp-gateway-01.blusoc.internal: A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "CRITICAL",
+    "severity_id": 5,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-12T21:06:18Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.10.115",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-co",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"HelloWorldXll.xll\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1137.006\\\\bin\\\\HelloWorldXll.xll\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-12T21:06:18Z\",\"sha256\":\"d433a2328cd4f3b3dfe7ad304974bb8bb890081e75977d0d925455de64fedc61\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\",\"tactic\":\"Machine Learning\",\"technique\":\"Sensor-based ML\",\"source_ip\":\"10.240.10.115\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Moderate",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "What is the CrowdStrike event timestamp logged inside alert #60694? (Format: YYYY-MM-DD HH:MM:SS)",
+        "answer": "2026-08-12 21:06:18",
+        "variants": [
+          "2026-08-12 21:06:18",
+          "2026-08-12 21:06:18 UTC",
+          "2026-08-12T21:06:18",
+          "2026-08-12T21:06:18Z",
+          "2026-08-12T21:06:18.000Z"
+        ]
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "HOSTNAME",
+        "text": "On which endpoint/hostname was the malware in alert #60694 detected?",
+        "answer": "corp-endpoint-115"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "FILENAME",
+        "text": "What is the malware/executable name flagged in alert #60694?",
+        "answer": "HelloWorldXll.xll"
+      }
+    ]
+  },
+  {
+    "id": "451760",
+    "title": "[Wazuh L8] CrowdStrike EDR Alert [HIGH SEVERITY] on corp-gateway-01.blusoc.internal: BrowserCollector.exe - This file meets the File Analysis ML algorithm's high-confidence threshold for malware. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T08:06:15Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-co",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"BrowserCollector.exe\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1555.003\\\\bin\\\\BrowserCollector.exe\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T08:06:15Z\",\"sha256\":\"cf648c23c6d626c0331dd50ac0e513964e0ce77d9f1d65a1300efd43d8c350ef\",\"description\":\"This file meets the File Analysis ML algorithm's high-confidence threshold for malware.\",\"tactic\":\"Machine Learning\",\"technique\":\"File Analysis\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "SHA256 HASH",
+        "text": "What is the SHA256 hash of the detected malware file for alert #451760?",
+        "answer": "cf648c23c6d626c0331dd50ac0e513964e0ce77d9f1d65a1300efd43d8c350ef"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "VENDOR",
+        "text": "Which vendor/product flagged alert #451760 (check Log vendor field)?",
+        "answer": "CrowdStrike"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "FILE EXTENSION",
+        "text": "What file extension does the malware in alert #451760 carry?",
+        "answer": "exe"
+      }
+    ]
+  },
+  {
+    "id": "452567",
+    "title": "[Wazuh L8] CrowdStrike EDR Alert [HIGH SEVERITY] on corp-gateway-01.blusoc.internal: ReflectivePick_x86_orig.dll - A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T08:06:15Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-confidence malware flagged and VirusTotal confirms 57 detections.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"ReflectivePick_x86_orig.dll\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\LEVEL-3 TOOLS\\\\Empire\\\\data\\\\misc\\\\ReflectivePick_x86_orig.dll\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T08:06:15Z\",\"sha256\":\"cee1543abec3e6c5df5b0387d412d5686fd228cfe8de0acb937bbc83a29e1070\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "High",
+        "format": "SHA256 HASH",
+        "text": "What is the SHA256 hash of the file in alert #452567 (as logged in IRIS)?",
+        "answer": "cee1543abec3e6c5df5b0387d412d5686fd228cfe8de0acb937bbc83a29e1070"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "TAG LIST",
+        "text": "List the tags attached to malware alert #452567 in IRIS (please answer all the tags in the format - tag1, tag2, tag3, ..).",
+        "answer": "wazuh, rule_100011, level_8, crowdstrike, _edr"
+      },
+      {
+        "num": 3,
+        "level": "Easy",
+        "format": "RULE ID",
+        "text": "What Wazuh rule ID corresponds to alert #452567?",
+        "answer": "100011"
+      }
+    ]
+  },
+  {
+    "id": "44074",
+    "title": "[Wazuh L14] CrowdStrike Falcon: Malware detected - BadPotato.exe on corp-gateway-01.blusoc.internal: A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "CRITICAL",
+    "severity_id": 5,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-12T06:36:14Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.10.115",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-co",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"BadPotato.exe\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1134.001\\\\bin\\\\BadPotato.exe\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-12T06:36:14Z\",\"sha256\":\"d1247eed7631475e2f38c4446d679d35de0d9d060dc8f7a30c59263b189ecdcf\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\",\"tactic\":\"Machine Learning\",\"technique\":\"Sensor-based ML\",\"source_ip\":\"10.240.10.115\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "High",
+        "format": "RULE ID",
+        "text": "What Wazuh rule ID corresponds to alert #44074?",
+        "answer": "100013"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "HOSTNAME",
+        "text": "On which endpoint/hostname was the malware in alert #44074 detected?",
+        "answer": "corp-endpoint-115"
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "FILE PATH",
+        "text": "What is the full file path recorded for alert #44074?",
+        "answer": "C:\\SecurityEvaluation\\Caldera - MITRE\\caldera\\plugins\\atomic\\data\\atomic-red-team\\atomics\\T1134.001\\bin\\BadPotato.exe",
+        "variants": [
+          "E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\atomic\\\\data\\\\atomic-red-team\\\\atomics\\\\T1134.001\\\\bin\\\\BadPotato.exe"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "443130",
+    "title": "[Wazuh L8] CrowdStrike EDR Alert [HIGH SEVERITY] on corp-gateway-01.blusoc.internal: ReflectivePick_x64_orig.dll - A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T08:06:14Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-confidence malware flagged and VirusTotal confirms 54 detections.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"ReflectivePick_x64_orig.dll\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\LEVEL-3 TOOLS\\\\Empire\\\\data\\\\misc\\\\ReflectivePick_x64_orig.dll\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T08:06:14Z\",\"sha256\":\"8dc4b0af1eba04215227f27d0043d8474c3efa64fb5dd098ce5cc3342f6aef64\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "VENDOR",
+        "text": "Which vendor/product flagged alert #443130 (check Log vendor field)?",
+        "answer": "CrowdStrike"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "What is the CrowdStrike event timestamp logged inside alert #443130? (Format: YYYY-MM-DD HH:MM:SS)",
+        "answer": "2026-08-13 08:06:14",
+        "variants": [
+          "2026-08-13 08:06:14",
+          "2026-08-13 08:06:14 UTC",
+          "2026-08-13T08:06:14",
+          "2026-08-13T08:06:14Z",
+          "2026-08-13T08:06:14.000Z"
+        ]
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "FILE PATH",
+        "text": "What is the full file path recorded for alert #443130?",
+        "answer": "C:\\SecurityEvaluation\\LEVEL-3 TOOLS\\Empire\\data\\misc\\ReflectivePick_x64_orig.dll",
+        "variants": [
+          "E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\LEVEL-3 TOOLS\\\\Empire\\\\data\\\\misc\\\\ReflectivePick_x64_orig.dll"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "443820",
+    "title": "[Wazuh L8] CrowdStrike EDR Alert [HIGH SEVERITY] on corp-gateway-01.blusoc.internal: HostingCLRx64.dll - This file meets the File Analysis ML algorithm's high-confidence threshold for malware. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T08:06:14Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-confidence malware flagged and VirusTotal confirms 43 detections.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"HostingCLRx64.dll\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\Caldera - MITRE\\\\caldera\\\\plugins\\\\stockpile\\\\payloads\\\\HostingCLRx64.dll\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T08:06:14Z\",\"sha256\":\"bd7bdd92faae22ac4b2f417a82af9d794a7ea4ab2fc8aa4ebb057ced6dfda311\",\"description\":\"This file meets the File Analysis ML algorithm's high-confidence threshold for malware.\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "High",
+        "format": "SEVERITY",
+        "text": "What severity level is assigned to alert #443820 in the IRIS interface [Critical / High / Medium / Low / Info]?",
+        "answer": "Medium"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "What is the CrowdStrike event timestamp logged inside alert #443820? (Format: YYYY-MM-DD HH:MM:SS)",
+        "answer": "2026-08-13 08:06:14",
+        "variants": [
+          "2026-08-13 08:06:14",
+          "2026-08-13 08:06:14 UTC",
+          "2026-08-13T08:06:14",
+          "2026-08-13T08:06:14Z",
+          "2026-08-13T08:06:14.000Z"
+        ]
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "SHA256 HASH",
+        "text": "What is the SHA256 hash of the detected malware file for alert #443820?",
+        "answer": "bd7bdd92faae22ac4b2f417a82af9d794a7ea4ab2fc8aa4ebb057ced6dfda311"
+      }
+    ]
+  },
+  {
+    "id": "452554",
+    "title": "[Wazuh L8] CrowdStrike EDR Alert [HIGH SEVERITY] on corp-gateway-01.blusoc.internal: ReflectivePick_x86_orig.dll - A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files. on corp-gateway-01.blusoc.internal",
+    "short_title": "Malware / EDR Detection",
+    "category": "malware",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "CrowdStrike",
+    "timestamp": "2026-08-13T08:06:15Z",
+    "src_ip": "10.240.10.115",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 443,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  CrowdStrike ML high-confidence malware flagged and VirusTotal confirms 57 detections.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1204.002",
+      "T1059.001",
+      "T1218"
+    ],
+    "raw_log": "{\"vendor\":\"CrowdStrike\",\"hostname\":\"corp-endpoint-115\",\"filename\":\"ReflectivePick_x86_orig.dll\",\"filepath\":\"E:\\\\Personal_AK_UTOS_BACKUP\\\\HP ENVY OLD System Backup\\\\Desktop\\\\LEVEL-3 TOOLS\\\\Empire\\\\data\\\\misc\\\\ReflectivePick_x86_orig.dll\",\"severity\":\"High\",\"status\":\"new\",\"timestamp\":\"2026-08-13T08:06:15Z\",\"sha256\":\"cee1543abec3e6c5df5b0387d412d5686fd228cfe8de0acb937bbc83a29e1070\",\"description\":\"A file meets the machine learning-based on-sensor AV protection's high-confidence threshold for malicious files.\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Moderate",
+        "format": "FILE EXTENSION",
+        "text": "What file extension does the malware in alert #452554 carry?",
+        "answer": "dll"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "HOSTNAME",
+        "text": "On which endpoint/hostname was the malware in alert #452554 detected?",
+        "answer": "corp-endpoint-115"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "VENDOR",
+        "text": "Which vendor/product flagged alert #452554 (check Log vendor field)?",
+        "answer": "CrowdStrike"
+      }
+    ]
+  },
+  {
+    "id": "603165",
+    "title": "[Wazuh L7] Barracuda: Spam detected from \"SharePoint Online\"<no-reply@sharepointonline.com> to sec-compliance@blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-24T12:10:50+0000",
+    "src_ip": "58.35.80.92",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #603165 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-24T12:10:54Z mstore-syslog-84f8d76bb4-lqjwj email[1]: {\"message_id\":\"1787573447-605183-17107-3977-1\",\"src_ip\":\"58.35.80.92\",\"hdr_from\":\"\\\"SharePoint Online\\\"\\u003cno-reply@sharepointonline.com\\u003e\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"\",\"attachments\":null,\"recipients\":[{\"action\":\"blocked\",\"reason\":\"score\",\"reason_extra\":\"6.603\",\"delivered\":\"not_delivered\",\"delivery_detail\":\"\",\"email\":\"sec-compliance@blusoc.internal\",\"taxonomy\":\"spam\"}],\"hdr_to\":\"sec-compliance@blusoc.internal\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":2828,\"subject\":\"Sign Here : Document 19022024pdf -2026/8/24 20:10:47 Contact - sec-compliance@blusoc.internal\",\"env_from\":\"no-reply@sharepointonline.com\",\"timestamp\":\"2026-08-24T12:10:50+0000\",\"geoip\":\"CHN\",\"tls\":false,\"hdr_auth_results\":\"mx-inbound20-63.ap-south-1b.ess.aws.cudaops.com; spf=fail (sender IP is 58.35.80.92) smtp.mailfrom=no-reply@sharepointonline.com; dkim=none header.d=; dmarc=none header.from=no-reply@sharepointonline.com\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "RULE ID",
+        "text": "What Wazuh rule ID triggered alert #603165?",
+        "answer": "100701"
+      },
+      {
+        "num": 2,
+        "level": "High",
+        "format": "YES/NO",
+        "text": "Are there any attachments in this log [answer should be in the format yes/no] for alert #603165?",
+        "answer": "No"
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What source IP (src_ip) is logged for the incoming email in alert #603165?",
+        "answer": "58.35.80.92"
+      }
+    ]
+  },
+  {
+    "id": "606529",
+    "title": "[Wazuh L7] Barracuda: Spam detected from \"SharePoint Online\"<no-reply@sharepointonline.com> to info@blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-24T15:29:12+0000",
+    "src_ip": "58.35.80.92",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #606529 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-24T15:29:15Z mstore-syslog-84f8d76bb4-24m7k email[1]: {\"message_id\":\"1787585349-610284-30966-2510-1\",\"src_ip\":\"58.35.80.92\",\"hdr_from\":\"\\\"SharePoint Online\\\"\\u003cno-reply@sharepointonline.com\\u003e\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"\",\"attachments\":null,\"recipients\":[{\"action\":\"blocked\",\"reason\":\"score\",\"reason_extra\":\"6.603\",\"delivered\":\"not_delivered\",\"delivery_detail\":\"\",\"email\":\"info@blusoc.internal\",\"taxonomy\":\"spam\"}],\"hdr_to\":\"info@blusoc.internal\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":2824,\"subject\":\"Review Document : Kindly sign : fllename Paymentinstruction-EFT - 2026/8/24 23:29:08 Contact - info@blusoc.internal\",\"env_from\":\"no-reply@sharepointonline.com\",\"timestamp\":\"2026-08-24T15:29:12+0000\",\"geoip\":\"CHN\",\"tls\":false,\"hdr_auth_results\":\"mx-inbound40-44.ap-south-1c.ess.aws.cudaops.com; spf=fail (sender IP is 58.35.80.92) smtp.mailfrom=no-reply@sharepointonline.com; dkim=none header.d=; dmarc=none header.from=no-reply@sharepointonline.com\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Moderate",
+        "format": "EMAIL ADDRESS",
+        "text": "Which internal corporate email address was targeted as the recipient in alert #606529?",
+        "answer": "info@blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "TAG LIST",
+        "text": "List the tags attached to phishing alert #606529 in IRIS (Please answer all the tags seperated by commas in the format tag1, tag2, tag3?",
+        "answer": "wazuh, rule_100701, level_7, barracuda, _barracuda, _spam"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "MESSAGE ID",
+        "text": "What is the Barracuda message_id for alert #606529?",
+        "answer": "1787585349-610284-30966-2510-1"
+      }
+    ]
+  },
+  {
+    "id": "608264",
+    "title": "[Wazuh L7] Barracuda: Spam detected from \"SharePoint Online\"<no-reply@sharepointonline.com> to sales@blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-24T17:14:26+0000",
+    "src_ip": "58.35.80.92",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #608264 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-24T17:14:31Z mstore-syslog-84f8d76bb4-lqjwj email[1]: {\"message_id\":\"1787591663-603409-31786-1301-1\",\"src_ip\":\"58.35.80.92\",\"hdr_from\":\"\\\"SharePoint Online\\\"\\u003cno-reply@sharepointonline.com\\u003e\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"\",\"attachments\":null,\"recipients\":[{\"action\":\"blocked\",\"reason\":\"score\",\"reason_extra\":\"6.603\",\"delivered\":\"not_delivered\",\"delivery_detail\":\"\",\"email\":\"sales@blusoc.internal\",\"taxonomy\":\"spam\"}],\"hdr_to\":\"sales@blusoc.internal\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":2827,\"subject\":\"Review Document : Kindly Sign : filename PaymentInstruction-EFT  - 2026/8/25 1:14:23 Contact - sales@blusoc.internal\",\"env_from\":\"no-reply@sharepointonline.com\",\"timestamp\":\"2026-08-24T17:14:26+0000\",\"geoip\":\"CHN\",\"tls\":false,\"hdr_auth_results\":\"mx-inbound13-81.ap-south-1a.ess.aws.cudaops.com; spf=fail (sender IP is 58.35.80.92) smtp.mailfrom=no-reply@sharepointonline.com; dkim=none header.d=; dmarc=none header.from=no-reply@sharepointonline.com\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Moderate",
+        "format": "RULE ID",
+        "text": "What Wazuh rule ID triggered alert #608264?",
+        "answer": "100701"
+      },
+      {
+        "num": 2,
+        "level": "High",
+        "format": "MESSAGE ID",
+        "text": "What is the Barracuda message_id for alert #608264?",
+        "answer": "1787591663-603409-31786-1301-1"
+      },
+      {
+        "num": 3,
+        "level": "Easy",
+        "format": "DOMAIN NAME",
+        "text": "What is the destination domain address mentioned in the log for alert #608264?",
+        "answer": "blusoc.internal"
+      }
+    ]
+  },
+  {
+    "id": "604469",
+    "title": "[Wazuh L7] Barracuda: Spam detected from Mixpanel <mixpanel-product@mixpanel.com> to analyst.vance@blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-24T13:25:01+0000",
+    "src_ip": "143.55.227.71",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #604469 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-24T13:25:04Z mstore-syslog-84f8d76bb4-24m7k email[1]: {\"message_id\":\"1787577898-603409-4895-2727-1\",\"src_ip\":\"143.55.227.71\",\"hdr_from\":\"Mixpanel \\u003cmixpanel-product@mixpanel.com\\u003e\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"v571.v54f91261.use4.send.mailgun.net\",\"attachments\":null,\"recipients\":[{\"action\":\"blocked\",\"reason\":\"score\",\"reason_extra\":\"5.002\",\"delivered\":\"not_delivered\",\"delivery_detail\":\"\",\"email\":\"analyst.vance@blusoc.internal\",\"taxonomy\":\"spam\"}],\"hdr_to\":\"analyst.vance@blusoc.internal\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":43913,\"subject\":\"Metric drop? Skip the manual checks\",\"env_from\":\"postmaster@cio90993.mixpanel.com\",\"timestamp\":\"2026-08-24T13:25:01+0000\",\"geoip\":\"USA\",\"tls\":true,\"hdr_auth_results\":\"mx-inbound13-81.ap-south-1a.ess.aws.cudaops.com; spf=pass (sender IP is 143.55.227.71) smtp.mailfrom=postmaster@cio90993.mixpanel.com; dkim=none header.d=; dmarc=none header.from=mixpanel-product@mixpanel.com\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "When did IRIS ingest alert #604469 (creation timestamp, Format: YYYY-MM-DD HH:MM:SS)?",
+        "answer": "2026-08-24 13:25:05",
+        "variants": [
+          "2026-08-24 13:25:05",
+          "2026-08-24 13:25:05 UTC",
+          "2026-08-24T13:25:05",
+          "2026-08-24T13:25:05Z",
+          "2026-08-24T13:25:05.000Z"
+        ]
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "YES/NO",
+        "text": "Does alert #604469 contain any attachments (as per attachments field)?",
+        "answer": "No"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "SUBJECT",
+        "text": "What is the email subject line for phishing alert #604469?",
+        "answer": "Metric drop? Skip the manual checks"
+      }
+    ]
+  },
+  {
+    "id": "607406",
+    "title": "[Wazuh L7] Barracuda: Spam detected from  to  on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-24T16:23:22+0000",
+    "src_ip": "31.76.42.237",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #607406 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-24T16:23:26Z mstore-syslog-84f8d76bb4-24m7k email[1]: {\"message_id\":\"1787588601-610284-5774-27-1\",\"src_ip\":\"31.76.42.237\",\"hdr_from\":\"\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"\",\"attachments\":null,\"recipients\":[{\"action\":\"deferred\",\"reason\":\"sender_quit\",\"reason_extra\":\"\",\"delivered\":\"not_delivered\",\"delivery_detail\":\"31.76.42.237 Sender Quit\",\"email\":\"analyst.chen@blusoc.internal\",\"taxonomy\":\"spam\"}],\"hdr_to\":\"\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":0,\"subject\":\"\",\"env_from\":\"\",\"timestamp\":\"2026-08-24T16:23:22+0000\",\"geoip\":\"\",\"tls\":false,\"hdr_auth_results\":\"\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Moderate",
+        "format": "DOMAIN NAME",
+        "text": "What destination domain (dst_domain) was the email in alert #607406 sent to?",
+        "answer": "blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "High",
+        "format": "YES/NO",
+        "text": "Does alert #607406 contain any attachments (as per attachments field)?",
+        "answer": "No"
+      },
+      {
+        "num": 3,
+        "level": "Easy",
+        "format": "RULE ID",
+        "text": "What is the wazuh rule ID that triggered alert #607406?",
+        "answer": "100701"
+      }
+    ]
+  },
+  {
+    "id": "607435",
+    "title": "[Wazuh L7] Barracuda: Spam detected from  to  on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-24T16:25:28+0000",
+    "src_ip": "31.76.42.237",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #607435 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-24T16:25:31Z mstore-syslog-84f8d76bb4-lqjwj email[1]: {\"message_id\":\"1787588727-603409-31780-293-1\",\"src_ip\":\"31.76.42.237\",\"hdr_from\":\"\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"\",\"attachments\":null,\"recipients\":[{\"action\":\"deferred\",\"reason\":\"sender_quit\",\"reason_extra\":\"\",\"delivered\":\"not_delivered\",\"delivery_detail\":\"31.76.42.237 Sender Quit\",\"email\":\"analyst.chen@blusoc.internal\",\"taxonomy\":\"spam\"}],\"hdr_to\":\"\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":0,\"subject\":\"\",\"env_from\":\"\",\"timestamp\":\"2026-08-24T16:25:28+0000\",\"geoip\":\"\",\"tls\":false,\"hdr_auth_results\":\"\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Moderate",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "When did IRIS ingest alert #607435 (creation timestamp, Format: YYYY-MM-DD HH:MM:SS)?",
+        "answer": "2026-08-24 16:25:32",
+        "variants": [
+          "2026-08-24 16:25:32",
+          "2026-08-24 16:25:32 UTC",
+          "2026-08-24T16:25:32",
+          "2026-08-24T16:25:32Z",
+          "2026-08-24T16:25:32.000Z"
+        ]
+      },
+      {
+        "num": 2,
+        "level": "High",
+        "format": "RULE ID",
+        "text": "What Wazuh rule ID triggered alert #607435?",
+        "answer": "100701"
+      },
+      {
+        "num": 3,
+        "level": "Easy",
+        "format": "EMAIL ADDRESS",
+        "text": "Which internal corporate email address was targeted as the recipient in alert #607435?",
+        "answer": "analyst.chen@blusoc.internal"
+      }
+    ]
+  },
+  {
+    "id": "602335",
+    "title": "[Wazuh L7] Barracuda: Spam detected from \"SharePoint Online\"<no-reply@sharepointonline.com> to billing@blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-24T11:27:26+0000",
+    "src_ip": "58.35.80.92",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #602335 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-24T11:27:28Z mstore-syslog-84f8d76bb4-lqjwj email[1]: {\"message_id\":\"1787570841-610284-10009-1273-1\",\"src_ip\":\"58.35.80.92\",\"hdr_from\":\"\\\"SharePoint Online\\\"\\u003cno-reply@sharepointonline.com\\u003e\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"\",\"attachments\":null,\"recipients\":[{\"action\":\"blocked\",\"reason\":\"score\",\"reason_extra\":\"6.603\",\"delivered\":\"not_delivered\",\"delivery_detail\":\"\",\"email\":\"billing@blusoc.internal\",\"taxonomy\":\"spam\"}],\"hdr_to\":\"billing@blusoc.internal\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":2834,\"subject\":\"Review Document : Kindly Sign : filename PaymentInstruction-EFT  - 2026/8/24 19:27:21 Contact - billing@blusoc.internal\",\"env_from\":\"no-reply@sharepointonline.com\",\"timestamp\":\"2026-08-24T11:27:26+0000\",\"geoip\":\"CHN\",\"tls\":false,\"hdr_auth_results\":\"mx-inbound40-44.ap-south-1c.ess.aws.cudaops.com; spf=fail (sender IP is 58.35.80.92) smtp.mailfrom=no-reply@sharepointonline.com; dkim=none header.d=; dmarc=none header.from=no-reply@sharepointonline.com\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "High",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "When did IRIS ingest alert #602335 (creation timestamp, Format: YYYY-MM-DD HH:MM:SS)?",
+        "answer": "2026-08-24 11:27:31",
+        "variants": [
+          "2026-08-24 11:27:31",
+          "2026-08-24 11:27:31 UTC",
+          "2026-08-24T11:27:31",
+          "2026-08-24T11:27:31Z",
+          "2026-08-24T11:27:31.000Z"
+        ]
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "EMAIL ADDRESS",
+        "text": "Which internal corporate email address was targeted as the recipient in alert #602335?",
+        "answer": "billing@blusoc.internal"
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What source IP (src_ip) is logged for phishing alert #602335?",
+        "answer": "58.35.80.92"
+      }
+    ]
+  },
+  {
+    "id": "607416",
+    "title": "[Wazuh L7] Barracuda: Spam detected from  to  on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-24T16:23:54+0000",
+    "src_ip": "31.76.42.237",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #607416 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-24T16:23:59Z mstore-syslog-84f8d76bb4-lqjwj email[1]: {\"message_id\":\"1787588633-610284-5776-36-1\",\"src_ip\":\"31.76.42.237\",\"hdr_from\":\"\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"\",\"attachments\":null,\"recipients\":[{\"action\":\"deferred\",\"reason\":\"sender_quit\",\"reason_extra\":\"\",\"delivered\":\"not_delivered\",\"delivery_detail\":\"31.76.42.237 Sender Quit\",\"email\":\"analyst.vance@blusoc.internal\",\"taxonomy\":\"spam\"}],\"hdr_to\":\"\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":0,\"subject\":\"\",\"env_from\":\"\",\"timestamp\":\"2026-08-24T16:23:54+0000\",\"geoip\":\"\",\"tls\":false,\"hdr_auth_results\":\"\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "High",
+        "format": "EMAIL ADDRESS",
+        "text": "Which internal corporate email address was targeted as the recipient in alert #607416?",
+        "answer": "analyst.vance@blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Easy",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What source IP (src_ip) is logged for phishing alert #607416?",
+        "answer": "31.76.42.237"
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "PROVIDER NAME",
+        "text": "Which gateway flagged alert #607416 (Provider Name)?",
+        "answer": "Barracuda"
+      }
+    ]
+  },
+  {
+    "id": "611841",
+    "title": "[Wazuh L7] Barracuda: Spam detected from Grace Miller <grace.m@provakilhub.com> to analyst.ross@blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-24T20:36:54+0000",
+    "src_ip": "40.121.220.169",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #611841 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-24T20:36:57Z mstore-syslog-84f8d76bb4-lqjwj email[1]: {\"message_id\":\"1787603811-603409-31783-4629-1\",\"src_ip\":\"40.121.220.169\",\"hdr_from\":\"Grace Miller \\u003cgrace.m@provakilhub.com\\u003e\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"smtp.provakilaw.com\",\"attachments\":null,\"recipients\":[{\"action\":\"blocked\",\"reason\":\"dest_invalid_recipient\",\"reason_extra\":\"\",\"delivered\":\"rejected\",\"delivery_detail\":\"blusoc-com.mail.protection.outlook.com:25:550 5.4.1 Recipient address rejected: Access denied. For more information see https://aka.ms/EXOSmtpErrors [MA1PEPF000072B0.INDPRD01.PROD.OUTLOOK.COM 2026-08-24T20:36:54.564Z 08DEFEF03205F281]\",\"email\":\"analyst.ross@blusoc.internal\",\"taxonomy\":\"spam\"}],\"hdr_to\":\"analyst.ross@blusoc.internal\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":2295,\"subject\":\"Join Provakil\",\"env_from\":\"grace.m@provakilhub.com\",\"timestamp\":\"2026-08-24T20:36:54+0000\",\"geoip\":\"USA\",\"tls\":true,\"hdr_auth_results\":\"mx-inbound13-81.ap-south-1a.ess.aws.cudaops.com; spf=pass (sender IP is 40.121.220.169) smtp.mailfrom=grace.m@provakilhub.com; dkim=none header.d=; dmarc=none header.from=grace.m@provakilhub.com\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "High",
+        "format": "SUBJECT",
+        "text": "What is the email subject line for phishing alert #611841?",
+        "answer": "Join Provakil"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "EMAIL ADDRESS",
+        "text": "Which internal corporate email address was targeted as the recipient in alert #611841?",
+        "answer": "analyst.ross@blusoc.internal"
+      },
+      {
+        "num": 3,
+        "level": "Easy",
+        "format": "PTR RECORD",
+        "text": "What PTR record is associated with the source IP in alert #611841?",
+        "answer": "smtp.provakilaw.com"
+      }
+    ]
+  },
+  {
+    "id": "619636",
+    "title": "[Wazuh L9] Barracuda: Policy rejection from Sophia LatenTech AV <sophia@latentech.com> to Vinod <analyst.ross@blusoc.internal> - subject: Your Conference Room: Which Side Are You On? on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "HIGH",
+    "severity_id": 4,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-25T04:36:50+0000",
+    "src_ip": "198.2.182.195",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #619636 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-25T04:36:54Z mstore-syslog-84f8d76bb4-24m7k email[1]: {\"message_id\":\"1787632607-610284-930-3064-1\",\"src_ip\":\"198.2.182.195\",\"hdr_from\":\"Sophia LatenTech AV \\u003csophia@latentech.com\\u003e\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"mail195.suw16.rsgsv.net\",\"attachments\":null,\"recipients\":[{\"action\":\"allowed\",\"reason\":\"emailcat\",\"reason_extra\":\"marketing\",\"delivered\":\"delivered\",\"delivery_detail\":\"blusoc-com.mail.protection.outlook.com:25:250 2.6.0 \\u003c349ef3faae43fcc619a8d3ce9.05a543378b.20260825043623.dff63bc222.5fb9374d@mail195.suw16.rsgsv.net\\u003e [InternalId=75814762718067, Hostname=PN2P287MB0480.INDP287.PROD.OUTLOOK.COM] 45470 bytes in 0.180, 245.754 KB/sec Queued mail for delivery\",\"email\":\"analyst.ross@blusoc.internal\",\"taxonomy\":\"policy\"}],\"hdr_to\":\"Vinod \\u003canalyst.ross@blusoc.internal\\u003e\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":27710,\"subject\":\"Your Conference Room: Which Side Are You On?\",\"env_from\":\"bounce-mc.us22_215721090.162814-05a543378b@mail195.suw16.rsgsv.net\",\"timestamp\":\"2026-08-25T04:36:50+0000\",\"geoip\":\"USA\",\"tls\":true,\"hdr_auth_results\":\"\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "TAG LIST",
+        "text": "List the tags attached to phishing alert #619636 in IRIS (Please answer all the tags seperated by commas in the format tag1, tag2, tag3)?",
+        "answer": "wazuh, rule_100706, level_9, barracuda, _barracuda, _policy, _rejection"
+      },
+      {
+        "num": 2,
+        "level": "High",
+        "format": "SEVERITY",
+        "text": "What severity level is assigned to alert #619636 in the IRIS interface [Critical / High / Medium / Low / Info]?",
+        "answer": "High"
+      },
+      {
+        "num": 3,
+        "level": "Moderate",
+        "format": "COUNTRY NAME",
+        "text": "What is the country of the source IP address in alert #619636?",
+        "answer": "United States of America",
+        "variants": [
+          "United States",
+          "United States of America",
+          "USA",
+          "US",
+          "U.S.",
+          "U.S.A."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "613602",
+    "title": "[Wazuh L7] Barracuda: Spam detected from info@blusoc.internal to info@blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-24T22:25:50+0000",
+    "src_ip": "89.41.26.74",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #613602 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-24T22:25:53Z mstore-syslog-84f8d76bb4-lqjwj email[1]: {\"message_id\":\"1787610346-610284-5780-5765-1\",\"src_ip\":\"89.41.26.74\",\"hdr_from\":\"info@blusoc.internal\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"\",\"attachments\":null,\"recipients\":[{\"action\":\"blocked\",\"reason\":\"intent\",\"reason_extra\":\"alladino.com.br\",\"delivered\":\"not_delivered\",\"delivery_detail\":\"\",\"email\":\"info@blusoc.internal\",\"taxonomy\":\"spam\"}],\"hdr_to\":\"info@blusoc.internal\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":5072,\"subject\":\"Notification of Pending Messages\",\"env_from\":\"info@blusoc.internal\",\"timestamp\":\"2026-08-24T22:25:50+0000\",\"geoip\":\"USA\",\"tls\":false,\"hdr_auth_results\":\"\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Moderate",
+        "format": "TAG LIST",
+        "text": "List the tags attached to phishing alert #613602 in IRIS (Please answer all the tags seperated by commas in the format tag1, tag2, tag3)?",
+        "answer": "wazuh, rule_100701, level_7, barracuda, _barracuda, _spam"
+      },
+      {
+        "num": 2,
+        "level": "High",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What source IP (src_ip) is logged for phishing alert #613602?",
+        "answer": "89.41.26.74"
+      },
+      {
+        "num": 3,
+        "level": "Easy",
+        "format": "SUBJECT",
+        "text": "What is the email subject line for phishing alert #613602?",
+        "answer": "Notification of Pending Messages"
+      }
+    ]
+  },
+  {
+    "id": "609309",
+    "title": "[Wazuh L7] Barracuda: Spam detected from Support Wordpress Team <web@saimogluotomasyon.com> to careers@blusoc.internal on corp-gateway-01.blusoc.internal",
+    "short_title": "Phishing / Spam Email Detection",
+    "category": "phishing",
+    "severity": "MEDIUM",
+    "severity_id": 3,
+    "provider": "Barracuda",
+    "timestamp": "2026-08-24T18:08:28+0000",
+    "src_ip": "109.104.120.86",
+    "dest_ip": "10.240.0.10",
+    "src_port": 49152,
+    "dest_port": 25,
+    "protocol": "TCP",
+    "sensor": "corp-gateway-01.blusoc.internal",
+    "verdict": "TRUE POSITIVE  -  Barracuda flagged phishing/spam and IRIS verified alert #609309 on corp-gateway-01.blusoc.internal.",
+    "expected_verdict": "True Positive",
+    "mitre_attack": [
+      "T1566.001",
+      "T1566.002"
+    ],
+    "raw_log": "2026-08-24T18:08:31Z mstore-syslog-84f8d76bb4-lqjwj email[1]: {\"message_id\":\"1787594903-610284-5778-2167-1\",\"src_ip\":\"109.104.120.86\",\"hdr_from\":\"Support Wordpress Team \\u003cweb@saimogluotomasyon.com\\u003e\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"static.109.104.120.86.odeaweb.com\",\"attachments\":null,\"recipients\":[{\"action\":\"blocked\",\"reason\":\"dest_invalid_recipient\",\"reason_extra\":\"\",\"delivered\":\"rejected\",\"delivery_detail\":\"blusoc-com.mail.protection.outlook.com:25:550 5.4.1 Recipient address rejected: Access denied. For more information see https://aka.ms/EXOSmtpErrors [MA1PEPF00007263.INDPRD01.PROD.OUTLOOK.COM 2026-08-24T18:08:28.672Z 08DF01E4F29F3478]\",\"email\":\"careers@blusoc.internal\",\"taxonomy\":\"spam\"}],\"hdr_to\":\"careers@blusoc.internal\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":18465,\"subject\":\"blusoc.internal is requesting verification of your registered email to finish setting up your account\",\"env_from\":\"web@saimogluotomasyon.com\",\"timestamp\":\"2026-08-24T18:08:28+0000\",\"geoip\":\"TUR\",\"tls\":true,\"hdr_auth_results\":\"mx-inbound40-44.ap-south-1c.ess.aws.cudaops.com; spf=pass (sender IP is 109.104.120.86) smtp.mailfrom=web@saimogluotomasyon.com; dkim=none header.d=; dmarc=none header.from=web@saimogluotomasyon.com\"}",
+    "triage_questions": [
+      {
+        "num": 1,
+        "level": "Easy",
+        "format": "EMAIL ADDRESS",
+        "text": "Which internal corporate email address was targeted as the recipient in alert #609309?",
+        "answer": "careers@blusoc.internal"
+      },
+      {
+        "num": 2,
+        "level": "Moderate",
+        "format": "XXX.XXX.XXX.XXX",
+        "text": "What source IP (src_ip) is logged for the incoming email in alert #609309?",
+        "answer": "109.104.120.86"
+      },
+      {
+        "num": 3,
+        "level": "High",
+        "format": "TIMESTAMP (YYYY-MM-DD HH:MM:SS)",
+        "text": "When did IRIS ingest alert #609309 (creation timestamp, Format: YYYY-MM-DD HH:MM:SS)?",
+        "answer": "2026-08-24 18:08:33",
+        "variants": [
+          "2026-08-24 18:08:33",
+          "2026-08-24 18:08:33 UTC",
+          "2026-08-24T18:08:33",
+          "2026-08-24T18:08:33Z",
+          "2026-08-24T18:08:33.000Z"
+        ]
+      }
+    ]
+  }
+]
