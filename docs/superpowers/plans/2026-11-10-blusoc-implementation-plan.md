@@ -90,19 +90,19 @@ Run `python detection-engineering/wazuh/tests/validate_rules.py` to confirm 100%
 - Consumes: Raw Wazuh alert events via stdin/arguments
 - Produces: Formatted REST payloads to DFIR-IRIS `/alerts/add`
 
-- [ ] **Step 1: Build the custom-iris integration script**
+- [x] **Step 1: Build the custom-iris integration script**
 Write `custom-iris.py` with the 4000-character buffer fix to prevent log truncation, GeoIP enrichment, severity mapping, and secure HTTP POST transport.
 
-- [ ] **Step 2: Build the bi-directional status synchronization daemon**
+- [x] **Step 2: Build the bi-directional status synchronization daemon**
 Write `iris_status_daemon.py` with resilient error handling, configurable polling intervals, and status broadcast capabilities.
 
-- [ ] **Step 3: Create local sandbox docker-compose**
+- [x] **Step 3: Create local sandbox docker-compose**
 Create `integrations/docker/docker-compose.yml` defining mock Wazuh and IRIS services for local development and testing.
 
-- [ ] **Step 4: Test integration script locally**
+- [x] **Step 4: Test integration script locally**
 Run unit tests passing sample Wazuh alert JSON through `custom-iris.py` to verify payload transformation and field integrity.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 `git add integrations/ && git commit -m "feat: implement integration daemons and truncation fixes"`
 
 ---

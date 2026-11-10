@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+  blusoc-iris-mock:
+    image: python:3.12-slim
+    container_name: blusoc-iris-mock
+    working_dir: /app
+    volumes:
+      - ./mock_iris_server.py:/app/mock_iris_server.py:ro
+    command: python /app/mock_iris_server.py 8000
+    ports:
+      - "8000:8000"
+    networks:
+      blusoc-net:
+        aliases:
+          - soar-iris-01.blusoc.internal
+          - mock-iris
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  blusoc-wazuh-simulator:
+    image: python:3.12-slim
+    container_name: blusoc-wazuh-simulator
+    working_dir: /var/ossec
+    volumes:
+      - ../custom-iris/custom-iris.py:/var/ossec/integrations/custom-iris:ro
+      - ../custom-iris/config.example.json:/var/ossec/etc/custom-iris.json:ro
+      - wazuh-logs:/var/ossec/logs
+      - wazuh-queue:/var/ossec/queue
+    environment:
+      - WAZUH_MANAGER=siem-core-01.blusoc.internal
+      - IRIS_HOOK_URL=http://soar-iris-01.blusoc.internal:8000/alerts/add
+    command: >
+      sh -c "mkdir -p /var/ossec/logs /var/ossec/queue/alerts /var/ossec/integrations &&
+             pip install requests &&
+             chmod +x /var/ossec/integrations/custom-iris 2>/dev/null || true &&
+             echo 'Wazuh integration simulator running...' &&
+             tail -f /dev/null"
+    networks:
+      - blusoc-net
+    depends_on:
+      - blusoc-iris-mock
+
+  blusoc-postgres:
+    image: postgres:16-alpine
+    container_name: blusoc-postgres
+    environment:
+      POSTGRES_DB: iris_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: blusoc_secure_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    networks:
+      - blusoc-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d iris_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  blusoc-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.240.50.0/24
+
+volumes:
+  wazuh-logs:
+  wazuh-queue:
+  pg-data:

@@ -1,0 +1,12 @@
+{
+  "endpoint_url": "https://soar-iris-01.blusoc.internal/alerts/add",
+  "api_key": "IRIS_API_KEY_PLACEHOLDER",
+  "customer_id": 1,
+  "max_payload_size": 4000,
+  "timeout_seconds": 10,
+  "verify_ssl": false,
+  "default_status_id": 1,
+  "log_level": "INFO",
+  "retry_attempts": 3,
+  "retry_backoff_seconds": 2
+}
