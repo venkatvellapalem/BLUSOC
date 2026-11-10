@@ -3162,7 +3162,7 @@
   },
   {
     "id": "619636",
-    "title": "[Wazuh L9] Barracuda: Policy rejection from Sophia LatenTech AV <sophia@latentech.com> to Vinod <analyst.ross@blusoc.internal> - subject: Your Conference Room: Which Side Are You On? on corp-gateway-01.blusoc.internal",
+    "title": "[Wazuh L9] Barracuda: Policy rejection from Sophia LatenTech AV <sophia@latentech.com> to David Ross <analyst.ross@blusoc.internal> - subject: Your Conference Room: Which Side Are You On? on corp-gateway-01.blusoc.internal",
     "short_title": "Phishing / Spam Email Detection",
     "category": "phishing",
     "severity": "HIGH",
@@ -3181,7 +3181,7 @@
       "T1566.001",
       "T1566.002"
     ],
-    "raw_log": "2026-08-25T04:36:54Z mstore-syslog-84f8d76bb4-24m7k email[1]: {\"message_id\":\"1787632607-610284-930-3064-1\",\"src_ip\":\"198.2.182.195\",\"hdr_from\":\"Sophia LatenTech AV \\u003csophia@latentech.com\\u003e\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"mail195.suw16.rsgsv.net\",\"attachments\":null,\"recipients\":[{\"action\":\"allowed\",\"reason\":\"emailcat\",\"reason_extra\":\"marketing\",\"delivered\":\"delivered\",\"delivery_detail\":\"blusoc-com.mail.protection.outlook.com:25:250 2.6.0 \\u003c349ef3faae43fcc619a8d3ce9.05a543378b.20260825043623.dff63bc222.5fb9374d@mail195.suw16.rsgsv.net\\u003e [InternalId=75814762718067, Hostname=PN2P287MB0480.INDP287.PROD.OUTLOOK.COM] 45470 bytes in 0.180, 245.754 KB/sec Queued mail for delivery\",\"email\":\"analyst.ross@blusoc.internal\",\"taxonomy\":\"policy\"}],\"hdr_to\":\"Vinod \\u003canalyst.ross@blusoc.internal\\u003e\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":27710,\"subject\":\"Your Conference Room: Which Side Are You On?\",\"env_from\":\"bounce-mc.us22_215721090.162814-05a543378b@mail195.suw16.rsgsv.net\",\"timestamp\":\"2026-08-25T04:36:50+0000\",\"geoip\":\"USA\",\"tls\":true,\"hdr_auth_results\":\"\"}",
+    "raw_log": "2026-08-25T04:36:54Z mstore-syslog-84f8d76bb4-24m7k email[1]: {\"message_id\":\"1787632607-610284-930-3064-1\",\"src_ip\":\"198.2.182.195\",\"hdr_from\":\"Sophia LatenTech AV \\u003csophia@latentech.com\\u003e\",\"account_id\":\"ESS217683\",\"domain_id\":\"303054\",\"ptr_record\":\"mail195.suw16.rsgsv.net\",\"attachments\":null,\"recipients\":[{\"action\":\"allowed\",\"reason\":\"emailcat\",\"reason_extra\":\"marketing\",\"delivered\":\"delivered\",\"delivery_detail\":\"blusoc-com.mail.protection.outlook.com:25:250 2.6.0 \\u003c349ef3faae43fcc619a8d3ce9.05a543378b.20260825043623.dff63bc222.5fb9374d@mail195.suw16.rsgsv.net\\u003e [InternalId=75814762718067, Hostname=PN2P287MB0480.INDP287.PROD.OUTLOOK.COM] 45470 bytes in 0.180, 245.754 KB/sec Queued mail for delivery\",\"email\":\"analyst.ross@blusoc.internal\",\"taxonomy\":\"policy\"}],\"hdr_to\":\"David Ross \\u003canalyst.ross@blusoc.internal\\u003e\",\"recipient_count\":1,\"dst_domain\":\"blusoc.internal\",\"size\":27710,\"subject\":\"Your Conference Room: Which Side Are You On?\",\"env_from\":\"bounce-mc.us22_215721090.162814-05a543378b@mail195.suw16.rsgsv.net\",\"timestamp\":\"2026-08-25T04:36:50+0000\",\"geoip\":\"USA\",\"tls\":true,\"hdr_auth_results\":\"\"}",
     "triage_questions": [
       {
         "num": 1,
