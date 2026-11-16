@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Shield, Radar, Network, Bell, Lock, Layers, Server } from "lucide-react";
+import { ArrowLeft, Shield, Radar, Network, Bell, Lock, Layers, Server, Workflow, Code2, Boxes, Wrench, BookOpen, Sparkles } from "lucide-react";
 
 type Item = {
   name: string;
@@ -24,23 +24,32 @@ type Section = {
 const SECTIONS: Section[] = [
   {
     id: "correlation",
-    title: "Correlation, Triage & Case Management",
-    description: "Core platforms that collect telemetry, suppress noise, decide, and track investigations.",
+    title: "Correlation, Orchestration & Triage",
+    description: "Core platforms that collect telemetry, suppress noise, enrich context, decide, and track investigations.",
     icon: Layers,
     items: [
       {
         name: "Wazuh",
         subtitle: "SIEM & correlation engine",
-        description: "Normalizes multi-source telemetry, correlates events, applies detection rules, and suppresses known benign noise. Forwards only qualifying alerts to Laya.",
+        description: "Normalizes multi-source telemetry, correlates events, applies detection rules, and suppresses known benign noise. Forwards only qualifying alerts to n8n.",
         logo: "/logos/wazuh.svg",
         logoW: 28,
         logoH: 28,
         accent: "from-blue-50 to-white border-blue-100",
       },
       {
+        name: "n8n SOAR",
+        subtitle: "Orchestration & enrichment workflows",
+        description: "Receives qualifying alerts via custom-n8n integration (webhook, DLQ), enriches with multi-feed threat intel (VirusTotal, AbuseIPDB, OTX, etc.), and routes to Laya for verdicting.",
+        logo: "/logos/n8n.svg",
+        logoW: 28,
+        logoH: 28,
+        accent: "from-rose-50 to-white border-rose-100",
+      },
+      {
         name: "Laya",
         subtitle: "AI-assisted alert triage",
-        description: "Reviews qualifying alerts from Wazuh, determines verdict and confidence, and routes outcomes: IRIS tickets for true positive high-confidence alerts, notifications to Discord/Slack, and containment to FortiGate.",
+        description: "Reviews enriched qualifying alerts, determines verdict and confidence, and routes outcomes: IRIS tickets for true positive high-confidence alerts, notifications to Discord/Slack, and containment to FortiGate.",
         logo: "/logos/laya.svg",
         logoW: 28,
         logoH: 28,
@@ -162,6 +171,107 @@ const SECTIONS: Section[] = [
       },
     ],
   },
+  {
+    id: "web",
+    title: "Web Showcase & Frontend",
+    description: "Technologies used to build this light-themed, animated portfolio showcase.",
+    icon: Code2,
+    items: [
+      {
+        name: "Next.js 14 (App Router)",
+        subtitle: "React framework",
+        description: "App Router pages and layouts, static/prerendered routes, optimized images, and Vercel-ready builds for the BLUSOC showcase.",
+        icon: Code2,
+        accent: "from-slate-50 to-white border-slate-200",
+      },
+      {
+        name: "React 18 & TypeScript",
+        subtitle: "UI and type safety",
+        description: "Component-driven UI with strict TypeScript for pipeline simulations, data models, and interactive views.",
+        icon: Code2,
+        accent: "from-sky-50 to-white border-sky-100",
+      },
+      {
+        name: "Tailwind CSS & Framer Motion",
+        subtitle: "Design system & animation",
+        description: "Utility-first styling, custom design tokens, and rich motion/transition effects for flow diagrams, simulators, and page reveals.",
+        icon: Sparkles,
+        accent: "from-cyan-50 to-white border-cyan-100",
+      },
+      {
+        name: "Lucide React & SVG assets",
+        subtitle: "Icons and branding",
+        description: "Consistent iconography plus custom/brand SVG and image assets (product logos, BLUSOC mark) across pages and diagrams.",
+        icon: Boxes,
+        accent: "from-indigo-50 to-white border-indigo-100",
+      },
+    ],
+  },
+  {
+    id: "engineering",
+    title: "Detection Engineering & Integrations",
+    description: "Rules, middleware, and automation artifacts that power correlation and response routing.",
+    icon: Wrench,
+    items: [
+      {
+        name: "Wazuh detection content",
+        subtitle: "XML rules, decoders, and tests",
+        description: "Custom suppression/correlation/threat-intel rules and decoders under detection-engineering/wazuh with sample events and validation harnesses (e.g. validate_rules.py).",
+        icon: Shield,
+        accent: "from-blue-50 to-white border-blue-100",
+      },
+      {
+        name: "custom-n8n integration",
+        subtitle: "Wazuh → n8n forwarding",
+        description: "Integration path that forwards qualifying Wazuh alerts to n8n webhooks with normalization and DLQ handling for reliable orchestration.",
+        icon: Workflow,
+        accent: "from-rose-50 to-white border-rose-100",
+      },
+      {
+        name: "custom-iris & sync daemon",
+        subtitle: "IRIS ticketing and status sync",
+        description: "custom-iris integration for alert/ticket creation and iris_status_daemon for synchronization workflows, exercised with tests and mock services.",
+        icon: Network,
+        accent: "from-violet-50 to-white border-violet-100",
+      },
+      {
+        name: "Docker & mock services",
+        subtitle: "Integration environment",
+        description: "Docker Compose definitions, mock IRIS/server components, and integration test suites to validate end-to-end routing behavior.",
+        icon: Boxes,
+        accent: "from-slate-50 to-white border-slate-200",
+      },
+    ],
+  },
+  {
+    id: "infra-data",
+    title: "Infrastructure, Data & Documentation",
+    description: "Deployment tooling and supporting artifacts included in the repository.",
+    icon: Server,
+    items: [
+      {
+        name: "Ubuntu deployment automation",
+        subtitle: "Scripts, templates, systemd",
+        description: "Bash deployment/provisioning scripts, configuration templates, and systemd units for operating BLUSOC services on Ubuntu hosts.",
+        icon: Server,
+        accent: "from-emerald-50 to-white border-emerald-100",
+      },
+      {
+        name: "Sanitized alert dataset",
+        subtitle: "data/alerts_sanitized.json",
+        description: "67 sanitized incidents across multiple attack categories used for read-only samples and showcase views.",
+        icon: BookOpen,
+        accent: "from-amber-50 to-white border-amber-100",
+      },
+      {
+        name: "Architecture & playbooks",
+        subtitle: "docs/ and engineering references",
+        description: "Architecture diagrams/notes, incident response playbook, and repository documentation describing detection and response design.",
+        icon: BookOpen,
+        accent: "from-sky-50 to-white border-sky-100",
+      },
+    ],
+  },
 ];
 
 export default function TechStackPage() {
@@ -178,15 +288,17 @@ export default function TechStackPage() {
             <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-brand-text-secondary">BLUSOC Stack</p>
             <h1 className="mt-4 text-3xl sm:text-5xl font-bold tracking-[-0.04em] text-brand-text-primary">Tech Stack</h1>
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-brand-text-secondary">
-              Products integrated across detection, correlation, triage, ticketing, notifications, and containment. Qualifying alerts flow from Wazuh to Laya; only true positive, high-confidence alerts become DFIR-IRIS tickets.
+              A deep view of the platforms, engineering artifacts, and web technologies behind BLUSOC — from sensors, Wazuh correlation, and n8n enrichment to Laya triage, DFIR-IRIS ticketing, notifications, containment, and this showcase site itself.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
             {[
-              { label: "Correlation", icon: Server },
               { label: "Detection", icon: Radar },
+              { label: "Orchestration", icon: Workflow },
               { label: "Triage", icon: Network },
               { label: "Response", icon: Lock },
+              { label: "Web", icon: Code2 },
+              { label: "Engineering", icon: Wrench },
             ].map((chip) => {
               const Icon = chip.icon;
               return (
@@ -228,7 +340,7 @@ export default function TechStackPage() {
                             className="h-7 w-auto object-contain max-w-[110px]"
                           />
                         ) : item.icon ? (
-                          <item.icon className="h-6 w-6 text-brand-text-primary" />
+                          <item.icon className="h-6 w-6 text-blue-600" />
                         ) : null}
                       </div>
                       <span className="font-mono text-[10px] tracking-wide uppercase text-brand-text-muted">Integrated</span>

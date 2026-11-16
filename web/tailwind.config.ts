@@ -50,6 +50,9 @@ const config: Config = {
         "dash-flow-slow": "dashFlow 2.4s linear infinite",
         "pulse-ring": "pulseRing 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite",
         "pulse-ring-fast": "pulseRing 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite",
+        "float-slow": "floatSlow 6s ease-in-out infinite",
+        shimmer: "shimmer 2.4s linear infinite",
+        beam: "beam 2.8s ease-in-out infinite",
         blink: "blink 1s step-end infinite",
       },
       keyframes: {
@@ -65,6 +68,18 @@ const config: Config = {
           "0%": { transform: "scale(0.6)", opacity: "0.7" },
           "80%": { transform: "scale(2.2)", opacity: "0" },
           "100%": { transform: "scale(2.2)", opacity: "0" },
+        },
+        floatSlow: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-6px)" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        beam: {
+          "0%, 100%": { opacity: "0.35", transform: "translateX(-10%)" },
+          "50%": { opacity: "0.9", transform: "translateX(10%)" },
         },
         blink: {
           "0%, 100%": { opacity: "1" },

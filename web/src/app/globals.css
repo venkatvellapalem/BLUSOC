@@ -9,6 +9,7 @@
 
 html {
   color-scheme: light;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -43,7 +44,6 @@ body {
 }
 
 @layer components {
-  /* Clean elevated panel: flat white, hairline border, no blur */
   .panel {
     background: #ffffff;
     border: 1px solid #e7ebf1;
@@ -54,6 +54,11 @@ body {
     height: 1px;
     background: #eef1f5;
   }
+
+  .flow-line {
+    stroke-dasharray: 6 8;
+    animation: dashFlow 1.4s linear infinite;
+  }
 }
 
 @layer utilities {
@@ -62,6 +67,9 @@ body {
   }
   .tabular {
     font-variant-numeric: tabular-nums;
+  }
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
   }
 }
 
@@ -72,5 +80,6 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -17,6 +17,7 @@ const METRICS = [
 
 const STACK = [
   { name: "Wazuh", src: "/logos/wazuh.svg", width: 22, height: 22 },
+  { name: "n8n", src: "/logos/n8n.svg", width: 22, height: 22 },
   { name: "Suricata", src: "/logos/suricata.png", width: 22, height: 22 },
   { name: "CrowdStrike", src: "/logos/crowdstrike.svg", width: 96, height: 18 },
   { name: "Laya", src: "/logos/laya.svg", width: 22, height: 22 },
@@ -27,7 +28,7 @@ const MODULES = [
     title: "Pipeline",
     path: "/pipeline",
     icon: GitFork,
-    line: "Wazuh → Laya triage → IRIS, Discord/Slack, FortiGate.",
+    line: "Wazuh → n8n enrich → Laya triage → IRIS, Discord/Slack, FortiGate.",
     hoverTitle: "group-hover:text-blue-600",
     hoverIcon: "group-hover:border-blue-300 group-hover:text-blue-600",
   },
@@ -74,7 +75,7 @@ export default function HomePage() {
             Detection that silences the noise.
           </motion.h1>
           <motion.p variants={item} className="mt-6 text-base sm:text-lg leading-relaxed text-brand-text-secondary max-w-2xl">
-            Multi-source telemetry correlated in Wazuh, with qualifying alerts triaged by Laya. Only true positive, high-confidence alerts become DFIR-IRIS tickets for analyst investigation, while alerts notify Discord/Slack and containment isolates affected systems via FortiGate.
+            Multi-source telemetry correlated in Wazuh, qualifying alerts enriched by n8n, and triaged by Laya. Only true positive, high-confidence alerts become DFIR-IRIS tickets for analyst investigation, while alerts notify Discord/Slack and containment isolates affected systems via FortiGate.
           </motion.p>
           <motion.div variants={item} className="mt-10 flex flex-wrap items-center gap-3">
             <Link
@@ -153,7 +154,7 @@ export default function HomePage() {
               </h2>
             </div>
             <p className="text-sm text-brand-text-secondary max-w-md leading-relaxed">
-              Wazuh correlates and suppresses at scale. Laya triages qualifying alerts and routes only confirmed, high-confidence threats to IRIS, with notifications and containment handled automatically.
+              Wazuh correlates and suppresses at scale. n8n enriches qualifying alerts, Laya triages and routes only confirmed, high-confidence threats to IRIS, with notifications and containment handled automatically.
             </p>
           </div>
         </Reveal>
@@ -162,23 +163,25 @@ export default function HomePage() {
             <div className="h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm">
               <div className="flex items-center gap-3">
                 <Image src="/logos/wazuh.svg" alt="Wazuh" width={28} height={28} className="h-7 w-7" />
-                <span className="font-mono text-[11px] font-semibold text-blue-700 bg-blue-50 border border-blue-100 rounded-full px-2.5 py-1">Correlate & suppress</span>
+                <Image src="/logos/n8n.svg" alt="n8n" width={22} height={22} className="h-[22px] w-[22px]" />
+                <span className="font-mono text-[11px] font-semibold text-blue-700 bg-blue-50 border border-blue-100 rounded-full px-2.5 py-1">Qualify & enrich</span>
               </div>
-              <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">Wazuh → Laya</h3>
+              <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">Wazuh → n8n → Laya</h3>
               <p className="mt-2 text-sm leading-relaxed text-brand-text-secondary">
-                Wazuh normalizes multi-source telemetry, drops known noise, and forwards qualifying alerts to Laya. Alerts are not sent directly to IRIS or analysts.
+                Wazuh normalizes multi-source telemetry, drops known noise, and forwards qualifying alerts to n8n. n8n enriches context and hands off to Laya. Alerts are not sent directly to IRIS or analysts.
               </p>
             </div>
           </Reveal>
           <Reveal delay={1}>
             <div className="h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm">
               <div className="flex items-center gap-3">
+                <Image src="/logos/n8n.svg" alt="n8n" width={24} height={24} className="h-6 w-6" />
                 <Image src="/logos/laya.svg" alt="Laya" width={28} height={28} className="h-7 w-7" />
-                <span className="font-mono text-[11px] font-semibold text-violet-700 bg-violet-50 border border-violet-100 rounded-full px-2.5 py-1">Triage & route</span>
+                <span className="font-mono text-[11px] font-semibold text-violet-700 bg-violet-50 border border-violet-100 rounded-full px-2.5 py-1">Enrich & route</span>
               </div>
               <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">Laya decisioning</h3>
               <p className="mt-2 text-sm leading-relaxed text-brand-text-secondary">
-                Laya evaluates verdict and confidence, creates DFIR-IRIS tickets only for true positive, high-confidence alerts, and dispatches notifications to Discord and Slack.
+                Laya evaluates enriched alerts for verdict and confidence, creates DFIR-IRIS tickets only for true positive, high-confidence alerts, and dispatches notifications to Discord and Slack.
               </p>
             </div>
           </Reveal>
@@ -190,7 +193,7 @@ export default function HomePage() {
               </div>
               <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">IRIS &amp; FortiGate</h3>
               <p className="mt-2 text-sm leading-relaxed text-brand-text-secondary">
-                Analysts investigate IRIS tickets, while containment actions are sent to FortiGate to isolate affected systems when threats are confirmed.
+                Analysts investigate IRIS tickets, while containment actions are sent to FortiGate to isolate affected systems when threats are confirmed by Laya.
               </p>
             </div>
           </Reveal>
