@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Shield, GitFork, Activity, Sliders, Menu, X, Terminal } from "lucide-react";
+import { Shield, GitFork, Activity, Sliders, Menu, X, Terminal, Layers } from "lucide-react";
 
 const NAV_ITEMS = [
   { name: "Overview", href: "/", icon: Activity },
   { name: "Pipeline", href: "/pipeline", icon: GitFork },
+  { name: "Tech Stack", href: "/tech-stack", icon: Layers },
   { name: "Sample", href: "/workbench", icon: Shield },
   { name: "Fatigue Lab", href: "/fatigue-lab", icon: Sliders },
 ];

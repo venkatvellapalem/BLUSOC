@@ -16,22 +16,23 @@ export function Footer() {
               </span>
             </div>
             <p className="text-xs text-brand-text-secondary max-w-md leading-relaxed">
-              Production blue-team engineering: alert noise suppression, packet correlation and
-              automated triage across Wazuh, Suricata and DFIR-IRIS.
+              Production blue-team engineering: alert noise suppression, Laya triage, and
+              automated response across Wazuh, DFIR-IRIS, Discord/Slack, and FortiGate.
             </p>
             <div className="flex items-center gap-3 text-xs text-brand-text-muted font-mono">
-              <span>Wazuh 4.8</span>
+              <span>Wazuh</span>
               <span>·</span>
-              <span>Suricata 7</span>
+              <span>Laya</span>
               <span>·</span>
-              <span>DFIR-IRIS 2.4</span>
+              <span>DFIR-IRIS</span>
             </div>
           </div>
 
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-brand-text-primary">Interactive Lab</h4>
+            <h4 className="text-xs font-semibold text-brand-text-primary">Explore</h4>
             <ul className="space-y-2 text-xs text-brand-text-secondary">
-              <li><Link href="/pipeline" className="hover:text-blue-600 transition-colors">Pipeline Orchestrator</Link></li>
+              <li><Link href="/pipeline" className="hover:text-blue-600 transition-colors">Pipeline Flow</Link></li>
+              <li><Link href="/tech-stack" className="hover:text-blue-600 transition-colors">Tech Stack</Link></li>
               <li><Link href="/workbench" className="hover:text-blue-600 transition-colors">Triage Sample</Link></li>
               <li><Link href="/fatigue-lab" className="hover:text-blue-600 transition-colors">Fatigue Lab</Link></li>
             </ul>

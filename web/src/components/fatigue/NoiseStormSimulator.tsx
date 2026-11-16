@@ -156,7 +156,7 @@ export function NoiseStormSimulator({ isTuned, suppressionRatio }: NoiseStormSim
         {/* Actionable Incident Egress (Right) */}
         <div className="absolute top-3 right-4 text-[10px] font-mono text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          DFIR-IRIS SOAR Egress
+          DFIR-IRIS Ticket Egress (via Laya)
         </div>
 
         {/* Render Moving Particles */}

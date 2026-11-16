@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { GitFork, Shield, Sliders, ArrowRight, ArrowUpRight } from "lucide-react";
+import { GitFork, Sliders, ArrowRight, ArrowUpRight, Layers } from "lucide-react";
 import { CorrelationConsole } from "@/components/home/CorrelationGraph";
 import { AnimatedCounter } from "@/components/home/AnimatedCounter";
 import { Reveal } from "@/components/home/Reveal";
@@ -19,6 +19,7 @@ const STACK = [
   { name: "Wazuh", src: "/logos/wazuh.svg", width: 22, height: 22 },
   { name: "Suricata", src: "/logos/suricata.png", width: 22, height: 22 },
   { name: "CrowdStrike", src: "/logos/crowdstrike.svg", width: 96, height: 18 },
+  { name: "Laya", src: "/logos/laya.svg", width: 22, height: 22 },
 ];
 
 const MODULES = [
@@ -26,23 +27,23 @@ const MODULES = [
     title: "Pipeline",
     path: "/pipeline",
     icon: GitFork,
-    line: "Tap to ticket, five stages.",
+    line: "Wazuh → Laya triage → IRIS, Discord/Slack, FortiGate.",
     hoverTitle: "group-hover:text-blue-600",
     hoverIcon: "group-hover:border-blue-300 group-hover:text-blue-600",
   },
   {
-    title: "Sample",
-    path: "/workbench",
-    icon: Shield,
-    line: "One incident, read-only.",
-    hoverTitle: "group-hover:text-emerald-600",
-    hoverIcon: "group-hover:border-emerald-300 group-hover:text-emerald-600",
+    title: "Tech Stack",
+    path: "/tech-stack",
+    icon: Layers,
+    line: "Products, sensors, and response platforms across the stack.",
+    hoverTitle: "group-hover:text-violet-600",
+    hoverIcon: "group-hover:border-violet-300 group-hover:text-violet-600",
   },
   {
     title: "Fatigue Lab",
     path: "/fatigue-lab",
     icon: Sliders,
-    line: "Watch the noise vanish.",
+    line: "Watch suppression turn noise into signal.",
     hoverTitle: "group-hover:text-amber-600",
     hoverIcon: "group-hover:border-amber-300 group-hover:text-amber-600",
   },
@@ -60,7 +61,6 @@ const item = {
 export default function HomePage() {
   return (
     <div className="relative">
-      {/* Hero */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 lg:pt-28 pb-10">
         <motion.div variants={container} initial="hidden" animate="show" className="max-w-4xl">
           <motion.p variants={item} className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.22em] uppercase text-brand-text-secondary">
@@ -74,8 +74,7 @@ export default function HomePage() {
             Detection that silences the noise.
           </motion.h1>
           <motion.p variants={item} className="mt-6 text-base sm:text-lg leading-relaxed text-brand-text-secondary max-w-2xl">
-            A production-grade blue-team showcase: tuned Wazuh detection, Suricata and CrowdStrike
-            telemetry, and automated triage that cuts 87.1% of alert noise.
+            Multi-source telemetry correlated in Wazuh, with qualifying alerts triaged by Laya. Only true positive, high-confidence alerts become DFIR-IRIS tickets for analyst investigation, while alerts notify Discord/Slack and containment isolates affected systems via FortiGate.
           </motion.p>
           <motion.div variants={item} className="mt-10 flex flex-wrap items-center gap-3">
             <Link
@@ -83,21 +82,21 @@ export default function HomePage() {
               className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white hover:bg-blue-700 transition-all shadow-[0_8px_24px_-10px_rgba(37,99,235,0.55)] hover:shadow-[0_12px_28px_-10px_rgba(37,99,235,0.65)]"
             >
               <GitFork className="h-4 w-4" />
-              Explore Pipeline
+              View Pipeline
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              href="/fatigue-lab"
+              href="/tech-stack"
               className="inline-flex items-center gap-2 rounded-xl border border-brand-border bg-white px-6 py-3.5 text-sm font-semibold text-brand-text-primary hover:border-slate-300 hover:shadow-sm transition-all"
             >
-              <Sliders className="h-4 w-4 text-amber-600" />
-              Fatigue Lab
+              <Layers className="h-4 w-4 text-violet-600" />
+              Tech Stack
             </Link>
           </motion.div>
 
           <motion.div variants={item} className="mt-12 pt-8 border-t border-brand-border">
             <p className="text-[11px] font-mono tracking-[0.18em] uppercase text-brand-text-muted mb-4">
-              Telemetry stack
+              Core platforms
             </p>
             <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
               {STACK.map((s) => (
@@ -110,9 +109,7 @@ export default function HomePage() {
               ))}
               <span className="hidden sm:inline h-5 w-px bg-brand-border" aria-hidden="true" />
               <div className="flex items-center gap-2.5 text-brand-text-primary">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-white">
-                  <Shield className="h-4 w-4" />
-                </span>
+                <Image src="/logos/dfir-iris.svg" alt="DFIR-IRIS logo" width={22} height={22} className="h-[22px] w-[22px]" />
                 <span className="text-sm font-semibold tracking-tight">DFIR-IRIS</span>
               </div>
             </div>
@@ -120,7 +117,6 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* Live correlation console */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="relative rounded-xl panel overflow-hidden">
@@ -129,7 +125,6 @@ export default function HomePage() {
         </Reveal>
       </section>
 
-      {/* Metrics */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24">
         <Reveal>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-brand-border rounded-2xl overflow-hidden border border-brand-border shadow-sm">
@@ -140,7 +135,7 @@ export default function HomePage() {
                 </div>
                 <div className="mt-3 text-sm font-medium text-brand-text-secondary">{m.label}</div>
                 <div className="mt-6 h-1 w-12 rounded-full bg-slate-100 overflow-hidden">
-                  <div className={`h-full ${m.bar} rounded-full transition-all duration-700`} style={{ width: "100%" }} />
+                  <div className={`h-full ${m.bar} rounded-full`} style={{ width: "100%" }} />
                 </div>
               </div>
             ))}
@@ -148,68 +143,60 @@ export default function HomePage() {
         </Reveal>
       </section>
 
-      {/* Integrated Stack */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-24">
         <Reveal>
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
             <div>
-              <p className="text-sm font-mono tracking-[0.18em] uppercase text-brand-text-muted">Integrated Stack</p>
+              <p className="text-sm font-mono tracking-[0.18em] uppercase text-brand-text-muted">Response Flow</p>
               <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-[-0.03em] text-brand-text-primary">
-                Built on proven detection tools.
+                Qualifying alerts, decided by Laya.
               </h2>
             </div>
             <p className="text-sm text-brand-text-secondary max-w-md leading-relaxed">
-              Each layer is tuned, correlated, and wired end-to-end from raw telemetry to a resolved case.
+              Wazuh correlates and suppresses at scale. Laya triages qualifying alerts and routes only confirmed, high-confidence threats to IRIS, with notifications and containment handled automatically.
             </p>
           </div>
         </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <Reveal delay={0}>
-            <div className="group h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm hover:shadow-md hover:border-blue-200 transition-all">
-              <div className="flex items-center justify-between">
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-blue-50 border border-blue-100">
-                  <Image src="/logos/wazuh.svg" alt="Wazuh logo" width={32} height={32} className="h-8 w-8" />
-                </div>
-                <span className="font-mono text-[11px] font-semibold text-blue-600 bg-blue-50 border border-blue-100 rounded-full px-2.5 py-1">SIEM Core</span>
+            <div className="h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm">
+              <div className="flex items-center gap-3">
+                <Image src="/logos/wazuh.svg" alt="Wazuh" width={28} height={28} className="h-7 w-7" />
+                <span className="font-mono text-[11px] font-semibold text-blue-700 bg-blue-50 border border-blue-100 rounded-full px-2.5 py-1">Correlate & suppress</span>
               </div>
-              <h3 className="mt-6 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">Wazuh</h3>
+              <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">Wazuh → Laya</h3>
               <p className="mt-2 text-sm leading-relaxed text-brand-text-secondary">
-                Decodes, correlates, and evaluates 14,280 daily events against tuned rules, dropping 98.7% of noise at Level 0.
+                Wazuh normalizes multi-source telemetry, drops known noise, and forwards qualifying alerts to Laya. Alerts are not sent directly to IRIS or analysts.
               </p>
             </div>
           </Reveal>
           <Reveal delay={1}>
-            <div className="group h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm hover:shadow-md hover:border-orange-200 transition-all">
-              <div className="flex items-center justify-between">
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-orange-50 border border-orange-100">
-                  <Image src="/logos/suricata.png" alt="Suricata logo" width={32} height={32} className="h-8 w-8 object-contain" />
-                </div>
-                <span className="font-mono text-[11px] font-semibold text-orange-700 bg-orange-50 border border-orange-100 rounded-full px-2.5 py-1">Network IDS</span>
+            <div className="h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm">
+              <div className="flex items-center gap-3">
+                <Image src="/logos/laya.svg" alt="Laya" width={28} height={28} className="h-7 w-7" />
+                <span className="font-mono text-[11px] font-semibold text-violet-700 bg-violet-50 border border-violet-100 rounded-full px-2.5 py-1">Triage & route</span>
               </div>
-              <h3 className="mt-6 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">Suricata</h3>
+              <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">Laya decisioning</h3>
               <p className="mt-2 text-sm leading-relaxed text-brand-text-secondary">
-                Deep packet inspection on 10GbE taps, streaming EVE JSON alerts for threat intel matches and protocol anomalies.
+                Laya evaluates verdict and confidence, creates DFIR-IRIS tickets only for true positive, high-confidence alerts, and dispatches notifications to Discord and Slack.
               </p>
             </div>
           </Reveal>
           <Reveal delay={2}>
-            <div className="group h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm hover:shadow-md hover:border-red-200 transition-all">
-              <div className="flex items-center justify-between">
-                <div className="flex h-14 w-28 items-center justify-center rounded-xl bg-red-50 border border-red-100 px-3">
-                  <Image src="/logos/crowdstrike.svg" alt="CrowdStrike logo" width={96} height={18} className="h-4 w-auto object-contain" />
-                </div>
-                <span className="font-mono text-[11px] font-semibold text-red-700 bg-red-50 border border-red-100 rounded-full px-2.5 py-1">EDR</span>
+            <div className="h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm">
+              <div className="flex items-center gap-3">
+                <Image src="/logos/fortinet.svg" alt="FortiGate" width={28} height={28} className="h-7 w-7" />
+                <span className="font-mono text-[11px] font-semibold text-rose-700 bg-rose-50 border border-rose-100 rounded-full px-2.5 py-1">Containment</span>
               </div>
-              <h3 className="mt-6 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">CrowdStrike Falcon</h3>
+              <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">IRIS &amp; FortiGate</h3>
               <p className="mt-2 text-sm leading-relaxed text-brand-text-secondary">
-                Endpoint telemetry and high-fidelity detections, with null-host noise filtered before it ever reaches the queue.
+                Analysts investigate IRIS tickets, while containment actions are sent to FortiGate to isolate affected systems when threats are confirmed.
               </p>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* Modules */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-24">
         <Reveal>
           <div className="flex items-end justify-between mb-8">
@@ -221,17 +208,12 @@ export default function HomePage() {
             const Icon = mod.icon;
             return (
               <Reveal key={mod.path} delay={i}>
-                <Link
-                  href={mod.path}
-                  className="group grid grid-cols-[auto_1fr_auto] items-center gap-5 sm:gap-7 py-8 border-b border-brand-border transition-all hover:bg-brand-surface/70 px-3 -mx-3 rounded-xl"
-                >
+                <Link href={mod.path} className="group grid grid-cols-[auto_1fr_auto] items-center gap-5 sm:gap-7 py-8 border-b border-brand-border transition-all hover:bg-brand-surface/70 px-3 -mx-3 rounded-xl">
                   <div className={`flex h-12 w-12 items-center justify-center rounded-xl border border-brand-border bg-white text-brand-text-muted shadow-sm ${mod.hoverIcon} transition-all group-hover:shadow-md`}>
                     <Icon className="h-5 w-5" />
                   </div>
                   <div className="min-w-0">
-                    <h3 className={`text-xl sm:text-2xl font-bold tracking-[-0.02em] text-brand-text-primary ${mod.hoverTitle} transition-colors`}>
-                      {mod.title}
-                    </h3>
+                    <h3 className={`text-xl sm:text-2xl font-bold tracking-[-0.02em] text-brand-text-primary ${mod.hoverTitle} transition-colors`}>{mod.title}</h3>
                     <p className="mt-1.5 text-sm sm:text-[15px] leading-relaxed text-brand-text-secondary">{mod.line}</p>
                   </div>
                   <ArrowUpRight className={`h-5 w-5 text-brand-text-muted ${mod.hoverIcon} transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5`} />
@@ -242,28 +224,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-28">
         <Reveal>
           <div className="relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 rounded-2xl border border-brand-border bg-gradient-to-br from-white via-white to-blue-50/40 p-8 lg:p-12 shadow-sm">
             <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-100/40 blur-3xl" />
             <div className="relative">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-[-0.03em] text-brand-text-primary">
-                Ship the full stack.
-              </h2>
-              <p className="mt-2 text-sm text-brand-text-secondary max-w-md">
-                Detection rules, middleware, deployment scripts and this showcase, all in one repository.
-              </p>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-[-0.03em] text-brand-text-primary">Explore the full stack.</h2>
+              <p className="mt-2 text-sm text-brand-text-secondary max-w-md">See every integrated platform, from sensors and correlation to triage, ticketing, notifications, and containment.</p>
             </div>
-            <a
-              href="https://github.com/blusoc/blusoc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10"
-            >
-              View Repository
+            <Link href="/tech-stack" className="relative inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10">
+              View Tech Stack
               <ArrowUpRight className="h-4 w-4" />
-            </a>
+            </Link>
           </div>
         </Reveal>
       </section>

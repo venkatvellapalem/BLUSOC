@@ -384,7 +384,7 @@ export default function FatigueLabPage() {
                       Tier 3: High-Fidelity Threat Intelligence (Levels 8 to 12)
                     </span>
                     <p className="text-xs text-brand-text-secondary">
-                      Rules 100011 (malware binaries), 86601 (ET DROP / CINS Army), and 100400 (GPL Apache RCE) tag MITRE ATT&CK techniques and automatically dispatch high-priority incident tickets to the DFIR-IRIS SOAR platform.
+                      Rules 100011 (malware binaries), 86601 (ET DROP / CINS Army), and 100400 (GPL Apache RCE) tag MITRE ATT&CK techniques and route qualifying alerts to Laya, which creates DFIR-IRIS tickets only for true positive, high-confidence threats.
                     </p>
                   </div>
                 </div>
