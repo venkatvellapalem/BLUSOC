@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { GitFork, Shield, Sliders, ArrowRight, ArrowUpRight } from "lucide-react";
 import { CorrelationConsole } from "@/components/home/CorrelationGraph";
@@ -8,10 +9,16 @@ import { AnimatedCounter } from "@/components/home/AnimatedCounter";
 import { Reveal } from "@/components/home/Reveal";
 
 const METRICS = [
-  { value: 3410000, suffix: "", label: "Raw events", accent: "text-blue-600", bar: "bg-blue-500" },
+  { value: 3410000, suffix: "", label: "Raw events processed", accent: "text-blue-600", bar: "bg-blue-500" },
   { value: 87.1, decimals: 1, suffix: "%", label: "Noise suppressed", accent: "text-emerald-600", bar: "bg-emerald-500" },
   { value: 68, suffix: "%", label: "Faster MTTR", accent: "text-amber-600", bar: "bg-amber-500" },
   { value: 67, suffix: "", label: "Attacks surfaced", accent: "text-rose-600", bar: "bg-rose-500" },
+];
+
+const STACK = [
+  { name: "Wazuh", src: "/logos/wazuh.svg", width: 22, height: 22 },
+  { name: "Suricata", src: "/logos/suricata.png", width: 22, height: 22 },
+  { name: "CrowdStrike", src: "/logos/crowdstrike.svg", width: 96, height: 18 },
 ];
 
 const MODULES = [
@@ -54,22 +61,26 @@ export default function HomePage() {
   return (
     <div className="relative">
       {/* Hero */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 lg:pt-24 pb-8">
-        <motion.div variants={container} initial="hidden" animate="show">
-          <motion.p variants={item} className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.22em] text-brand-text-secondary">
+      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 lg:pt-28 pb-10">
+        <motion.div variants={container} initial="hidden" animate="show" className="max-w-4xl">
+          <motion.p variants={item} className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.22em] uppercase text-brand-text-secondary">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
-            DETECTION OPERATIONS
+            Detection Operations
           </motion.p>
-          <motion.h1 variants={item} className="mt-6 text-4xl sm:text-6xl lg:text-7xl font-bold tracking-[-0.035em] leading-[1.02] text-brand-text-primary max-w-4xl">
+          <motion.h1 variants={item} className="mt-7 text-4xl sm:text-6xl lg:text-[4.5rem] font-bold tracking-[-0.04em] leading-[1.02] text-brand-text-primary">
             Detection that silences the noise.
           </motion.h1>
-          <motion.div variants={item} className="mt-9 flex flex-wrap items-center gap-3">
+          <motion.p variants={item} className="mt-6 text-base sm:text-lg leading-relaxed text-brand-text-secondary max-w-2xl">
+            A production-grade blue-team showcase: tuned Wazuh detection, Suricata and CrowdStrike
+            telemetry, and automated triage that cuts 87.1% of alert noise.
+          </motion.p>
+          <motion.div variants={item} className="mt-10 flex flex-wrap items-center gap-3">
             <Link
               href="/pipeline"
-              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-glow"
+              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white hover:bg-blue-700 transition-all shadow-[0_8px_24px_-10px_rgba(37,99,235,0.55)] hover:shadow-[0_12px_28px_-10px_rgba(37,99,235,0.65)]"
             >
               <GitFork className="h-4 w-4" />
               Explore Pipeline
@@ -77,11 +88,34 @@ export default function HomePage() {
             </Link>
             <Link
               href="/fatigue-lab"
-              className="inline-flex items-center gap-2 rounded-lg border border-brand-border bg-white px-5 py-3 text-sm font-semibold text-brand-text-primary hover:border-slate-300 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl border border-brand-border bg-white px-6 py-3.5 text-sm font-semibold text-brand-text-primary hover:border-slate-300 hover:shadow-sm transition-all"
             >
               <Sliders className="h-4 w-4 text-amber-600" />
               Fatigue Lab
             </Link>
+          </motion.div>
+
+          <motion.div variants={item} className="mt-12 pt-8 border-t border-brand-border">
+            <p className="text-[11px] font-mono tracking-[0.18em] uppercase text-brand-text-muted mb-4">
+              Telemetry stack
+            </p>
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+              {STACK.map((s) => (
+                <div key={s.name} className="flex items-center gap-2.5 text-brand-text-primary">
+                  <span className="flex h-9 w-auto items-center justify-center">
+                    <Image src={s.src} alt={`${s.name} logo`} width={s.width} height={s.height} className="h-[22px] w-auto object-contain" />
+                  </span>
+                  <span className="text-sm font-semibold tracking-tight">{s.name}</span>
+                </div>
+              ))}
+              <span className="hidden sm:inline h-5 w-px bg-brand-border" aria-hidden="true" />
+              <div className="flex items-center gap-2.5 text-brand-text-primary">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-white">
+                  <Shield className="h-4 w-4" />
+                </span>
+                <span className="text-sm font-semibold tracking-tight">DFIR-IRIS</span>
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       </section>
@@ -96,17 +130,17 @@ export default function HomePage() {
       </section>
 
       {/* Metrics */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24">
         <Reveal>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-brand-border rounded-xl overflow-hidden border border-brand-border">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-brand-border rounded-2xl overflow-hidden border border-brand-border shadow-sm">
             {METRICS.map((m) => (
-              <div key={m.label} className="bg-white p-6 lg:p-8">
-                <div className={`text-3xl lg:text-5xl font-bold tracking-tight tabular ${m.accent}`}>
+              <div key={m.label} className="bg-white p-7 lg:p-9 group">
+                <div className={`text-3xl lg:text-5xl font-bold tracking-[-0.03em] tabular ${m.accent}`}>
                   <AnimatedCounter value={m.value} decimals={m.decimals ?? 0} suffix={m.suffix} />
                 </div>
-                <div className="mt-2 text-sm text-brand-text-secondary">{m.label}</div>
-                <div className="mt-5 h-px w-10 bg-brand-border">
-                  <div className={`h-px ${m.bar}`} style={{ width: "100%" }} />
+                <div className="mt-3 text-sm font-medium text-brand-text-secondary">{m.label}</div>
+                <div className="mt-6 h-1 w-12 rounded-full bg-slate-100 overflow-hidden">
+                  <div className={`h-full ${m.bar} rounded-full transition-all duration-700`} style={{ width: "100%" }} />
                 </div>
               </div>
             ))}
@@ -115,7 +149,12 @@ export default function HomePage() {
       </section>
 
       {/* Modules */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 lg:pb-20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-24">
+        <Reveal>
+          <div className="flex items-end justify-between mb-8">
+            <h2 className="text-sm font-mono tracking-[0.18em] uppercase text-brand-text-muted">Explore</h2>
+          </div>
+        </Reveal>
         <div className="border-t border-brand-border">
           {MODULES.map((mod, i) => {
             const Icon = mod.icon;
@@ -123,16 +162,16 @@ export default function HomePage() {
               <Reveal key={mod.path} delay={i}>
                 <Link
                   href={mod.path}
-                  className="group grid grid-cols-[auto_1fr_auto] items-center gap-6 py-7 border-b border-brand-border transition-colors hover:bg-brand-surface px-2 -mx-2 rounded-lg"
+                  className="group grid grid-cols-[auto_1fr_auto] items-center gap-5 sm:gap-7 py-8 border-b border-brand-border transition-all hover:bg-brand-surface/70 px-3 -mx-3 rounded-xl"
                 >
-                  <div className={`flex h-11 w-11 items-center justify-center rounded-lg border border-brand-border bg-white text-brand-text-muted ${mod.hoverIcon} transition-colors`}>
+                  <div className={`flex h-12 w-12 items-center justify-center rounded-xl border border-brand-border bg-white text-brand-text-muted shadow-sm ${mod.hoverIcon} transition-all group-hover:shadow-md`}>
                     <Icon className="h-5 w-5" />
                   </div>
                   <div className="min-w-0">
-                    <h3 className={`text-xl sm:text-2xl font-bold tracking-tight text-brand-text-primary ${mod.hoverTitle} transition-colors`}>
+                    <h3 className={`text-xl sm:text-2xl font-bold tracking-[-0.02em] text-brand-text-primary ${mod.hoverTitle} transition-colors`}>
                       {mod.title}
                     </h3>
-                    <p className="mt-1 text-sm text-brand-text-muted">{mod.line}</p>
+                    <p className="mt-1.5 text-sm sm:text-[15px] leading-relaxed text-brand-text-secondary">{mod.line}</p>
                   </div>
                   <ArrowUpRight className={`h-5 w-5 text-brand-text-muted ${mod.hoverIcon} transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5`} />
                 </Link>
@@ -143,17 +182,23 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-28">
         <Reveal>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 rounded-xl panel p-8 lg:p-10">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-brand-text-primary">
-              Ship the full stack.
-            </h2>
+          <div className="relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 rounded-2xl border border-brand-border bg-gradient-to-br from-white via-white to-blue-50/40 p-8 lg:p-12 shadow-sm">
+            <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-100/40 blur-3xl" />
+            <div className="relative">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-[-0.03em] text-brand-text-primary">
+                Ship the full stack.
+              </h2>
+              <p className="mt-2 text-sm text-brand-text-secondary max-w-md">
+                Detection rules, middleware, deployment scripts and this showcase, all in one repository.
+              </p>
+            </div>
             <a
               href="https://github.com/blusoc/blusoc"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-glow"
+              className="relative inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10"
             >
               View Repository
               <ArrowUpRight className="h-4 w-4" />
