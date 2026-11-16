@@ -40,10 +40,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-screen bg-brand-canvas font-sans text-brand-text-primary antialiased flex flex-col relative overflow-x-hidden">
-        {/* Soft Ambient Light Glows */}
-        <div aria-hidden="true" className="pointer-events-none fixed -top-32 -left-32 w-96 h-96 rounded-full bg-blue-400/10 blur-3xl" />
-        <div aria-hidden="true" className="pointer-events-none fixed top-1/4 -right-32 w-[32rem] h-[32rem] rounded-full bg-emerald-400/10 blur-3xl" />
-        <div aria-hidden="true" className="pointer-events-none fixed -bottom-32 left-1/3 w-96 h-96 rounded-full bg-sky-300/10 blur-3xl" />
+        {/* Subtle top ambient wash */}
+        <div aria-hidden="true" className="pointer-events-none fixed -top-40 -left-40 w-[40rem] h-[40rem] rounded-full bg-blue-100/40 blur-3xl" />
 
         {/* Global Navigation Bar */}
         <Navbar />
