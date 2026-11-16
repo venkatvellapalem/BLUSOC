@@ -470,10 +470,10 @@ export default function FatigueLabPage() {
                       <Shield className="h-4 w-4 text-emerald-600" />
                       <div>
                         <span className="block text-xs font-bold text-brand-text-primary">
-                          Analyst Workbench
+                          Triage Sample
                         </span>
                         <span className="block text-[11px] text-brand-text-muted">
-                          Triage 67 confirmed attack alerts
+                          A read-only sample incident
                         </span>
                       </div>
                     </div>

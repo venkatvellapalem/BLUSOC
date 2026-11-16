@@ -8,7 +8,7 @@ import { Shield, GitFork, Activity, Sliders, Menu, X, Terminal } from "lucide-re
 const NAV_ITEMS = [
   { name: "Overview", href: "/", icon: Activity },
   { name: "Pipeline", href: "/pipeline", icon: GitFork },
-  { name: "Workbench", href: "/workbench", icon: Shield },
+  { name: "Sample", href: "/workbench", icon: Shield },
   { name: "Fatigue Lab", href: "/fatigue-lab", icon: Sliders },
 ];
 

@@ -32,7 +32,7 @@ export function Footer() {
             <h4 className="text-xs font-semibold text-brand-text-primary">Interactive Lab</h4>
             <ul className="space-y-2 text-xs text-brand-text-secondary">
               <li><Link href="/pipeline" className="hover:text-blue-600 transition-colors">Pipeline Orchestrator</Link></li>
-              <li><Link href="/workbench" className="hover:text-blue-600 transition-colors">Analyst Workbench</Link></li>
+              <li><Link href="/workbench" className="hover:text-blue-600 transition-colors">Triage Sample</Link></li>
               <li><Link href="/fatigue-lab" className="hover:text-blue-600 transition-colors">Fatigue Lab</Link></li>
             </ul>
           </div>

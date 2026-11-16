@@ -174,7 +174,7 @@ export default function PipelinePage() {
                 className="inline-flex items-center gap-2 rounded-lg border border-brand-border bg-white px-3.5 py-2 text-xs font-semibold text-brand-text-primary hover:bg-brand-muted transition-colors shadow-subtle"
               >
                 <Shield className="h-4 w-4 text-blue-600" />
-                <span>Analyst Workbench</span>
+                <span>Triage Sample</span>
                 <ArrowRight className="h-3.5 w-3.5 text-brand-text-muted" />
               </Link>
               <Link

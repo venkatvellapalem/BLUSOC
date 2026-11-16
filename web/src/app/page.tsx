@@ -24,10 +24,10 @@ const MODULES = [
     hoverIcon: "group-hover:border-blue-300 group-hover:text-blue-600",
   },
   {
-    title: "Workbench",
+    title: "Sample",
     path: "/workbench",
     icon: Shield,
-    line: "Investigate the 67.",
+    line: "One incident, read-only.",
     hoverTitle: "group-hover:text-emerald-600",
     hoverIcon: "group-hover:border-emerald-300 group-hover:text-emerald-600",
   },
@@ -76,11 +76,11 @@ export default function HomePage() {
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              href="/workbench"
+              href="/fatigue-lab"
               className="inline-flex items-center gap-2 rounded-lg border border-brand-border bg-white px-5 py-3 text-sm font-semibold text-brand-text-primary hover:border-slate-300 transition-colors"
             >
-              <Shield className="h-4 w-4 text-emerald-600" />
-              Triage 67 Attacks
+              <Sliders className="h-4 w-4 text-amber-600" />
+              Fatigue Lab
             </Link>
           </motion.div>
         </motion.div>
