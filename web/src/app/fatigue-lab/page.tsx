@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Sliders,
   ArrowLeft,
@@ -174,18 +175,32 @@ export default function FatigueLabPage() {
         </div>
 
         {/* Hero Title Section */}
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600 border border-blue-200 shadow-subtle">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 border-b border-brand-border pb-8">
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white shadow-[0_8px_20px_-8px_rgba(37,99,235,0.5)]">
               <Sliders className="h-6 w-6" />
             </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-brand-text-primary">
+            <div className="space-y-2">
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-[-0.03em] text-brand-text-primary">
                 Alert Fatigue Reduction Lab
               </h1>
-              <p className="text-xs sm:text-sm text-brand-text-secondary mt-0.5">
-                Dynamic telemetry noise modeling, interactive rule optimizer matrix, and quantified SOC capacity ROI.
+              <p className="text-sm sm:text-[15px] leading-relaxed text-brand-text-secondary max-w-2xl">
+                Tune Wazuh suppression rules, model noise drop, and quantify the operational ROI of precision detection.
               </p>
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
+                  <Image src="/logos/wazuh.svg" alt="Wazuh" width={14} height={14} className="h-3.5 w-3.5" />
+                  Wazuh 4.8
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
+                  <Image src="/logos/crowdstrike.svg" alt="CrowdStrike" width={54} height={10} className="h-2.5 w-auto" />
+                  CrowdStrike
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
+                  <Image src="/logos/suricata.png" alt="Suricata" width={14} height={14} className="h-3.5 w-3.5 object-contain" />
+                  Suricata
+                </span>
+              </div>
             </div>
           </div>
         </div>

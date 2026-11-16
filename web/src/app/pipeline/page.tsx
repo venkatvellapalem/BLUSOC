@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   GitFork,
   ArrowLeft,
@@ -130,7 +131,7 @@ export default function PipelinePage() {
     <div className="min-h-screen bg-brand-canvas py-8 lg:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Navigation & Header */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div className="flex items-center justify-between">
             <Link
               href="/"
@@ -141,78 +142,92 @@ export default function PipelinePage() {
             </Link>
 
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 border border-emerald-200">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold text-emerald-700 border border-emerald-200">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Pipeline Online
               </span>
-              <span className="font-mono text-xs text-brand-text-muted">
-                v2026.11-PROD
-              </span>
+              <span className="font-mono text-[11px] text-brand-text-muted">v2026.1</span>
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-brand-border pb-6">
-            <div className="space-y-1">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600 border border-blue-200 shadow-subtle">
-                  <GitFork className="h-5 w-5" />
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-brand-border pb-8">
+            <div className="space-y-4 max-w-3xl">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white shadow-[0_8px_20px_-8px_rgba(37,99,235,0.5)]">
+                  <GitFork className="h-6 w-6" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold tracking-tight text-brand-text-primary">
+                  <h1 className="text-3xl sm:text-4xl font-bold tracking-[-0.03em] text-brand-text-primary">
                     Visual Pipeline Orchestrator
                   </h1>
-                  <p className="text-xs text-brand-text-secondary">
-                    Five-stage distributed telemetry DAG, XML suppression matrix, and interactive packet flow engine
+                  <p className="mt-1.5 text-sm sm:text-[15px] leading-relaxed text-brand-text-secondary">
+                    Five-stage telemetry DAG from sensor tap to SOAR case, with tuned suppression and interactive packet flow.
                   </p>
                 </div>
               </div>
+              <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
+                  <Image src="/logos/suricata.png" alt="Suricata" width={16} height={16} className="h-4 w-4 object-contain" />
+                  Suricata
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
+                  <Image src="/logos/crowdstrike.svg" alt="CrowdStrike" width={60} height={11} className="h-3 w-auto object-contain" />
+                  CrowdStrike
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
+                  <Image src="/logos/wazuh.svg" alt="Wazuh" width={16} height={16} className="h-4 w-4 object-contain" />
+                  Wazuh
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
+                  <Database className="h-3.5 w-3.5 text-emerald-600" />
+                  DFIR-IRIS
+                </span>
+              </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 shrink-0">
               <Link
                 href="/workbench"
-                className="inline-flex items-center gap-2 rounded-lg border border-brand-border bg-white px-3.5 py-2 text-xs font-semibold text-brand-text-primary hover:bg-brand-muted transition-colors shadow-subtle"
+                className="inline-flex items-center gap-2 rounded-xl border border-brand-border bg-white px-4 py-2.5 text-sm font-semibold text-brand-text-primary hover:border-slate-300 hover:shadow-sm transition-all"
               >
-                <Shield className="h-4 w-4 text-blue-600" />
+                <Shield className="h-4 w-4 text-emerald-600" />
                 <span>Triage Sample</span>
-                <ArrowRight className="h-3.5 w-3.5 text-brand-text-muted" />
               </Link>
               <Link
                 href="/fatigue-lab"
-                className="inline-flex items-center gap-2 rounded-lg border border-brand-border bg-white px-3.5 py-2 text-xs font-semibold text-brand-text-primary hover:bg-brand-muted transition-colors shadow-subtle"
+                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-all shadow-[0_8px_20px_-10px_rgba(37,99,235,0.5)]"
               >
-                <Sliders className="h-4 w-4 text-amber-600" />
+                <Sliders className="h-4 w-4" />
                 <span>Fatigue Lab</span>
-                <ArrowRight className="h-3.5 w-3.5 text-brand-text-muted" />
               </Link>
             </div>
           </div>
         </div>
 
         {/* SEC-OPS DIAL INSTRUMENTATION DECK */}
-        <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.03)] backdrop-blur-md">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-bold text-blue-600 uppercase tracking-wider">
-                LIVE PIPELINE TELEMETRY INSTRUMENTS
+        <div className="rounded-2xl border border-brand-border bg-white p-6 sm:p-8 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-border pb-5 mb-6">
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-[11px] font-bold text-blue-600 uppercase tracking-[0.16em]">
+                Live Pipeline Telemetry
               </span>
               <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
-                CALIBRATED SENSORS
+                Calibrated
               </span>
             </div>
-            <span className="text-xs font-mono text-slate-400">
-              FIFO QUEUE: 142/65536 PKTS
+            <span className="text-[11px] font-mono text-brand-text-muted">
+              FIFO Queue: 142 / 65536 pkts
             </span>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
             <SecOpsDial
               value={14280}
               min={0}
               max={15000}
               label="Ingress Volume"
               unit="EPS"
-              sublabel="14,280 Daily Ingress"
+              sublabel="14,280 daily ingress"
               size={175}
             />
             <SecOpsDial
@@ -221,7 +236,7 @@ export default function PipelinePage() {
               max={15000}
               label="Suppressed Noise"
               unit="EPS"
-              sublabel="14,096 Dropped L0"
+              sublabel="14,096 dropped L0"
               size={175}
             />
             <SecOpsDial
@@ -230,7 +245,7 @@ export default function PipelinePage() {
               max={500}
               label="Actionable SOAR"
               unit="ALERTS"
-              sublabel="184 Clean Incidents"
+              sublabel="184 clean incidents"
               size={175}
             />
             <SecOpsDial
@@ -239,7 +254,7 @@ export default function PipelinePage() {
               max={10}
               label="Pipeline Latency"
               unit="MS"
-              sublabel="< 2.8ms Wire to IRIS"
+              sublabel="< 2.8ms wire to IRIS"
               formatValue={(v) => `${v.toFixed(1)}ms`}
               size={175}
             />
@@ -284,86 +299,116 @@ export default function PipelinePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
             {/* Stage 1 card */}
-            <div className="rounded-xl border border-brand-border bg-brand-canvas p-5 space-y-3">
+            <div className="rounded-xl border border-brand-border bg-white p-5 space-y-3 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs font-bold text-blue-600">Stage 01</span>
                 <span className="text-[11px] text-brand-text-muted">14,280 eps</span>
               </div>
+              <div className="flex items-center gap-2 pt-1">
+                <Image src="/logos/suricata.png" alt="Suricata" width={18} height={18} className="h-[18px] w-[18px] object-contain" />
+                <Image src="/logos/crowdstrike.svg" alt="CrowdStrike" width={64} height={12} className="h-3 w-auto object-contain" />
+              </div>
               <h3 className="text-sm font-bold text-brand-text-primary">
                 Distributed Ingestion & Sensor Grid
               </h3>
-              <p className="text-xs text-brand-text-secondary leading-relaxed">
-                Ingests multi-vendor telemetry from Suricata 7.0 DPI taps on 10GbE interfaces, CrowdStrike Falcon EDR streams, Barracuda perimeter firewalls, and Cloudflare edge WAF logpush endpoints.
+              <p className="text-xs leading-relaxed text-brand-text-secondary">
+                Multi-vendor telemetry from Suricata 7.0 DPI taps, CrowdStrike Falcon EDR, Barracuda gateways, and Cloudflare WAF.
               </p>
             </div>
 
             {/* Stage 2 card */}
-            <div className="rounded-xl border border-brand-border bg-brand-canvas p-5 space-y-3">
+            <div className="rounded-xl border border-brand-border bg-white p-5 space-y-3 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs font-bold text-amber-600">Stage 02</span>
                 <span className="text-[11px] text-amber-700 font-semibold">98.7% Suppressed</span>
               </div>
+              <div className="flex items-center gap-2 pt-1">
+                <Image src="/logos/wazuh.svg" alt="Wazuh" width={18} height={18} className="h-[18px] w-[18px] object-contain" />
+                <span className="text-xs font-semibold text-brand-text-secondary">Wazuh 4.8</span>
+              </div>
               <h3 className="text-sm font-bold text-brand-text-primary">
-                Wazuh Decoders & Level 0 Noise Suppression
+                Decoders & Level 0 Noise Suppression
               </h3>
-              <p className="text-xs text-brand-text-secondary leading-relaxed">
-                Evaluates events against 1,420 detection rules. Aggressive suppression filters (Rules 100010, 91578, 86611) eliminate 14,096 benign events per day directly in the analysisd engine, protecting indexers.
+              <p className="text-xs leading-relaxed text-brand-text-secondary">
+                1,420 detection rules. Suppression (100010, 91578, 86611) drops 14,096 benign events per day at the analysis engine.
               </p>
             </div>
 
             {/* Stage 3 card */}
-            <div className="rounded-xl border border-brand-border bg-brand-canvas p-5 space-y-3">
+            <div className="rounded-xl border border-brand-border bg-white p-5 space-y-3 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs font-bold text-emerald-600">Stage 03</span>
-                <span className="text-[11px] text-brand-text-muted">4,000 Chars Cap</span>
+                <span className="text-[11px] text-brand-text-muted">4,000-char buffer</span>
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-emerald-50 border border-emerald-100 text-emerald-700 font-mono text-[10px] font-bold">PY</span>
+                <span className="text-xs font-semibold text-brand-text-secondary">custom-iris.py</span>
               </div>
               <h3 className="text-sm font-bold text-brand-text-primary">
-                custom-iris.py Buffer Protection & GeoIP
+                Buffer Protection & GeoIP Enrichment
               </h3>
-              <p className="text-xs text-brand-text-secondary leading-relaxed">
-                The Python middleware replaces Wazuh default 400-char truncation with a 4,000-character preservation buffer. Enriches external attacker IPs with local MaxMind City and ASN intelligence in 1.1ms.
+              <p className="text-xs leading-relaxed text-brand-text-secondary">
+                Expands truncation from 400 to 4,000 chars and decorates external IPs with MaxMind ASN/GeoIP in 1.1ms.
               </p>
             </div>
 
             {/* Stage 4 card */}
-            <div className="rounded-xl border border-brand-border bg-brand-canvas p-5 space-y-3">
+            <div className="rounded-xl border border-brand-border bg-white p-5 space-y-3 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs font-bold text-purple-600">Stage 04</span>
-                <span className="text-[11px] text-brand-text-muted">15m to 4h SLAs</span>
+                <span className="text-[11px] text-brand-text-muted">15m - 4h SLAs</span>
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-purple-50 border border-purple-100">
+                  <Database className="h-3.5 w-3.5 text-purple-700" />
+                </span>
+                <span className="text-xs font-semibold text-brand-text-secondary">DFIR-IRIS 2.4</span>
               </div>
               <h3 className="text-sm font-bold text-brand-text-primary">
-                DFIR-IRIS SOAR & Dynamic SLA Engine
+                SOAR & Dynamic SLA Engine
               </h3>
-              <p className="text-xs text-brand-text-secondary leading-relaxed">
-                Enriched payloads hit the REST API /alerts/add. High-severity threats automatically generate cases with deduplicated IOC linkages and engage dynamic SLA countdown timers based on severity.
+              <p className="text-xs leading-relaxed text-brand-text-secondary">
+                REST ingestion creates cases with deduplicated IOCs and severity-driven SLA timers from 15 minutes to 4 hours.
               </p>
             </div>
 
             {/* Stage 5 card */}
-            <div className="rounded-xl border border-brand-border bg-brand-canvas p-5 space-y-3">
+            <div className="rounded-xl border border-brand-border bg-white p-5 space-y-3 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs font-bold text-blue-600">Stage 05</span>
                 <span className="text-[11px] text-brand-text-muted">8 min MTTR</span>
               </div>
+              <div className="flex items-center gap-2 pt-1">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-blue-50 border border-blue-100">
+                  <Shield className="h-3.5 w-3.5 text-blue-700" />
+                </span>
+                <span className="text-xs font-semibold text-brand-text-secondary">Triage & Closing Gate</span>
+              </div>
               <h3 className="text-sm font-bold text-brand-text-primary">
-                Analyst Triage & Ticket Closing Gate
+                Analyst Queue & Verdict Gate
               </h3>
-              <p className="text-xs text-brand-text-secondary leading-relaxed">
-                Tickets route to Tier 1, 2, and 3 analyst queues. Strict closing gate policies prevent ticket dismissal without a verified True/False positive classification, containment actions, and investigative notes.
+              <p className="text-xs leading-relaxed text-brand-text-secondary">
+                Tiered routing with enforced verdicts, containment actions, and investigative notes before any ticket closes.
               </p>
             </div>
 
             {/* Zero Fatigue Impact Card */}
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-5 space-y-3">
+            <div className="rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-5 space-y-3 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs font-bold text-emerald-800">Operational ROI</span>
-                <span className="text-[11px] text-emerald-700 font-bold">32 hrs/day saved</span>
+                <span className="text-[11px] font-semibold text-emerald-700 bg-white/80 border border-emerald-200 rounded-full px-2 py-0.5">32 hrs/day saved</span>
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-emerald-100 border border-emerald-200">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-700" />
+                </span>
+                <span className="text-xs font-semibold text-emerald-800">Measured impact</span>
               </div>
               <h3 className="text-sm font-bold text-emerald-950">
                 Measurable Fatigue Reduction
               </h3>
-              <p className="text-xs text-emerald-900 leading-relaxed">
-                By tuning out 14,096 noise events per day, analyst mean time to respond (MTTR) dropped from 42 minutes down to 8 minutes, with 100% triage coverage of real threats.
+              <p className="text-xs leading-relaxed text-emerald-900/90">
+                Tuning out 14,096 noise events per day cut MTTR from 42 to 8 minutes with full triage coverage of real threats.
               </p>
             </div>
           </div>

@@ -148,6 +148,67 @@ export default function HomePage() {
         </Reveal>
       </section>
 
+      {/* Integrated Stack */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-24">
+        <Reveal>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+            <div>
+              <p className="text-sm font-mono tracking-[0.18em] uppercase text-brand-text-muted">Integrated Stack</p>
+              <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-[-0.03em] text-brand-text-primary">
+                Built on proven detection tools.
+              </h2>
+            </div>
+            <p className="text-sm text-brand-text-secondary max-w-md leading-relaxed">
+              Each layer is tuned, correlated, and wired end-to-end from raw telemetry to a resolved case.
+            </p>
+          </div>
+        </Reveal>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <Reveal delay={0}>
+            <div className="group h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm hover:shadow-md hover:border-blue-200 transition-all">
+              <div className="flex items-center justify-between">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-blue-50 border border-blue-100">
+                  <Image src="/logos/wazuh.svg" alt="Wazuh logo" width={32} height={32} className="h-8 w-8" />
+                </div>
+                <span className="font-mono text-[11px] font-semibold text-blue-600 bg-blue-50 border border-blue-100 rounded-full px-2.5 py-1">SIEM Core</span>
+              </div>
+              <h3 className="mt-6 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">Wazuh</h3>
+              <p className="mt-2 text-sm leading-relaxed text-brand-text-secondary">
+                Decodes, correlates, and evaluates 14,280 daily events against tuned rules, dropping 98.7% of noise at Level 0.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={1}>
+            <div className="group h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm hover:shadow-md hover:border-orange-200 transition-all">
+              <div className="flex items-center justify-between">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-orange-50 border border-orange-100">
+                  <Image src="/logos/suricata.png" alt="Suricata logo" width={32} height={32} className="h-8 w-8 object-contain" />
+                </div>
+                <span className="font-mono text-[11px] font-semibold text-orange-700 bg-orange-50 border border-orange-100 rounded-full px-2.5 py-1">Network IDS</span>
+              </div>
+              <h3 className="mt-6 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">Suricata</h3>
+              <p className="mt-2 text-sm leading-relaxed text-brand-text-secondary">
+                Deep packet inspection on 10GbE taps, streaming EVE JSON alerts for threat intel matches and protocol anomalies.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={2}>
+            <div className="group h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm hover:shadow-md hover:border-red-200 transition-all">
+              <div className="flex items-center justify-between">
+                <div className="flex h-14 w-28 items-center justify-center rounded-xl bg-red-50 border border-red-100 px-3">
+                  <Image src="/logos/crowdstrike.svg" alt="CrowdStrike logo" width={96} height={18} className="h-4 w-auto object-contain" />
+                </div>
+                <span className="font-mono text-[11px] font-semibold text-red-700 bg-red-50 border border-red-100 rounded-full px-2.5 py-1">EDR</span>
+              </div>
+              <h3 className="mt-6 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">CrowdStrike Falcon</h3>
+              <p className="mt-2 text-sm leading-relaxed text-brand-text-secondary">
+                Endpoint telemetry and high-fidelity detections, with null-host noise filtered before it ever reaches the queue.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Modules */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-24">
         <Reveal>
