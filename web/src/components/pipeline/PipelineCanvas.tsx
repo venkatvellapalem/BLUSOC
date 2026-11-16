@@ -419,8 +419,8 @@ export default function PipelineCanvas({
               <rect x="260" y="90" width="215" height="12" fill="#F8FAFC" />
               <line x1="260" y1="102" x2="475" y2="102" stroke="#E2E8F0" strokeWidth="1" />
 
-              <circle cx="280" cy="76" r="12" fill="#EFF6FF" stroke="#BFDBFE" strokeWidth="1" />
-              <text x="280" y="80" textAnchor="middle" fontSize="11" fontWeight="700" fill="#2563EB">2</text>
+              <rect x="268" y="64" width="24" height="24" rx="6" fill="#EFF6FF" stroke="#BFDBFE" strokeWidth="1" />
+              <image href="/logos/wazuh.svg" x="272" y="68" width="16" height="16" preserveAspectRatio="xMidYMid meet" />
               <text x="300" y="73" fontSize="11" fontWeight="700" fill="#0F172A">WAZUH SIEM ENGINE</text>
               <text x="300" y="87" fontSize="9.5" fontWeight="500" fill="#64748B">Decoders & Evaluation</text>
 

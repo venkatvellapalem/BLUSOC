@@ -12,12 +12,12 @@ interface LogItem {
 }
 
 const SENSORS = [
-  { name: "Suricata DPI", feed: "10G tap", y: 56 },
-  { name: "CrowdStrike", feed: "EDR stream", y: 128 },
-  { name: "Cloudflare WAF", feed: "logpush", y: 200 },
-  { name: "Barracuda FW", feed: "syslog", y: 272 },
-  { name: "O365 Egress", feed: "auth proxy", y: 344 },
-];
+  { name: "Suricata", feed: "IDS / 10G tap", y: 56, logo: "/logos/suricata.png", logoW: 18, logoH: 18 },
+  { name: "CrowdStrike", feed: "Falcon EDR", y: 128, logo: "/logos/crowdstrike.svg", logoW: 22, logoH: 6 },
+  { name: "Cloudflare WAF", feed: "Edge logpush", y: 200 },
+  { name: "Barracuda FW", feed: "Gateway syslog", y: 272 },
+  { name: "O365 Egress", feed: "Proxy auth", y: 344 },
+] as { name: string; feed: string; y: number; logo?: string; logoW?: number; logoH?: number }[];
 
 const ENGINE = { x: 450, y: 200 };
 const SINK = { x: 450, y: 382 };
@@ -56,6 +56,8 @@ const KIND_META: Record<LogItem["kind"], { label: string; cls: string }> = {
   correlate: { label: "CORRELATE", cls: "text-blue-700 bg-blue-50 border-blue-200" },
   escalate: { label: "ESCALATE", cls: "text-rose-700 bg-rose-50 border-rose-200" },
 };
+
+const SENSOR_COLORS = ["#F97316", "#FC0000", "#3B82F6", "#0EA5E9", "#6366F1"];
 
 export function CorrelationConsole() {
   const [log, setLog] = useState<LogItem[]>(SEED);
@@ -192,14 +194,32 @@ export function CorrelationConsole() {
 
             {SENSORS.map((s, i) => {
               const on = flash?.source === i;
+              const color = SENSOR_COLORS[i] ?? "#3B82F6";
+              const textX = s.logo ? SENSOR_X + 32 : SENSOR_X + 14;
               return (
                 <g key={`sn${i}`}>
-                  <rect x={SENSOR_X - 5} y={s.y - 5} width="10" height="10" rx="2" fill={on ? "#1D4ED8" : "#3B82F6"} />
-                  <rect x={SENSOR_X - 5} y={s.y - 5} width="10" height="10" rx="2" fill="none" stroke={on ? "#1D4ED8" : "#3B82F6"} strokeOpacity="0.4" />
-                  <text x={SENSOR_X + 14} y={s.y - 1} fill="#334155" fontSize="11" fontFamily="var(--font-mono)">
+                  {s.logo ? (
+                    <>
+                      <rect x={SENSOR_X - 8} y={s.y - 13} width="30" height="26" rx="6" fill="#FFFFFF" stroke={on ? color : "#E2E8F0"} strokeWidth={on ? 1.5 : 1} />
+                      <image
+                        href={s.logo}
+                        x={SENSOR_X - 8 + (30 - (s.logoW ?? 18)) / 2}
+                        y={s.y - 13 + (26 - (s.logoH ?? 18)) / 2}
+                        width={s.logoW ?? 18}
+                        height={s.logoH ?? 18}
+                        preserveAspectRatio="xMidYMid meet"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <rect x={SENSOR_X - 5} y={s.y - 5} width="10" height="10" rx="2" fill={on ? color : color} fillOpacity={on ? 1 : 0.85} />
+                      <rect x={SENSOR_X - 5} y={s.y - 5} width="10" height="10" rx="2" fill="none" stroke={color} strokeOpacity="0.4" />
+                    </>
+                  )}
+                  <text x={textX} y={s.y - 1} fill={on ? "#0F172A" : "#334155"} fontSize="11" fontWeight={s.logo ? "600" : "500"} fontFamily="var(--font-mono)">
                     {s.name}
                   </text>
-                  <text x={SENSOR_X + 14} y={s.y + 11} fill="#94A3B8" fontSize="9" fontFamily="var(--font-mono)">
+                  <text x={textX} y={s.y + 11} fill="#94A3B8" fontSize="9" fontFamily="var(--font-mono)">
                     {s.feed}
                   </text>
                 </g>
@@ -213,11 +233,12 @@ export function CorrelationConsole() {
               <circle cx={ENGINE.x} cy={ENGINE.y} r="22" fill="none" stroke="#93C5FD" strokeOpacity="0.6" />
               <circle cx={ENGINE.x} cy={ENGINE.y} r="22" fill="none" stroke="#3B82F6" strokeWidth="1.5" className="animate-pulse-ring" style={{ transformOrigin: `${ENGINE.x}px ${ENGINE.y}px` }} />
               <circle cx={ENGINE.x} cy={ENGINE.y} r="22" fill="none" stroke="#3B82F6" strokeWidth="1.5" className="animate-pulse-ring-fast" style={{ transformOrigin: `${ENGINE.x}px ${ENGINE.y}px` }} />
-              <text x={ENGINE.x} y={ENGINE.y + 3} fill="#FFFFFF" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
-                WZ
+              <image href="/logos/wazuh.svg" x={ENGINE.x - 11} y={ENGINE.y - 11} width="22" height="22" preserveAspectRatio="xMidYMid meet" />
+              <text x={ENGINE.x} y={ENGINE.y + 46} fill="#2563EB" fontSize="10" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
+                WAZUH
               </text>
-              <text x={ENGINE.x} y={ENGINE.y + 46} fill="#2563EB" fontSize="10" fontWeight="600" textAnchor="middle" fontFamily="var(--font-mono)">
-                CORRELATION ENGINE
+              <text x={ENGINE.x} y={ENGINE.y + 59} fill="#64748B" fontSize="8.5" textAnchor="middle" fontFamily="var(--font-mono)">
+                Correlation Engine
               </text>
             </g>
 
