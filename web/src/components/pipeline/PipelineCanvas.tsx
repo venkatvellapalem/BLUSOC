@@ -23,10 +23,8 @@ const STAGES = [
 export default function PipelineCanvas({
   selectedStageId,
   onSelectStage,
-  simulationStep,
 }: PipelineCanvasProps) {
   const [hovered, setHovered] = useState<string | null>(null);
-  const activeStageIndex = simulationStep === 0 ? -1 : simulationStep - 1;
 
   const sensorRows = useMemo(
     () => [
@@ -89,7 +87,7 @@ export default function PipelineCanvas({
             <path d="M 960 138 C 960 155, 960 160, 960 170" stroke="#94A3B8" strokeWidth="2" fill="none" strokeDasharray="4 4" />
 
             {STAGES.map((s, idx) => {
-              const active = selectedStageId === s.id || activeStageIndex === idx;
+              const active = selectedStageId === s.id;
               const hover = hovered === s.id;
               return (
                 <g
@@ -107,8 +105,7 @@ export default function PipelineCanvas({
                     rx="16"
                     fill="#FFFFFF"
                     stroke={active ? '#2563EB' : hover ? '#93C5FD' : '#E2E8F0'}
-                    strokeWidth={active ? 2.5 : 1.5}
-                    filter={active ? 'url(#softglow)' : undefined}
+                    strokeWidth={active ? 2 : 1.5}
                   />
                   <rect x={s.x} y={s.y} width={s.w} height="54" rx="16" fill="#F8FAFC" />
                   <rect x={s.x} y={s.y + 42} width={s.w} height="12" fill="#F8FAFC" />

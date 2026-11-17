@@ -9,8 +9,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-brand-border">
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-subtle">
-                <Image src="/brand-mark.svg" alt="BLUSOC" width={24} height={24} className="h-6 w-6" />
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-subtle overflow-hidden">
+                <Image src="/brand-mark.png" alt="BLUSOC" width={32} height={28} className="h-7 w-auto object-contain" />
               </span>
               <span className="font-mono text-base font-bold tracking-tight text-brand-text-primary">
                 BLUSOC

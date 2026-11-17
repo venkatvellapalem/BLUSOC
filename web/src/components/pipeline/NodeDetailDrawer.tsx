@@ -53,7 +53,7 @@ export default function NodeDetailDrawer({
   return (
     <AnimatePresence>
       {selectedStageId && stage && (
-        <div className="fixed inset-0 z-[70] flex justify-end overflow-hidden">
+        <div className="fixed inset-x-0 bottom-0 top-16 z-[100] flex justify-end overflow-hidden">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -61,7 +61,7 @@ export default function NodeDetailDrawer({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
           />
 
           {/* Slide-over Drawer Panel */}

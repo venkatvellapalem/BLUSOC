@@ -22,8 +22,8 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-brand-border/80 bg-white/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="group flex items-center gap-3">
-          <span className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-subtle ring-1 ring-black/[0.02] transition-all group-hover:shadow-card group-hover:border-slate-300">
-            <Image src="/brand-mark.svg" alt="BLUSOC" width={28} height={28} className="h-7 w-7" priority />
+          <span className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-subtle ring-1 ring-black/[0.02] transition-all group-hover:shadow-card group-hover:border-slate-300 overflow-hidden">
+            <Image src="/brand-mark.png" alt="BLUSOC" width={36} height={31} className="h-8 w-auto object-contain" priority />
           </span>
           <div className="flex flex-col leading-none">
             <span className="font-mono text-[15px] font-bold tracking-tight text-brand-text-primary">

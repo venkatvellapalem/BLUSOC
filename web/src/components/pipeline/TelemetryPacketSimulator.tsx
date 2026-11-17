@@ -62,8 +62,8 @@ export default function TelemetryPacketSimulator({
       <div className="border-b border-brand-border bg-gradient-to-b from-brand-canvas to-white px-6 py-5">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-brand-border shadow-subtle ring-1 ring-black/[0.02]">
-              <Image src="/brand-mark.svg" alt="BLUSOC" width={24} height={24} className="h-6 w-6" />
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-brand-border shadow-subtle ring-1 ring-black/[0.02] overflow-hidden">
+              <Image src="/brand-mark.png" alt="BLUSOC" width={32} height={28} className="h-7 w-auto object-contain" />
               {isSimulating && <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-blue-500 animate-ping" />}
             </div>
             <div>

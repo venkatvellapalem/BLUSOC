@@ -62,8 +62,13 @@ const item = {
 export default function HomePage() {
   return (
     <div className="relative">
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 lg:pt-28 pb-10">
+      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 lg:pt-24 pb-10">
         <motion.div variants={container} initial="hidden" animate="show" className="max-w-4xl">
+          <motion.div variants={item} className="mb-6 flex items-center">
+            <span className="inline-flex items-center justify-center rounded-2xl border border-slate-200/80 bg-white/80 p-2 shadow-sm ring-1 ring-black/[0.02] backdrop-blur-sm">
+              <Image src="/brand-mark.png" alt="BLUSOC logo" width={58} height={50} className="h-12 w-auto sm:h-14 object-contain drop-shadow-sm" priority />
+            </span>
+          </motion.div>
           <motion.p variants={item} className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.22em] uppercase text-brand-text-secondary">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
@@ -120,6 +125,10 @@ export default function HomePage() {
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
+          <div className="mb-4 flex items-center gap-3">
+            <Image src="/brand-mark.png" alt="" width={26} height={22} className="h-5 w-auto object-contain" aria-hidden="true" />
+            <p className="text-[11px] font-mono tracking-[0.18em] uppercase text-brand-text-muted">Live correlation</p>
+          </div>
           <div className="relative rounded-xl panel overflow-hidden">
             <CorrelationConsole />
           </div>
@@ -128,6 +137,10 @@ export default function HomePage() {
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24">
         <Reveal>
+          <div className="mb-6 flex items-center gap-3">
+            <Image src="/brand-mark.png" alt="" width={26} height={22} className="h-5 w-auto object-contain" aria-hidden="true" />
+            <p className="text-[11px] font-mono tracking-[0.18em] uppercase text-brand-text-muted">At a glance</p>
+          </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-brand-border rounded-2xl overflow-hidden border border-brand-border shadow-sm">
             {METRICS.map((m) => (
               <div key={m.label} className="bg-white p-7 lg:p-9 group">
@@ -148,7 +161,10 @@ export default function HomePage() {
         <Reveal>
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
             <div>
-              <p className="text-sm font-mono tracking-[0.18em] uppercase text-brand-text-muted">Response Flow</p>
+              <div className="flex items-center gap-2.5">
+                <Image src="/brand-mark.png" alt="" width={26} height={22} className="h-5 w-auto object-contain" aria-hidden="true" />
+                <p className="text-sm font-mono tracking-[0.18em] uppercase text-brand-text-muted">Response Flow</p>
+              </div>
               <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-[-0.03em] text-brand-text-primary">
                 Qualifying alerts, decided by Laya.
               </h2>
@@ -203,7 +219,10 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-24">
         <Reveal>
           <div className="flex items-end justify-between mb-8">
-            <h2 className="text-sm font-mono tracking-[0.18em] uppercase text-brand-text-muted">Explore</h2>
+            <div className="flex items-center gap-2.5">
+              <Image src="/brand-mark.png" alt="" width={26} height={22} className="h-5 w-auto object-contain" aria-hidden="true" />
+              <h2 className="text-sm font-mono tracking-[0.18em] uppercase text-brand-text-muted">Explore</h2>
+            </div>
           </div>
         </Reveal>
         <div className="border-t border-brand-border">
@@ -232,6 +251,9 @@ export default function HomePage() {
           <div className="relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 rounded-2xl border border-brand-border bg-gradient-to-br from-white via-white to-blue-50/40 p-8 lg:p-12 shadow-sm">
             <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-100/40 blur-3xl" />
             <div className="relative">
+              <div className="mb-4 flex items-center gap-2.5">
+                <Image src="/brand-mark.png" alt="" width={30} height={26} className="h-6 w-auto object-contain" aria-hidden="true" />
+              </div>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-[-0.03em] text-brand-text-primary">Explore the full stack.</h2>
               <p className="mt-2 text-sm text-brand-text-secondary max-w-md">See every integrated platform, from sensors and correlation to triage, ticketing, notifications, and containment.</p>
             </div>
