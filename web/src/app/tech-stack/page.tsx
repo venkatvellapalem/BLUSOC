@@ -77,8 +77,8 @@ const SECTIONS: Section[] = [
         subtitle: "Endpoint detection & response (EDR)",
         description: "High-fidelity endpoint telemetry and detections across workstations and servers, feeding process, identity, and threat signals into correlation.",
         logo: "/logos/crowdstrike.svg",
-        logoW: 110,
-        logoH: 20,
+        logoW: 28,
+        logoH: 28,
         accent: "from-red-50 to-white border-red-100",
       },
       {
@@ -259,7 +259,7 @@ const SECTIONS: Section[] = [
       {
         name: "Sanitized alert dataset",
         subtitle: "data/alerts_sanitized.json",
-        description: "67 sanitized incidents across multiple attack categories used for read-only samples and showcase views.",
+        description: "Sanitized incident records spanning multiple attack categories used for read-only sample demonstrations in the showcase.",
         icon: BookOpen,
         accent: "from-amber-50 to-white border-amber-100",
       },

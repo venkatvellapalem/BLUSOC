@@ -107,7 +107,7 @@ export default function TelemetryPacketSimulator({
         <div>
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-bold text-brand-text-primary uppercase tracking-wider">Pipeline Progress</span>
-            <span className="font-mono text-xs text-brand-text-secondary">{simulationStep === 0 ? 'Idle' : completed ? 'Complete' : `Step ${simulationStep} / 5`}</span>
+            <span className="font-mono text-xs text-brand-text-secondary">{simulationStep === 0 ? 'Ready — inject an alert' : completed ? 'Trace complete' : `Step ${simulationStep} of 5`}</span>
           </div>
           <div className="grid grid-cols-5 gap-2">
             {steps.map((st) => {
@@ -130,13 +130,13 @@ export default function TelemetryPacketSimulator({
         <div className="rounded-xl border border-slate-800 bg-[#0B1220] p-4 text-slate-200 shadow-inner">
           <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-800 text-xs">
             <div className="flex items-center gap-2 font-mono text-slate-400"><Terminal className="h-4 w-4 text-blue-400" /><span>alert-flow://trace</span></div>
-            <div className="flex items-center gap-2"><span className={`h-2 w-2 rounded-full ${isSimulating ? 'bg-blue-400 animate-pulse' : 'bg-emerald-400'}`} /><span className="font-mono text-[11px] text-slate-300">{isSimulating ? 'RUNNING' : 'LIVE'}</span></div>
+            <div className="flex items-center gap-2"><span className={`h-2 w-2 rounded-full ${isSimulating ? 'bg-blue-400 animate-pulse' : simulationStep === 0 ? 'bg-slate-500' : 'bg-emerald-400'}`} /><span className="font-mono text-[11px] text-slate-300">{isSimulating ? 'RUNNING' : simulationStep === 0 ? 'READY' : 'COMPLETE'}</span></div>
           </div>
           <div className="space-y-2 font-mono text-xs max-h-56 overflow-y-auto pr-1">
             {terminalLogs.length === 0 ? (
               <div className="py-8 text-center text-slate-500">
-                <p>Inject an alert to trace it through the pipeline.</p>
-                <p className="mt-1 text-[11px] text-slate-600">Suppressed at Wazuh, or Wazuh → n8n → Laya → IRIS / Discord/Slack / FortiGate.</p>
+                <p className="font-medium text-slate-400">Select a scenario and click “Inject Alert” to trace it live.</p>
+                <p className="mt-1.5 text-[11px] text-slate-600">Watch each step progress across Wazuh → n8n → Laya and see the routed outcome (suppress, IRIS ticket, notify, or contain).</p>
               </div>
             ) : terminalLogs.map((log, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} className="flex items-start gap-2.5 leading-relaxed">

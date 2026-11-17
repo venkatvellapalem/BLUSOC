@@ -13,7 +13,7 @@ interface LogItem {
 }
 
 const SENSORS = [
-  { name: "CrowdStrike Falcon", feed: "EDR telemetry", y: 54, logo: "/logos/crowdstrike.svg", logoW: 22, logoH: 6 },
+  { name: "CrowdStrike Falcon", feed: "EDR telemetry", y: 54, logo: "/logos/crowdstrike.svg", logoW: 18, logoH: 18 },
   { name: "Suricata", feed: "IDS / DPI", y: 112, logo: "/logos/suricata.png", logoW: 18, logoH: 18 },
   { name: "Barracuda", feed: "Email & gateway", y: 170, logo: "/logos/barracuda.svg", logoW: 18, logoH: 18 },
   { name: "Sophos", feed: "Endpoint protection", y: 228, logo: "/logos/sophos.svg", logoW: 18, logoH: 18 },

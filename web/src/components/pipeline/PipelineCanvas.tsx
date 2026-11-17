@@ -51,7 +51,7 @@ export default function PipelineCanvas({
   const activeStageIndex = simulationStep === 0 ? -1 : simulationStep - 1;
 
   const sensorRows = useMemo(() => ([
-    { name: 'CrowdStrike Falcon', sub: 'EDR telemetry', y: 150, logo: '/logos/crowdstrike.svg', lw: 58, lh: 10 },
+    { name: 'CrowdStrike Falcon', sub: 'EDR telemetry', y: 150, logo: '/logos/crowdstrike.svg', lw: 18, lh: 18 },
     { name: 'Suricata', sub: 'IDS / 10G tap', y: 205, logo: '/logos/suricata.png', lw: 16, lh: 16 },
     { name: 'Sophos', sub: 'Endpoint protection', y: 260, logo: '/logos/sophos.svg', lw: 16, lh: 16 },
     { name: 'Barracuda', sub: 'Email & gateway', y: 315, logo: '/logos/barracuda.svg', lw: 16, lh: 16 },

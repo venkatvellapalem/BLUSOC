@@ -9,17 +9,17 @@ import { AnimatedCounter } from "@/components/home/AnimatedCounter";
 import { Reveal } from "@/components/home/Reveal";
 
 const METRICS = [
-  { value: 3410000, suffix: "", label: "Raw events processed", accent: "text-blue-600", bar: "bg-blue-500" },
-  { value: 87.1, decimals: 1, suffix: "%", label: "Noise suppressed", accent: "text-emerald-600", bar: "bg-emerald-500" },
+  { value: 3410000, suffix: "", label: "Events correlated", accent: "text-blue-600", bar: "bg-blue-500" },
+  { value: 98.7, decimals: 1, suffix: "%", label: "Noise reduced (tuned)", accent: "text-emerald-600", bar: "bg-emerald-500" },
   { value: 68, suffix: "%", label: "Faster MTTR", accent: "text-amber-600", bar: "bg-amber-500" },
-  { value: 67, suffix: "", label: "Attacks surfaced", accent: "text-rose-600", bar: "bg-rose-500" },
+  { value: 13, suffix: "+", label: "Platforms integrated", accent: "text-violet-600", bar: "bg-violet-500" },
 ];
 
 const STACK = [
   { name: "Wazuh", src: "/logos/wazuh.svg", width: 22, height: 22 },
   { name: "n8n", src: "/logos/n8n.svg", width: 22, height: 22 },
   { name: "Suricata", src: "/logos/suricata.png", width: 22, height: 22 },
-  { name: "CrowdStrike", src: "/logos/crowdstrike.svg", width: 96, height: 18 },
+  { name: "CrowdStrike", src: "/logos/crowdstrike.svg", width: 22, height: 22 },
   { name: "Laya", src: "/logos/laya.svg", width: 22, height: 22 },
 ];
 

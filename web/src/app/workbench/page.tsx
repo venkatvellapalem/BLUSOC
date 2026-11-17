@@ -293,9 +293,6 @@ export default function TriageSamplePage() {
           </div>
         </div>
 
-        <p className="text-xs text-brand-text-muted text-center">
-          Full dataset: 67 sanitized incidents across 4 attack categories in <code className="font-mono">data/alerts_sanitized.json</code>.
-        </p>
       </div>
     </div>
   );

@@ -17,6 +17,7 @@ export default function PipelinePage() {
   const [simulationStep, setSimulationStep] = useState(0);
   const [terminalLogs, setTerminalLogs] = useState<SimulationStepLog[]>([]);
   const timersRef = useRef<NodeJS.Timeout[]>([]);
+  const handleStartSimulationRef = useRef<() => void>(() => {});
 
   const clearTimers = useCallback(() => {
     timersRef.current.forEach((t) => clearTimeout(t));
@@ -26,6 +27,16 @@ export default function PipelinePage() {
   useEffect(() => () => clearTimers(), [clearTimers]);
 
   const activePreset = SIMULATION_PRESETS.find((p) => p.id === selectedPresetId) || SIMULATION_PRESETS[0];
+
+  const didAutoRunRef = useRef(false);
+  useEffect(() => {
+    if (didAutoRunRef.current) return;
+    didAutoRunRef.current = true;
+    const t = setTimeout(() => {
+      handleStartSimulationRef.current?.();
+    }, 700);
+    return () => clearTimeout(t);
+  }, []);
 
   const pushStep = (step: number, presetId: string) => {
     const preset = SIMULATION_PRESETS.find((p) => p.id === presetId)!;
@@ -68,6 +79,8 @@ export default function PipelinePage() {
     setSimulationStep(0);
     setTerminalLogs([]);
   };
+
+  handleStartSimulationRef.current = handleStartSimulation;
 
   return (
     <div className="min-h-screen bg-brand-canvas py-8 lg:py-12">
