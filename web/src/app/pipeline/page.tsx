@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { GitFork, ArrowLeft, Shield, Sliders, Database, Workflow, Sparkles } from 'lucide-react';
 import PipelineCanvas from '@/components/pipeline/PipelineCanvas';
 import NodeDetailDrawer from '@/components/pipeline/NodeDetailDrawer';
@@ -17,7 +16,6 @@ export default function PipelinePage() {
   const [simulationStep, setSimulationStep] = useState(0);
   const [terminalLogs, setTerminalLogs] = useState<SimulationStepLog[]>([]);
   const timersRef = useRef<NodeJS.Timeout[]>([]);
-  const handleStartSimulationRef = useRef<() => void>(() => {});
 
   const clearTimers = useCallback(() => {
     timersRef.current.forEach((t) => clearTimeout(t));
@@ -27,16 +25,6 @@ export default function PipelinePage() {
   useEffect(() => () => clearTimers(), [clearTimers]);
 
   const activePreset = SIMULATION_PRESETS.find((p) => p.id === selectedPresetId) || SIMULATION_PRESETS[0];
-
-  const didAutoRunRef = useRef(false);
-  useEffect(() => {
-    if (didAutoRunRef.current) return;
-    didAutoRunRef.current = true;
-    const t = setTimeout(() => {
-      handleStartSimulationRef.current?.();
-    }, 700);
-    return () => clearTimeout(t);
-  }, []);
 
   const pushStep = (step: number, presetId: string) => {
     const preset = SIMULATION_PRESETS.find((p) => p.id === presetId)!;
@@ -80,12 +68,10 @@ export default function PipelinePage() {
     setTerminalLogs([]);
   };
 
-  handleStartSimulationRef.current = handleStartSimulation;
-
   return (
     <div className="min-h-screen bg-brand-canvas py-8 lg:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.16,1,0.3,1] }} className="space-y-6">
+        <div className="space-y-6">
           <div className="flex items-center justify-between">
             <Link href="/" className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-text-secondary hover:text-brand-text-primary transition-colors">
               <ArrowLeft className="h-4 w-4" />
@@ -146,9 +132,9 @@ export default function PipelinePage() {
               </Link>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.05 }}>
+        <div>
           <TelemetryPacketSimulator
             selectedPresetId={selectedPresetId}
             onSelectPreset={handleSelectPreset}
@@ -158,9 +144,9 @@ export default function PipelinePage() {
             onResetSimulation={handleResetSimulation}
             terminalLogs={terminalLogs}
           />
-        </motion.div>
+        </div>
 
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
+        <div>
           <PipelineCanvas
             selectedStageId={selectedStageId}
             onSelectStage={(id) => setSelectedStageId(id)}
@@ -168,9 +154,9 @@ export default function PipelinePage() {
             simulationStep={simulationStep}
             isSimulating={isSimulating}
           />
-        </motion.div>
+        </div>
 
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }} className="rounded-2xl border border-brand-border bg-white p-6 sm:p-8 shadow-sm">
+        <div className="rounded-2xl border border-brand-border bg-white p-6 sm:p-8 shadow-sm">
           <div className="mb-6 flex items-start gap-3">
             <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600 border border-blue-200"><Sparkles className="h-4 w-4" /></span>
             <div>
@@ -205,7 +191,7 @@ export default function PipelinePage() {
               <p className="text-xs text-brand-text-secondary leading-relaxed">Alerts to Discord/Slack. Containment isolates affected systems via FortiGate.</p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       <NodeDetailDrawer

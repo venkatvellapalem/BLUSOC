@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
 import Image from 'next/image';
 import { Play, RotateCcw, Terminal, ShieldAlert, Filter, Check, Bell, Shield } from 'lucide-react';
 import { SIMULATION_PRESETS, SimulationPreset, SimulationStepLog } from './pipelineData';
@@ -25,8 +24,6 @@ export default function TelemetryPacketSimulator({
   onResetSimulation,
   terminalLogs,
 }: Props) {
-  const endRef = useRef<HTMLDivElement>(null);
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [terminalLogs]);
 
   const preset = SIMULATION_PRESETS.find((p) => p.id === selectedPresetId) || SIMULATION_PRESETS[0];
   const completed = simulationStep >= 5 || (preset.outcome === 'suppressed' && simulationStep >= 2);
@@ -64,7 +61,6 @@ export default function TelemetryPacketSimulator({
           <div className="flex items-center gap-3">
             <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-brand-border shadow-subtle ring-1 ring-black/[0.02] overflow-hidden">
               <Image src="/brand-mark.png" alt="BLUSOC" width={32} height={28} className="h-7 w-auto object-contain" />
-              {isSimulating && <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-blue-500 animate-ping" />}
             </div>
             <div>
               <h2 className="text-sm font-bold text-brand-text-primary tracking-tight">Alert Flow Simulator</h2>
@@ -73,8 +69,8 @@ export default function TelemetryPacketSimulator({
           </div>
           <div className="flex items-center gap-2">
             <button onClick={onResetSimulation} disabled={isSimulating} className="inline-flex items-center gap-1.5 rounded-lg border border-brand-border bg-white px-3 py-1.5 text-xs font-semibold text-brand-text-secondary hover:bg-brand-muted disabled:opacity-50 transition-colors"><RotateCcw className="h-3.5 w-3.5" />Reset</button>
-            <button onClick={onStartSimulation} disabled={isSimulating} className={`inline-flex items-center gap-2 rounded-lg px-4 py-1.5 text-xs font-bold text-white transition-all shadow-sm ${isSimulating ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 active:scale-[0.98]'}`}>
-              {isSimulating ? <><span className="h-2 w-2 rounded-full bg-white animate-ping" />Running...</> : <><Play className="h-3.5 w-3.5 fill-current" />{completed ? 'Run Again' : 'Inject Alert'}</>}
+            <button onClick={onStartSimulation} disabled={isSimulating} className={`inline-flex items-center gap-2 rounded-lg px-4 py-1.5 text-xs font-bold text-white transition-colors shadow-sm ${isSimulating ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}>
+              {isSimulating ? <><span className="h-2 w-2 rounded-full bg-white/80" />Running...</> : <><Play className="h-3.5 w-3.5 fill-current" />{completed ? 'Run Again' : 'Inject Alert'}</>}
             </button>
           </div>
         </div>
@@ -85,7 +81,7 @@ export default function TelemetryPacketSimulator({
             const meta = outcomeMeta(p);
             return (
               <button key={p.id} onClick={() => { if (!isSimulating) onSelectPreset(p.id); }} disabled={isSimulating}
-                className={`relative flex flex-col text-left rounded-xl p-3 transition-all border ${sel ? 'border-blue-600 bg-white ring-2 ring-blue-500/20 shadow-md' : 'border-brand-border bg-white hover:border-slate-300 hover:shadow-sm'} ${isSimulating ? 'opacity-60' : ''}`}>
+                className={`relative flex flex-col text-left rounded-xl p-3 transition-colors border ${sel ? 'border-blue-600 bg-white ring-2 ring-blue-500/20 shadow-md' : 'border-brand-border bg-white hover:border-slate-300 hover:shadow-sm'} ${isSimulating ? 'opacity-60' : ''}`}>
                 <div className="flex items-center justify-between gap-1 mb-1.5">
                   <span className={`rounded px-1.5 py-0.5 text-[10px] font-bold border ${meta.cls}`}>{meta.label}</span>
                   <span className="font-mono text-[10px] text-brand-text-muted">L{p.ruleLevel}</span>
@@ -96,7 +92,6 @@ export default function TelemetryPacketSimulator({
                   <span className="truncate pr-2">{p.source}</span>
                   <span className={sel ? 'text-blue-600 font-bold' : ''}>{sel ? 'Active' : 'Select'}</span>
                 </div>
-                {sel && <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-blue-500" />}
               </button>
             );
           })}
@@ -115,13 +110,12 @@ export default function TelemetryPacketSimulator({
               const past = simulationStep > st.num;
               const bypass = preset.outcome === 'suppressed' && st.num >= 3;
               return (
-                <motion.div key={st.num} layout className={`relative rounded-lg border p-2 text-center transition-colors ${active && !bypass ? 'border-blue-600 bg-blue-50 text-blue-900 font-bold ring-2 ring-blue-500/20' : past && !bypass ? 'border-emerald-300 bg-emerald-50 text-emerald-800' : bypass ? 'border-slate-200 bg-slate-50 text-slate-400 opacity-60' : 'border-brand-border bg-white text-brand-text-secondary'}`}>
+                <div key={st.num} className={`relative rounded-lg border p-2 text-center ${active && !bypass ? 'border-blue-500 bg-blue-50 text-blue-900 font-semibold' : past && !bypass ? 'border-emerald-200 bg-emerald-50/70 text-emerald-800' : bypass ? 'border-slate-200 bg-slate-50 text-slate-400 opacity-60' : 'border-brand-border bg-white text-brand-text-secondary'}`}>
                   <div className="flex items-center justify-center gap-1">
                     {past && !bypass ? <Check className="h-3 w-3 text-emerald-600" /> : null}
                     <span className="text-[10px] sm:text-[11px] truncate">{st.name}</span>
                   </div>
-                  {active && !bypass && isSimulating && <motion.span layoutId="stepGlow" className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-blue-400/40" />}
-                </motion.div>
+                </div>
               );
             })}
           </div>
@@ -130,45 +124,42 @@ export default function TelemetryPacketSimulator({
         <div className="rounded-xl border border-slate-800 bg-[#0B1220] p-4 text-slate-200 shadow-inner">
           <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-800 text-xs">
             <div className="flex items-center gap-2 font-mono text-slate-400"><Terminal className="h-4 w-4 text-blue-400" /><span>alert-flow://trace</span></div>
-            <div className="flex items-center gap-2"><span className={`h-2 w-2 rounded-full ${isSimulating ? 'bg-blue-400 animate-pulse' : simulationStep === 0 ? 'bg-slate-500' : 'bg-emerald-400'}`} /><span className="font-mono text-[11px] text-slate-300">{isSimulating ? 'RUNNING' : simulationStep === 0 ? 'READY' : 'COMPLETE'}</span></div>
+            <div className="flex items-center gap-2"><span className={`h-2 w-2 rounded-full ${isSimulating ? 'bg-blue-400' : simulationStep === 0 ? 'bg-slate-500' : 'bg-emerald-400'}`} /><span className="font-mono text-[11px] text-slate-300">{isSimulating ? 'RUNNING' : simulationStep === 0 ? 'READY' : 'COMPLETE'}</span></div>
           </div>
           <div className="space-y-2 font-mono text-xs max-h-56 overflow-y-auto pr-1">
             {terminalLogs.length === 0 ? (
               <div className="py-8 text-center text-slate-500">
-                <p className="font-medium text-slate-400">Select a scenario and click “Inject Alert” to trace it live.</p>
-                <p className="mt-1.5 text-[11px] text-slate-600">Watch each step progress across Wazuh → n8n → Laya and see the routed outcome (suppress, IRIS ticket, notify, or contain).</p>
+                <p className="font-medium text-slate-400">Select a scenario and click “Inject Alert” to trace it.</p>
+                <p className="mt-1.5 text-[11px] text-slate-600">Wazuh → n8n → Laya and the routed outcome (suppress, IRIS ticket, notify, or contain).</p>
               </div>
             ) : terminalLogs.map((log, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} className="flex items-start gap-2.5 leading-relaxed">
+              <div key={i} className="flex items-start gap-2.5 leading-relaxed">
                 <span className="text-slate-500 shrink-0 text-[11px]">[Step {log.step}]</span>
                 <span className={`rounded px-1.5 py-0.2 text-[10px] font-bold border shrink-0 ${tagColors[log.tag] || 'text-slate-400 bg-slate-900 border-slate-800'}`}>{log.tag}</span>
                 <span className="text-slate-300 break-words">{log.text}</span>
-              </motion.div>
+              </div>
             ))}
-            <div ref={endRef} />
           </div>
 
-          <AnimatePresence>
-            {completed && (
-              <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`mt-4 rounded-lg p-3 text-xs border flex items-center gap-3 ${preset.outcome === 'suppressed' ? 'bg-amber-950/40 border-amber-800/80 text-amber-200' : preset.outcome === 'contain' ? 'bg-rose-950/40 border-rose-800/80 text-rose-200' : preset.outcome === 'notify' ? 'bg-indigo-950/40 border-indigo-800/80 text-indigo-200' : 'bg-sky-950/40 border-sky-800/80 text-sky-200'}`}>
-                {preset.outcome === 'suppressed' ? <Filter className="h-4 w-4 shrink-0" /> : preset.outcome === 'contain' ? <Shield className="h-4 w-4 shrink-0" /> : preset.outcome === 'notify' ? <Bell className="h-4 w-4 shrink-0" /> : <ShieldAlert className="h-4 w-4 shrink-0" />}
-                <div>
-                  <span className="font-bold">
-                    {preset.outcome === 'suppressed' && 'SUPPRESSED AT WAZUH  -  no qualifying alert sent to n8n/Laya'}
-                    {preset.outcome === 'iris' && 'TRUE POSITIVE (HIGH CONFIDENCE)  -  IRIS ticket created for analyst investigation'}
-                    {preset.outcome === 'notify' && 'ALERT DELIVERED  -  Discord and Slack notified'}
-                    {preset.outcome === 'contain' && 'CONTAINMENT TRIGGERED  -  IRIS ticket + Discord/Slack + FortiGate isolation'}
-                  </span>
-                  <p className="text-[11px] opacity-80 mt-0.5">
-                    {preset.outcome === 'suppressed' && 'Benign noise dropped at the correlation engine.'}
-                    {preset.outcome === 'iris' && 'Only true positive, high-confidence alerts become IRIS tickets.'}
-                    {preset.outcome === 'notify' && 'SOC channels notified; no IRIS ticket created for this case.'}
-                    {preset.outcome === 'contain' && 'Affected system isolated via FortiGate; analysts investigate in IRIS.'}
-                  </p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {completed && (
+            <div className={`mt-4 rounded-lg p-3 text-xs border flex items-center gap-3 ${preset.outcome === 'suppressed' ? 'bg-amber-950/40 border-amber-800/80 text-amber-200' : preset.outcome === 'contain' ? 'bg-rose-950/40 border-rose-800/80 text-rose-200' : preset.outcome === 'notify' ? 'bg-indigo-950/40 border-indigo-800/80 text-indigo-200' : 'bg-sky-950/40 border-sky-800/80 text-sky-200'}`}>
+              {preset.outcome === 'suppressed' ? <Filter className="h-4 w-4 shrink-0" /> : preset.outcome === 'contain' ? <Shield className="h-4 w-4 shrink-0" /> : preset.outcome === 'notify' ? <Bell className="h-4 w-4 shrink-0" /> : <ShieldAlert className="h-4 w-4 shrink-0" />}
+              <div>
+                <span className="font-bold">
+                  {preset.outcome === 'suppressed' && 'SUPPRESSED AT WAZUH  -  no qualifying alert sent to n8n/Laya'}
+                  {preset.outcome === 'iris' && 'TRUE POSITIVE (HIGH CONFIDENCE)  -  IRIS ticket created for analyst investigation'}
+                  {preset.outcome === 'notify' && 'ALERT DELIVERED  -  Discord and Slack notified'}
+                  {preset.outcome === 'contain' && 'CONTAINMENT TRIGGERED  -  IRIS ticket + Discord/Slack + FortiGate isolation'}
+                </span>
+                <p className="text-[11px] opacity-80 mt-0.5">
+                  {preset.outcome === 'suppressed' && 'Benign noise dropped at the correlation engine.'}
+                  {preset.outcome === 'iris' && 'Only true positive, high-confidence alerts become IRIS tickets.'}
+                  {preset.outcome === 'notify' && 'SOC channels notified; no IRIS ticket created for this case.'}
+                  {preset.outcome === 'contain' && 'Affected system isolated via FortiGate; analysts investigate in IRIS.'}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

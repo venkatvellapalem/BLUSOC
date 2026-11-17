@@ -81,9 +81,9 @@ export default function PipelineCanvas({
             <path d="M 380 250 C 390 250, 390 250, 400 250" stroke="#2563EB" strokeWidth="3" fill="none" strokeDasharray="6 5" className="flow-line" />
             <path d="M 570 250 C 580 250, 580 250, 590 250" stroke="#7C3AED" strokeWidth="3" fill="none" strokeDasharray="6 5" className="flow-line" />
             <path d="M 295 340 C 295 420, 295 470, 295 530" stroke="#D97706" strokeWidth="3" fill="none" strokeDasharray="5 5" className="animate-dash-flow-slow" />
-            <path d="M 760 220 C 810 150, 840 130, 870 120" stroke="#0284C7" strokeWidth="2.6" fill="none" strokeDasharray="5 5" className="flow-line" />
-            <path d="M 760 250 C 820 250, 840 250, 870 250" stroke="#6366F1" strokeWidth="2.6" fill="none" strokeDasharray="5 5" className="flow-line" />
-            <path d="M 760 290 C 810 330, 840 350, 870 360" stroke="#DC2626" strokeWidth="2.6" fill="none" strokeDasharray="5 5" className="flow-line" />
+            <path d="M 760 220 C 810 160, 840 145, 870 140" stroke="#0284C7" strokeWidth="2.6" fill="none" strokeDasharray="5 5" className="flow-line" />
+            <path d="M 760 250 C 820 245, 840 242, 870 240" stroke="#6366F1" strokeWidth="2.6" fill="none" strokeDasharray="5 5" className="flow-line" />
+            <path d="M 760 290 C 810 315, 840 325, 870 328" stroke="#DC2626" strokeWidth="2.6" fill="none" strokeDasharray="5 5" className="flow-line" />
             <path d="M 960 138 C 960 155, 960 160, 960 170" stroke="#94A3B8" strokeWidth="2" fill="none" strokeDasharray="4 4" />
 
             {STAGES.map((s, idx) => {
@@ -191,35 +191,34 @@ export default function PipelineCanvas({
             </g>
 
             <g>
-              <rect x={792} y={92} width={276} height="90" rx="12" fill="#F0F9FF" stroke="#BAE6FD" />
-              <image href="/logos/dfir-iris.png" x={802} y={100} width="36" height="12" preserveAspectRatio="xMidYMid meet" />
-              <text x={844} y={111} fontSize="10.5" fontWeight="700" fill="#0F172A">DFIR-IRIS (Tickets)</text>
-              <text x={804} y={134} fontSize="8.5" fill="#0369A1">Only true positive, high-confidence alerts</text>
-              <text x={804} y={148} fontSize="8.5" fill="#64748B">Ticket created for analyst investigation</text>
-              <rect x={804} y={156} width={92} height="18" rx="6" fill="#E0F2FE" />
-              <text x={850} y={168} textAnchor="middle" fontSize="8.2" fontWeight="600" fill="#0369A1">Analyst queue</text>
-              <circle cx={960} cy={188} r="11" fill="#E0F2FE" stroke="#7DD3FC" />
-              <text x={960} y={192} textAnchor="middle" fontSize="9" fontWeight="700" fill="#0369A1">A</text>
-              <text x={977} y={192} fontSize="8.5" fill="#334155">Analysts</text>
+              <rect x={792} y={96} width={276} height="96" rx="12" fill="#F0F9FF" stroke="#BAE6FD" />
+              <image href="/logos/dfir-iris.png" x={804} y={108} width="40" height="14" preserveAspectRatio="xMidYMid meet" />
+              <text x={850} y={119} fontSize="10.5" fontWeight="700" fill="#0F172A">DFIR-IRIS (Tickets)</text>
+              <text x={804} y={138} fontSize="8.5" fill="#0369A1">Only true positive, high-confidence alerts</text>
+              <text x={804} y={152} fontSize="8.5" fill="#64748B">Ticket created for analyst investigation</text>
+              <rect x={804} y={162} width={112} height="18" rx="6" fill="#E0F2FE" />
+              <text x={860} y={174} textAnchor="middle" fontSize="8.2" fontWeight="600" fill="#0369A1">Analyst queue</text>
+              <circle cx={930} cy={171} r="8" fill="#E0F2FE" stroke="#7DD3FC" />
+              <text x={930} y={174} textAnchor="middle" fontSize="8" fontWeight="700" fill="#0369A1">A</text>
+              <text x={942} y={174} fontSize="8.3" fill="#334155">Analysts</text>
 
-              <rect x={792} y={212} width={276} height="74" rx="12" fill="#EEF2FF" stroke="#C7D2FE" />
-              <image href="/logos/discord.svg" x={804} y={224} width="18" height="18" preserveAspectRatio="xMidYMid meet" />
-              <image href="/logos/slack.svg" x={826} y={224} width="18" height="18" preserveAspectRatio="xMidYMid meet" />
-              <text x={850} y={237} fontSize="10.5" fontWeight="700" fill="#0F172A">Discord &amp; Slack</text>
-              <text x={804} y={254} fontSize="8.5" fill="#4338CA">Alert notifications sent to SOC channels</text>
-              <text x={804} y={268} fontSize="8.5" fill="#64748B">Operational visibility for triaged alerts</text>
+              <rect x={792} y={204} width={276} height="72" rx="12" fill="#EEF2FF" stroke="#C7D2FE" />
+              <image href="/logos/discord.svg" x={804} y={216} width="18" height="18" preserveAspectRatio="xMidYMid meet" />
+              <image href="/logos/slack.svg" x={826} y={216} width="18" height="18" preserveAspectRatio="xMidYMid meet" />
+              <text x={850} y={229} fontSize="10.5" fontWeight="700" fill="#0F172A">Discord &amp; Slack</text>
+              <text x={804} y={246} fontSize="8.5" fill="#4338CA">Alert notifications sent to SOC channels</text>
+              <text x={804} y={260} fontSize="8.5" fill="#64748B">Operational visibility for triaged alerts</text>
 
-              <rect x={792} y={316} width={276} height="78" rx="12" fill="#FEF2F2" stroke="#FECACA" />
-              <image href="/logos/fortinet.svg" x={804} y={328} width="18" height="18" preserveAspectRatio="xMidYMid meet" />
-              <text x={828} y={341} fontSize="10.5" fontWeight="700" fill="#0F172A">FortiGate Containment</text>
-              <text x={804} y={358} fontSize="8.5" fill="#B91C1C">Containment actions isolate affected systems</text>
-              <text x={804} y={372} fontSize="8.5" fill="#64748B">Quarantine / block for confirmed threats</text>
+              <rect x={792} y={288} width={276} height="80" rx="12" fill="#FEF2F2" stroke="#FECACA" />
+              <image href="/logos/fortinet.svg" x={804} y={300} width="18" height="18" preserveAspectRatio="xMidYMid meet" />
+              <text x={828} y={313} fontSize="10.5" fontWeight="700" fill="#0F172A">FortiGate Containment</text>
+              <text x={804} y={330} fontSize="8.5" fill="#B91C1C">Containment actions isolate affected systems</text>
+              <text x={804} y={344} fontSize="8.5" fill="#64748B">Quarantine / block for confirmed threats</text>
             </g>
 
             <text x="200" y="242" fontSize="8" fill="#2563EB" textAnchor="middle">ingest</text>
             <text x="390" y="242" fontSize="8" fill="#2563EB" textAnchor="middle">qualifying</text>
             <text x="580" y="242" fontSize="8" fill="#7C3AED" textAnchor="middle">enriched</text>
-            <text x="812" y="112" fontSize="7.5" fill="#0284C7">TP + high confidence</text>
           </svg>
         </div>
       </div>
