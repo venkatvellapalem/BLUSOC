@@ -107,7 +107,7 @@ export default function TelemetryPacketSimulator({
         <div>
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-bold text-brand-text-primary uppercase tracking-wider">Pipeline Progress</span>
-            <span className="font-mono text-xs text-brand-text-secondary">{simulationStep === 0 ? 'Ready — inject an alert' : completed ? 'Trace complete' : `Step ${simulationStep} of 5`}</span>
+            <span className="font-mono text-xs text-brand-text-secondary">{simulationStep === 0 ? 'Ready  -  inject an alert' : completed ? 'Trace complete' : `Step ${simulationStep} of 5`}</span>
           </div>
           <div className="grid grid-cols-5 gap-2">
             {steps.map((st) => {
@@ -154,10 +154,10 @@ export default function TelemetryPacketSimulator({
                 {preset.outcome === 'suppressed' ? <Filter className="h-4 w-4 shrink-0" /> : preset.outcome === 'contain' ? <Shield className="h-4 w-4 shrink-0" /> : preset.outcome === 'notify' ? <Bell className="h-4 w-4 shrink-0" /> : <ShieldAlert className="h-4 w-4 shrink-0" />}
                 <div>
                   <span className="font-bold">
-                    {preset.outcome === 'suppressed' && 'SUPPRESSED AT WAZUH — no qualifying alert sent to n8n/Laya'}
-                    {preset.outcome === 'iris' && 'TRUE POSITIVE (HIGH CONFIDENCE) — IRIS ticket created for analyst investigation'}
-                    {preset.outcome === 'notify' && 'ALERT DELIVERED — Discord and Slack notified'}
-                    {preset.outcome === 'contain' && 'CONTAINMENT TRIGGERED — IRIS ticket + Discord/Slack + FortiGate isolation'}
+                    {preset.outcome === 'suppressed' && 'SUPPRESSED AT WAZUH  -  no qualifying alert sent to n8n/Laya'}
+                    {preset.outcome === 'iris' && 'TRUE POSITIVE (HIGH CONFIDENCE)  -  IRIS ticket created for analyst investigation'}
+                    {preset.outcome === 'notify' && 'ALERT DELIVERED  -  Discord and Slack notified'}
+                    {preset.outcome === 'contain' && 'CONTAINMENT TRIGGERED  -  IRIS ticket + Discord/Slack + FortiGate isolation'}
                   </span>
                   <p className="text-[11px] opacity-80 mt-0.5">
                     {preset.outcome === 'suppressed' && 'Benign noise dropped at the correlation engine.'}

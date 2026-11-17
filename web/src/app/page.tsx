@@ -17,9 +17,9 @@ const METRICS = [
 
 const STACK = [
   { name: "Wazuh", src: "/logos/wazuh.svg", width: 22, height: 22 },
-  { name: "n8n", src: "/logos/n8n.svg", width: 22, height: 22 },
+  { name: "n8n", src: "/logos/n8n.png", width: 22, height: 22 },
   { name: "Suricata", src: "/logos/suricata.png", width: 22, height: 22 },
-  { name: "CrowdStrike", src: "/logos/crowdstrike.svg", width: 22, height: 22 },
+  { name: "CrowdStrike", src: "/logos/crowdstrike.png", width: 22, height: 22 },
   { name: "Laya", src: "/logos/laya.svg", width: 22, height: 22 },
 ];
 
@@ -110,7 +110,7 @@ export default function HomePage() {
               ))}
               <span className="hidden sm:inline h-5 w-px bg-brand-border" aria-hidden="true" />
               <div className="flex items-center gap-2.5 text-brand-text-primary">
-                <Image src="/logos/dfir-iris.svg" alt="DFIR-IRIS logo" width={22} height={22} className="h-[22px] w-[22px]" />
+                <Image src="/logos/dfir-iris.png" alt="DFIR-IRIS logo" width={22} height={22} className="h-[22px] w-[22px]" />
                 <span className="text-sm font-semibold tracking-tight">DFIR-IRIS</span>
               </div>
             </div>
@@ -163,7 +163,7 @@ export default function HomePage() {
             <div className="h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm">
               <div className="flex items-center gap-3">
                 <Image src="/logos/wazuh.svg" alt="Wazuh" width={28} height={28} className="h-7 w-7" />
-                <Image src="/logos/n8n.svg" alt="n8n" width={22} height={22} className="h-[22px] w-[22px]" />
+                <Image src="/logos/n8n.png" alt="n8n" width={22} height={22} className="h-[22px] w-[22px]" />
                 <span className="font-mono text-[11px] font-semibold text-blue-700 bg-blue-50 border border-blue-100 rounded-full px-2.5 py-1">Qualify & enrich</span>
               </div>
               <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-brand-text-primary">Wazuh → n8n → Laya</h3>
@@ -175,7 +175,7 @@ export default function HomePage() {
           <Reveal delay={1}>
             <div className="h-full rounded-2xl border border-brand-border bg-white p-7 shadow-sm">
               <div className="flex items-center gap-3">
-                <Image src="/logos/n8n.svg" alt="n8n" width={24} height={24} className="h-6 w-6" />
+                <Image src="/logos/n8n.png" alt="n8n" width={24} height={24} className="h-6 w-6" />
                 <Image src="/logos/laya.svg" alt="Laya" width={28} height={28} className="h-7 w-7" />
                 <span className="font-mono text-[11px] font-semibold text-violet-700 bg-violet-50 border border-violet-100 rounded-full px-2.5 py-1">Enrich & route</span>
               </div>

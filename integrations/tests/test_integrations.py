@@ -317,7 +317,7 @@ class TestMockIrisServerAndTransport(unittest.TestCase):
             "alert_context": {"rule_id": "100400"},
         }
         hook_url = f"http://127.0.0.1:{self.port}/alerts/add"
-        response = custom_iris.send_iris_alert(test_payload, hook_url=hook_url, api_key="TEST_KEY")
+        response = custom_iris.send_iris_alert(test_payload, hook_url=hook_url, api_key="TEST_KEY", verify_ssl=False)
         self.assertEqual(response.status_code, 200)
         res_data = response.json()
         self.assertEqual(res_data["status"], "success")

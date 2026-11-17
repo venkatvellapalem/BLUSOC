@@ -4,7 +4,7 @@
   "customer_id": 1,
   "max_payload_size": 4000,
   "timeout_seconds": 10,
-  "verify_ssl": false,
+  "verify_ssl": true,
   "default_status_id": 1,
   "log_level": "INFO",
   "retry_attempts": 3,

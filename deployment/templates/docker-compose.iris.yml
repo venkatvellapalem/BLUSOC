@@ -12,13 +12,13 @@ services:
     container_name: blusoc-iris-db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-iris_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Placeholder_IrisPostgresPassword_ChangeMe!}
-      POSTGRES_DB: ${POSTGRES_DB:-iris_db}
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
     volumes:
       - iris_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-iris_user} -d ${POSTGRES_DB:-iris_db}"]
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -35,8 +35,8 @@ services:
     container_name: blusoc-iris-rabbitmq
     restart: unless-stopped
     environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-iris_mq}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-Placeholder_IrisRabbitMqPassword_ChangeMe!}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:?RABBITMQ_DEFAULT_USER is required}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:?RABBITMQ_DEFAULT_PASS is required}
     volumes:
       - iris_rabbitmq_data:/var/lib/rabbitmq
     healthcheck:
@@ -64,14 +64,14 @@ services:
     environment:
       POSTGRES_HOST: iris-db
       POSTGRES_PORT: 5432
-      POSTGRES_USER: ${POSTGRES_USER:-iris_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Placeholder_IrisPostgresPassword_ChangeMe!}
-      POSTGRES_DB: ${POSTGRES_DB:-iris_db}
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
       RABBITMQ_HOST: iris-rabbitmq
       RABBITMQ_PORT: 5672
-      RABBITMQ_USER: ${RABBITMQ_DEFAULT_USER:-iris_mq}
-      RABBITMQ_PASS: ${RABBITMQ_DEFAULT_PASS:-Placeholder_IrisRabbitMqPassword_ChangeMe!}
-      SECRET_KEY: ${IRIS_SECRET_KEY:-Placeholder_IrisDjangoSecretKey_64CharsRandom!}
+      RABBITMQ_USER: ${RABBITMQ_DEFAULT_USER:?RABBITMQ_DEFAULT_USER is required}
+      RABBITMQ_PASS: ${RABBITMQ_DEFAULT_PASS:?RABBITMQ_DEFAULT_PASS is required}
+      SECRET_KEY: ${IRIS_SECRET_KEY:?IRIS_SECRET_KEY is required}
       IRIS_SERVER_NAME: ${IRIS_SERVER_NAME:-soar-iris-01.blusoc.internal}
     volumes:
       - iris_user_data:/iriswebapp/dependencies
@@ -104,14 +104,14 @@ services:
     environment:
       POSTGRES_HOST: iris-db
       POSTGRES_PORT: 5432
-      POSTGRES_USER: ${POSTGRES_USER:-iris_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Placeholder_IrisPostgresPassword_ChangeMe!}
-      POSTGRES_DB: ${POSTGRES_DB:-iris_db}
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
       RABBITMQ_HOST: iris-rabbitmq
       RABBITMQ_PORT: 5672
-      RABBITMQ_USER: ${RABBITMQ_DEFAULT_USER:-iris_mq}
-      RABBITMQ_PASS: ${RABBITMQ_DEFAULT_PASS:-Placeholder_IrisRabbitMqPassword_ChangeMe!}
-      SECRET_KEY: ${IRIS_SECRET_KEY:-Placeholder_IrisDjangoSecretKey_64CharsRandom!}
+      RABBITMQ_USER: ${RABBITMQ_DEFAULT_USER:?RABBITMQ_DEFAULT_USER is required}
+      RABBITMQ_PASS: ${RABBITMQ_DEFAULT_PASS:?RABBITMQ_DEFAULT_PASS is required}
+      SECRET_KEY: ${IRIS_SECRET_KEY:?IRIS_SECRET_KEY is required}
     volumes:
       - iris_user_data:/iriswebapp/dependencies
       - iris_logs:/var/log/iris

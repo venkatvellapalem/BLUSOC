@@ -66,6 +66,12 @@ FORBIDDEN_TERMS: Dict[str, str] = {
     "xiaomi": "Personal Hardware Identifier (xiaomi)",
 }
 
+# Known-safe public references to ignore (avoid false positives on intentional public links)
+ALLOWED_LINE_SUBSTRINGS = {
+    "https://github.com/venkatvellapalem/BLUSOC",
+}
+
+
 # Regex patterns for active credential leaks
 SUSPICIOUS_CREDENTIAL_PATTERNS: List[Tuple[str, str]] = [
     (r"AKIA[0-9A-Z]{16}", "AWS Access Key ID"),
@@ -109,6 +115,9 @@ def audit_repository(repo_root: str) -> bool:
                 continue
 
             for line_num, line in enumerate(lines, start=1):
+                if any(allowed in line for allowed in ALLOWED_LINE_SUBSTRINGS):
+                    continue
+
                 # 1. Check exact forbidden terms
                 lower_line = line.lower()
                 for term, desc in FORBIDDEN_TERMS.items():

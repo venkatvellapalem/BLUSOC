@@ -134,8 +134,7 @@ def test_env_example_keys() -> Tuple[bool, str]:
 
     # Sanitization verification
     suspicious_patterns = [
-        r"(?i)password\s*=\s*(?!Placeholder|change)[a-zA-Z0-9!@#$%^&*]{8,}",
-        r"(?i)secret\s*=\s*(?!Placeholder|placeholder)[a-zA-Z0-9]{16,}",
+        r"(?i)(password|secret|api_key|token)\s*=\s*(?!(?:Placeholder|__SET_|change|placeholder))(?=\S*[A-Za-z0-9])[^\s#]{8,}",
     ]
     for pattern in suspicious_patterns:
         matches = re.findall(pattern, content)

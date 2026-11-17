@@ -18,8 +18,6 @@ from typing import Any, Dict, List, Optional, Tuple
 import requests
 import urllib3
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 STATUS_ID_TO_NAME: Dict[int, str] = {
     1: "OPEN",
     2: "OPEN",
@@ -35,6 +33,13 @@ DEFAULT_ENDPOINT = "https://soar-iris-01.blusoc.internal/alerts/filter"
 DEFAULT_INTERVAL_SECONDS = 10
 INITIAL_BACKOFF_SECONDS = 2
 MAX_BACKOFF_SECONDS = 60
+
+
+def _env_flag(name: str, default: bool) -> bool:
+    val = os.environ.get(name)
+    if val is None:
+        return default
+    return val.strip().lower() in {"1", "true", "yes", "on"}
 
 
 def setup_logger(audit_file: Optional[str] = None) -> logging.Logger:
@@ -67,15 +72,17 @@ class IrisStatusDaemon:
     def __init__(
         self,
         endpoint_url: str = DEFAULT_ENDPOINT,
-        api_key: str = "BLUSOC_IRIS_SYNC_KEY",
+        api_key: Optional[str] = None,
         poll_interval: int = DEFAULT_INTERVAL_SECONDS,
-        verify_ssl: bool = False,
+        verify_ssl: Optional[bool] = None,
         audit_file: Optional[str] = None,
         db_connection_string: Optional[str] = None,
     ) -> None:
         self.endpoint_url = endpoint_url
-        self.api_key = api_key
+        self.api_key = api_key or os.environ.get("IRIS_API_KEY", "")
         self.poll_interval = poll_interval
+        if verify_ssl is None:
+            verify_ssl = _env_flag("IRIS_VERIFY_SSL", True)
         self.verify_ssl = verify_ssl
         self.audit_file = audit_file
         self.db_connection_string = db_connection_string
@@ -84,6 +91,12 @@ class IrisStatusDaemon:
         self.retry_count: int = 0
         self.state_cache: Dict[str, Dict[str, Any]] = {}
         self.db_conn: Optional[Any] = None
+
+        if not self.verify_ssl:
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+            logger.warning("TLS certificate verification is disabled for IRIS polling requests.")
+        if not self.api_key:
+            logger.warning("IRIS_API_KEY is not set; API requests may be rejected.")
 
         self._setup_signals()
 
@@ -270,7 +283,7 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument(
         "--api-key",
-        default=os.environ.get("IRIS_API_KEY", "BLUSOC_IRIS_SYNC_KEY"),
+        default=os.environ.get("IRIS_API_KEY"),
         help="API authentication key",
     )
     parser.add_argument(
@@ -290,6 +303,11 @@ def parse_arguments() -> argparse.Namespace:
         help="Target audit file path",
     )
     parser.add_argument(
+        "--insecure",
+        action="store_true",
+        help="Disable TLS certificate verification (not recommended)",
+    )
+    parser.add_argument(
         "--once",
         action="store_true",
         help="Execute a single synchronization cycle and exit",
@@ -299,10 +317,12 @@ def parse_arguments() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_arguments()
+    verify_ssl = False if args.insecure else _env_flag("IRIS_VERIFY_SSL", True)
     daemon = IrisStatusDaemon(
         endpoint_url=args.endpoint,
         api_key=args.api_key,
         poll_interval=args.interval,
+        verify_ssl=verify_ssl,
         db_connection_string=args.db_url,
         audit_file=args.audit_file,
     )

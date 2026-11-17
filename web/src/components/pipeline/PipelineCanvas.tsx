@@ -13,51 +13,32 @@ interface PipelineCanvasProps {
 }
 
 const STAGES = [
-  { id: 'stage-sensors', title: 'Sensors', sub: 'Telemetry ingress', x: 20, y: 70, w: 170, h: 440, logo: null as string | null },
-  { id: 'stage-wazuh', title: 'Wazuh', sub: 'Correlate & suppress', x: 210, y: 70, w: 170, h: 440, logo: '/logos/wazuh.svg' },
-  { id: 'stage-n8n', title: 'n8n SOAR', sub: 'Enrich & route', x: 400, y: 70, w: 170, h: 440, logo: null },
-  { id: 'stage-laya', title: 'Laya', sub: 'Verdict & decision', x: 590, y: 70, w: 170, h: 440, logo: '/logos/laya.svg' },
-  { id: 'stage-response', title: 'Response', sub: 'IRIS, notify, contain', x: 780, y: 70, w: 300, h: 440, logo: null },
+  { id: 'stage-sensors', title: 'Sensors', sub: 'Telemetry ingress', x: 20, y: 70, w: 170, h: 440, logo: null as string | null, logoW: 0, logoH: 0 },
+  { id: 'stage-wazuh', title: 'Wazuh', sub: 'Correlate & suppress', x: 210, y: 70, w: 170, h: 440, logo: '/logos/wazuh.svg', logoW: 18, logoH: 18 },
+  { id: 'stage-n8n', title: 'n8n SOAR', sub: 'Enrich & route', x: 400, y: 70, w: 170, h: 440, logo: '/logos/n8n.png', logoW: 24, logoH: 17 },
+  { id: 'stage-laya', title: 'Laya', sub: 'Verdict & decision', x: 590, y: 70, w: 170, h: 440, logo: '/logos/laya.svg', logoW: 18, logoH: 18 },
+  { id: 'stage-response', title: 'Response', sub: 'IRIS, notify, contain', x: 780, y: 70, w: 300, h: 440, logo: null, logoW: 0, logoH: 0 },
 ];
-
-function packetPos(step: number, outcome?: string) {
-  if (!step) return null;
-  if (outcome === 'suppressed') {
-    if (step === 1) return { x: 105, y: 250, label: 'INGEST' };
-    if (step >= 2) return { x: 295, y: 560, label: 'SUPPRESSED' };
-  }
-  switch (step) {
-    case 1: return { x: 105, y: 250, label: 'INGEST' };
-    case 2: return { x: 295, y: 250, label: 'QUALIFY' };
-    case 3: return { x: 485, y: 250, label: 'ENRICH' };
-    case 4: return { x: 675, y: 250, label: 'TRIAGE' };
-    case 5:
-      if (outcome === 'contain') return { x: 1005, y: 360, label: 'CONTAIN' };
-      if (outcome === 'notify') return { x: 1005, y: 250, label: 'NOTIFY' };
-      return { x: 1005, y: 120, label: 'IRIS TICKET' };
-    default: return null;
-  }
-}
 
 export default function PipelineCanvas({
   selectedStageId,
   onSelectStage,
-  activePreset,
   simulationStep,
-  isSimulating,
 }: PipelineCanvasProps) {
   const [hovered, setHovered] = useState<string | null>(null);
-  const pkt = packetPos(simulationStep, activePreset?.outcome);
   const activeStageIndex = simulationStep === 0 ? -1 : simulationStep - 1;
 
-  const sensorRows = useMemo(() => ([
-    { name: 'CrowdStrike Falcon', sub: 'EDR telemetry', y: 150, logo: '/logos/crowdstrike.svg', lw: 18, lh: 18 },
-    { name: 'Suricata', sub: 'IDS / 10G tap', y: 205, logo: '/logos/suricata.png', lw: 16, lh: 16 },
-    { name: 'Sophos', sub: 'Endpoint protection', y: 260, logo: '/logos/sophos.svg', lw: 16, lh: 16 },
-    { name: 'Barracuda', sub: 'Email & gateway', y: 315, logo: '/logos/barracuda.svg', lw: 16, lh: 16 },
-    { name: 'Microsoft 365', sub: 'Identity & audit', y: 370, logo: '/logos/microsoft-365.svg', lw: 16, lh: 16 },
-    { name: 'Cloudflare WAF', sub: 'Edge traffic', y: 425, logo: '/logos/cloudflare.svg', lw: 16, lh: 16 },
-  ]), []);
+  const sensorRows = useMemo(
+    () => [
+      { name: 'CrowdStrike Falcon', sub: 'EDR telemetry', y: 150, logo: '/logos/crowdstrike.png', lw: 28, lh: 15 },
+      { name: 'Suricata', sub: 'IDS / 10G tap', y: 205, logo: '/logos/suricata.png', lw: 16, lh: 16 },
+      { name: 'Sophos', sub: 'Endpoint protection', y: 260, logo: '/logos/sophos.png', lw: 28, lh: 14 },
+      { name: 'Barracuda', sub: 'Email & gateway', y: 315, logo: '/logos/barracuda.svg', lw: 16, lh: 16 },
+      { name: 'Microsoft 365', sub: 'Identity & audit', y: 370, logo: '/logos/microsoft-365.svg', lw: 16, lh: 16 },
+      { name: 'Cloudflare WAF', sub: 'Edge traffic', y: 425, logo: '/logos/cloudflare.svg', lw: 16, lh: 16 },
+    ],
+    []
+  );
 
   return (
     <div className="relative rounded-2xl border border-brand-border bg-brand-surface shadow-sm overflow-hidden">
@@ -68,7 +49,9 @@ export default function PipelineCanvas({
           </div>
           <div>
             <h2 className="text-sm font-bold text-brand-text-primary tracking-tight">Detection &amp; Response Flow</h2>
-            <p className="text-xs text-brand-text-secondary">Qualifying alerts: Wazuh → n8n (enrich) → Laya (triage) → IRIS, Discord/Slack, or FortiGate</p>
+            <p className="text-xs text-brand-text-secondary">
+              Qualifying alerts: Wazuh → n8n (enrich) → Laya (triage) → IRIS, Discord/Slack, or FortiGate
+            </p>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-3 text-[11px] text-brand-text-secondary">
@@ -85,42 +68,48 @@ export default function PipelineCanvas({
               <pattern id="dotp2" width="24" height="24" patternUnits="userSpaceOnUse">
                 <circle cx="2" cy="2" r="1" fill="#E2E8F0" />
               </pattern>
-              <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 8 5 L 0 9 z" fill="#2563EB" /></marker>
-              <marker id="arr-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 8 5 L 0 9 z" fill="#D97706" /></marker>
-              <marker id="arr-violet" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 8 5 L 0 9 z" fill="#7C3AED" /></marker>
-              <marker id="arr-sky" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 8 5 L 0 9 z" fill="#0284C7" /></marker>
-              <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 8 5 L 0 9 z" fill="#DC2626" /></marker>
               <filter id="softglow" x="-50%" y="-50%" width="200%" height="200%">
                 <feGaussianBlur stdDeviation="3.5" result="b" />
-                <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+                <feMerge>
+                  <feMergeNode in="b" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
               </filter>
             </defs>
             <rect width="1100" height="640" fill="url(#dotp2)" />
 
-            <path d="M 190 250 C 200 250, 200 250, 210 250" stroke="#2563EB" strokeWidth="3" fill="none" markerEnd="url(#arr-blue)" strokeDasharray="6 5" className="flow-line" />
-            <path d="M 380 250 C 390 250, 390 250, 400 250" stroke="#2563EB" strokeWidth="3" fill="none" markerEnd="url(#arr-blue)" strokeDasharray="6 5" className="flow-line" />
-            <path d="M 570 250 C 580 250, 580 250, 590 250" stroke="#7C3AED" strokeWidth="3" fill="none" markerEnd="url(#arr-violet)" strokeDasharray="6 5" className="flow-line" />
-            <path d="M 295 340 C 295 420, 295 470, 295 530" stroke="#D97706" strokeWidth="3" fill="none" markerEnd="url(#arr-amber)" strokeDasharray="5 5" className="animate-dash-flow-slow" />
-            <path d="M 760 220 C 810 150, 840 130, 870 120" stroke="#0284C7" strokeWidth="2.6" fill="none" markerEnd="url(#arr-sky)" strokeDasharray="5 5" className="flow-line" />
-            <path d="M 760 250 C 820 250, 840 250, 870 250" stroke="#6366F1" strokeWidth="2.6" fill="none" markerEnd="url(#arr-violet)" strokeDasharray="5 5" className="flow-line" />
-            <path d="M 760 290 C 810 330, 840 350, 870 360" stroke="#DC2626" strokeWidth="2.6" fill="none" markerEnd="url(#arr-red)" strokeDasharray="5 5" className="flow-line" />
-            <path d="M 945 138 C 945 155, 945 160, 945 170" stroke="#94A3B8" strokeWidth="2" fill="none" strokeDasharray="4 4" />
-
-            {!isSimulating && (
-              <>
-                <circle r="4" fill="#2563EB"><animateMotion path="M 190 250 C 200 250, 200 250, 210 250" dur="1.8s" repeatCount="indefinite" /></circle>
-                <circle r="4" fill="#2563EB"><animateMotion path="M 380 250 C 390 250, 390 250, 400 250" dur="2s" repeatCount="indefinite" /></circle>
-                <circle r="4" fill="#7C3AED"><animateMotion path="M 570 250 C 580 250, 580 250, 590 250" dur="2s" repeatCount="indefinite" /></circle>
-                <circle r="4" fill="#D97706"><animateMotion path="M 295 340 C 295 420, 295 470, 295 530" dur="2.8s" repeatCount="indefinite" /></circle>
-              </>
-            )}
+            {/* Flow lines (no arrows, no moving dots) */}
+            <path d="M 190 250 C 200 250, 200 250, 210 250" stroke="#2563EB" strokeWidth="3" fill="none" strokeDasharray="6 5" className="flow-line" />
+            <path d="M 380 250 C 390 250, 390 250, 400 250" stroke="#2563EB" strokeWidth="3" fill="none" strokeDasharray="6 5" className="flow-line" />
+            <path d="M 570 250 C 580 250, 580 250, 590 250" stroke="#7C3AED" strokeWidth="3" fill="none" strokeDasharray="6 5" className="flow-line" />
+            <path d="M 295 340 C 295 420, 295 470, 295 530" stroke="#D97706" strokeWidth="3" fill="none" strokeDasharray="5 5" className="animate-dash-flow-slow" />
+            <path d="M 760 220 C 810 150, 840 130, 870 120" stroke="#0284C7" strokeWidth="2.6" fill="none" strokeDasharray="5 5" className="flow-line" />
+            <path d="M 760 250 C 820 250, 840 250, 870 250" stroke="#6366F1" strokeWidth="2.6" fill="none" strokeDasharray="5 5" className="flow-line" />
+            <path d="M 760 290 C 810 330, 840 350, 870 360" stroke="#DC2626" strokeWidth="2.6" fill="none" strokeDasharray="5 5" className="flow-line" />
+            <path d="M 960 138 C 960 155, 960 160, 960 170" stroke="#94A3B8" strokeWidth="2" fill="none" strokeDasharray="4 4" />
 
             {STAGES.map((s, idx) => {
               const active = selectedStageId === s.id || activeStageIndex === idx;
               const hover = hovered === s.id;
               return (
-                <g key={s.id} onClick={() => onSelectStage(s.id)} onMouseEnter={() => setHovered(s.id)} onMouseLeave={() => setHovered(null)} className="cursor-pointer">
-                  <rect x={s.x} y={s.y} width={s.w} height={s.h} rx="16" fill="#FFFFFF" stroke={active ? '#2563EB' : hover ? '#93C5FD' : '#E2E8F0'} strokeWidth={active ? 2.5 : 1.5} filter={active ? 'url(#softglow)' : undefined} />
+                <g
+                  key={s.id}
+                  onClick={() => onSelectStage(s.id)}
+                  onMouseEnter={() => setHovered(s.id)}
+                  onMouseLeave={() => setHovered(null)}
+                  className="cursor-pointer"
+                >
+                  <rect
+                    x={s.x}
+                    y={s.y}
+                    width={s.w}
+                    height={s.h}
+                    rx="16"
+                    fill="#FFFFFF"
+                    stroke={active ? '#2563EB' : hover ? '#93C5FD' : '#E2E8F0'}
+                    strokeWidth={active ? 2.5 : 1.5}
+                    filter={active ? 'url(#softglow)' : undefined}
+                  />
                   <rect x={s.x} y={s.y} width={s.w} height="54" rx="16" fill="#F8FAFC" />
                   <rect x={s.x} y={s.y + 42} width={s.w} height="12" fill="#F8FAFC" />
                   <line x1={s.x} y1={s.y + 54} x2={s.x + s.w} y2={s.y + 54} stroke="#E2E8F0" />
@@ -128,9 +117,20 @@ export default function PipelineCanvas({
                   <text x={s.x + 20} y={s.y + 31} textAnchor="middle" fontSize="10" fontWeight="700" fill="#2563EB">{idx + 1}</text>
                   <text x={s.x + 38} y={s.y + 24} fontSize="11" fontWeight="700" fill="#0F172A">{s.title}</text>
                   <text x={s.x + 38} y={s.y + 38} fontSize="9" fill="#64748B">{s.sub}</text>
-                  {s.logo && <image href={s.logo} x={s.x + s.w - 32} y={s.y + 15} width="18" height="18" preserveAspectRatio="xMidYMid meet" />}
+                  {s.logo && (
+                    <image
+                      href={s.logo}
+                      x={s.x + s.w - s.logoW - 12}
+                      y={s.y + 27 - s.logoH / 2}
+                      width={s.logoW}
+                      height={s.logoH}
+                      preserveAspectRatio="xMidYMid meet"
+                    />
+                  )}
                   <rect x={s.x + 12} y={s.y + s.h - 34} width={s.w - 24} height="22" rx="6" fill="#F1F5F9" stroke="#E2E8F0" />
-                  <text x={s.x + s.w / 2} y={s.y + s.h - 19} textAnchor="middle" fontSize="9" fontWeight="600" fill="#2563EB">Inspect stage →</text>
+                  <text x={s.x + s.w / 2} y={s.y + s.h - 19} textAnchor="middle" fontSize="9" fontWeight="600" fill="#2563EB">
+                    Inspect stage →
+                  </text>
                 </g>
               );
             })}
@@ -148,7 +148,7 @@ export default function PipelineCanvas({
               <rect x={222} y={140} width={146} height="70" rx="9" fill="#F8FAFC" stroke="#E2E8F0" />
               <text x={234} y={160} fontSize="10" fontWeight="700" fill="#0F172A">Correlation Engine</text>
               <text x={234} y={175} fontSize="8.5" fill="#64748B">Custom tuned rules (L0-L12)</text>
-              <text x={234} y={189} fontSize="8.5" fill="#2563EB">Decoders & scoring</text>
+              <text x={234} y={189} fontSize="8.5" fill="#2563EB">Decoders &amp; scoring</text>
               <rect x={222} y={220} width={146} height="70" rx="9" fill="#FFFBEB" stroke="#FDE68A" />
               <text x={234} y={240} fontSize="10" fontWeight="700" fill="#92400E">Noise Suppression</text>
               <text x={234} y={255} fontSize="8.5" fill="#78350F">Level 0 benign events dropped</text>
@@ -181,7 +181,7 @@ export default function PipelineCanvas({
 
             <g>
               <rect x={602} y={140} width={146} height="76" rx="9" fill="#F5F3FF" stroke="#DDD6FE" />
-              <text x={614} y={160} fontSize="10" fontWeight="700" fill="#5B21B6">Triage & Verdict</text>
+              <text x={614} y={160} fontSize="10" fontWeight="700" fill="#5B21B6">Triage &amp; Verdict</text>
               <text x={614} y={175} fontSize="8.5" fill="#6D28D9">Confidence assessment</text>
               <text x={614} y={190} fontSize="8.5" fill="#6D28D9">TP / suspicious / benign</text>
               <rect x={602} y={226} width={146} height="102" rx="9" fill="#F8FAFC" stroke="#E2E8F0" />
@@ -195,25 +195,25 @@ export default function PipelineCanvas({
 
             <g>
               <rect x={792} y={92} width={276} height="90" rx="12" fill="#F0F9FF" stroke="#BAE6FD" />
-              <image href="/logos/dfir-iris.svg" x={804} y={102} width="18" height="18" />
-              <text x={828} y={115} fontSize="10.5" fontWeight="700" fill="#0F172A">DFIR-IRIS (Tickets)</text>
+              <image href="/logos/dfir-iris.png" x={802} y={100} width="36" height="12" preserveAspectRatio="xMidYMid meet" />
+              <text x={844} y={111} fontSize="10.5" fontWeight="700" fill="#0F172A">DFIR-IRIS (Tickets)</text>
               <text x={804} y={134} fontSize="8.5" fill="#0369A1">Only true positive, high-confidence alerts</text>
               <text x={804} y={148} fontSize="8.5" fill="#64748B">Ticket created for analyst investigation</text>
               <rect x={804} y={156} width={92} height="18" rx="6" fill="#E0F2FE" />
               <text x={850} y={168} textAnchor="middle" fontSize="8.2" fontWeight="600" fill="#0369A1">Analyst queue</text>
-              <circle cx={945} cy={188} r="11" fill="#E0F2FE" stroke="#7DD3FC" />
-              <text x={945} y={192} textAnchor="middle" fontSize="9" fontWeight="700" fill="#0369A1">A</text>
-              <text x={962} y={192} fontSize="8.5" fill="#334155">Analysts</text>
+              <circle cx={960} cy={188} r="11" fill="#E0F2FE" stroke="#7DD3FC" />
+              <text x={960} y={192} textAnchor="middle" fontSize="9" fontWeight="700" fill="#0369A1">A</text>
+              <text x={977} y={192} fontSize="8.5" fill="#334155">Analysts</text>
 
               <rect x={792} y={212} width={276} height="74" rx="12" fill="#EEF2FF" stroke="#C7D2FE" />
-              <image href="/logos/discord.svg" x={804} y={224} width="18" height="18" />
-              <image href="/logos/slack.svg" x={826} y={224} width="18" height="18" />
-              <text x={850} y={237} fontSize="10.5" fontWeight="700" fill="#0F172A">Discord & Slack</text>
+              <image href="/logos/discord.svg" x={804} y={224} width="18" height="18" preserveAspectRatio="xMidYMid meet" />
+              <image href="/logos/slack.svg" x={826} y={224} width="18" height="18" preserveAspectRatio="xMidYMid meet" />
+              <text x={850} y={237} fontSize="10.5" fontWeight="700" fill="#0F172A">Discord &amp; Slack</text>
               <text x={804} y={254} fontSize="8.5" fill="#4338CA">Alert notifications sent to SOC channels</text>
               <text x={804} y={268} fontSize="8.5" fill="#64748B">Operational visibility for triaged alerts</text>
 
               <rect x={792} y={316} width={276} height="78" rx="12" fill="#FEF2F2" stroke="#FECACA" />
-              <image href="/logos/fortinet.svg" x={804} y={328} width="18" height="18" />
+              <image href="/logos/fortinet.svg" x={804} y={328} width="18" height="18" preserveAspectRatio="xMidYMid meet" />
               <text x={828} y={341} fontSize="10.5" fontWeight="700" fill="#0F172A">FortiGate Containment</text>
               <text x={804} y={358} fontSize="8.5" fill="#B91C1C">Containment actions isolate affected systems</text>
               <text x={804} y={372} fontSize="8.5" fill="#64748B">Quarantine / block for confirmed threats</text>
@@ -223,17 +223,6 @@ export default function PipelineCanvas({
             <text x="390" y="242" fontSize="8" fill="#2563EB" textAnchor="middle">qualifying</text>
             <text x="580" y="242" fontSize="8" fill="#7C3AED" textAnchor="middle">enriched</text>
             <text x="812" y="112" fontSize="7.5" fill="#0284C7">TP + high confidence</text>
-
-            {pkt && (
-              <g transform={`translate(${pkt.x}, ${pkt.y})`} filter="url(#softglow)">
-                <circle r="16" fill={pkt.label === 'SUPPRESSED' ? '#FEF3C7' : pkt.label === 'CONTAIN' ? '#FEE2E2' : '#DBEAFE'} opacity="0.85">
-                  <animate attributeName="r" values="12;20;12" dur="1.2s" repeatCount="indefinite" />
-                </circle>
-                <circle r="9" fill={pkt.label === 'SUPPRESSED' ? '#D97706' : pkt.label === 'CONTAIN' ? '#DC2626' : pkt.label === 'NOTIFY' ? '#4F46E5' : '#2563EB'} stroke="#fff" strokeWidth="2.5" />
-                <rect x="-44" y="-32" width="88" height="20" rx="5" fill="#0F172A" opacity="0.92" />
-                <text x="0" y="-19" textAnchor="middle" fontSize="8" fontWeight="700" fill="#fff">{pkt.label}</text>
-              </g>
-            )}
           </svg>
         </div>
       </div>
@@ -243,7 +232,7 @@ export default function PipelineCanvas({
           <Info className="h-4 w-4 text-brand-text-muted" />
           <span>Wazuh forwards qualifying alerts to n8n for enrichment, then Laya triages. Only true positive, high-confidence alerts become IRIS tickets.</span>
         </div>
-        <span className="font-mono text-brand-text-muted">Animated flow · click any stage for details</span>
+        <span className="font-mono text-brand-text-muted">Lines show flow · click any stage for details</span>
       </div>
     </div>
   );

@@ -116,13 +116,13 @@ export default function PipelinePage() {
                   <Image src="/logos/wazuh.svg" alt="Wazuh" width={16} height={16} className="h-4 w-4" /> Wazuh
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-semibold text-rose-700 shadow-sm">
-                  <Image src="/logos/n8n.svg" alt="n8n" width={14} height={14} className="h-3.5 w-3.5" /> n8n SOAR
+                  <Image src="/logos/n8n.png" alt="n8n" width={14} height={14} className="h-3.5 w-3.5" /> n8n SOAR
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
                   <Image src="/logos/laya.svg" alt="Laya" width={16} height={16} className="h-4 w-4" /> Laya
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
-                  <Image src="/logos/dfir-iris.svg" alt="DFIR-IRIS" width={16} height={16} className="h-4 w-4" /> DFIR-IRIS
+                  <Image src="/logos/dfir-iris.png" alt="DFIR-IRIS" width={16} height={16} className="h-4 w-4" /> DFIR-IRIS
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
                   <Image src="/logos/discord.svg" alt="Discord" width={14} height={14} className="h-3.5 w-3.5" />
@@ -192,7 +192,7 @@ export default function PipelinePage() {
               <p className="text-xs text-brand-text-secondary leading-relaxed">Assigns verdict/confidence and routes IRIS tickets, notifications, and containment.</p>
             </div>
             <div className="rounded-xl border border-brand-border bg-brand-surface p-5 hover:shadow-sm transition-shadow">
-              <div className="flex items-center gap-2 mb-2"><Image src="/logos/dfir-iris.svg" alt="DFIR-IRIS" width={18} height={18} /><span className="text-sm font-semibold">DFIR-IRIS</span></div>
+              <div className="flex items-center gap-2 mb-2"><Image src="/logos/dfir-iris.png" alt="DFIR-IRIS" width={18} height={18} /><span className="text-sm font-semibold">DFIR-IRIS</span></div>
               <p className="text-xs text-brand-text-secondary leading-relaxed">Receives tickets only for <strong>true positive, high-confidence</strong> alerts for analyst investigation.</p>
             </div>
             <div className="rounded-xl border border-brand-border bg-brand-surface p-5 hover:shadow-sm transition-shadow">

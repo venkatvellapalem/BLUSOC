@@ -53,7 +53,7 @@ export default function NodeDetailDrawer({
   return (
     <AnimatePresence>
       {selectedStageId && stage && (
-        <div className="fixed inset-0 z-50 flex justify-end overflow-hidden">
+        <div className="fixed inset-0 z-[70] flex justify-end overflow-hidden">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}

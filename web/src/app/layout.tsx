@@ -19,7 +19,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "BLUSOC | Enterprise Blue-Team Engineering & Detection Operations",
   description:
-    "Production-grade Wazuh detection rules, Python middleware integrations, and interactive light-themed SOC telemetry lab with 67 confirmed true positive attack investigations.",
+    "Production-grade Wazuh detection rules, Python middleware integrations, and an interactive light-themed SOC telemetry lab showcasing detection and response engineering.",
   keywords: [
     "SOC",
     "Detection Engineering",

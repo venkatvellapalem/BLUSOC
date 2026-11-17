@@ -13,10 +13,10 @@ interface LogItem {
 }
 
 const SENSORS = [
-  { name: "CrowdStrike Falcon", feed: "EDR telemetry", y: 54, logo: "/logos/crowdstrike.svg", logoW: 18, logoH: 18 },
+  { name: "CrowdStrike Falcon", feed: "EDR telemetry", y: 54, logo: "/logos/crowdstrike.png", logoW: 24, logoH: 13 },
   { name: "Suricata", feed: "IDS / DPI", y: 112, logo: "/logos/suricata.png", logoW: 18, logoH: 18 },
   { name: "Barracuda", feed: "Email & gateway", y: 170, logo: "/logos/barracuda.svg", logoW: 18, logoH: 18 },
-  { name: "Sophos", feed: "Endpoint protection", y: 228, logo: "/logos/sophos.svg", logoW: 18, logoH: 18 },
+  { name: "Sophos", feed: "Endpoint protection", y: 228, logo: "/logos/sophos.png", logoW: 24, logoH: 13 },
   { name: "Microsoft 365", feed: "Identity & audit", y: 286, logo: "/logos/microsoft-365.svg", logoW: 18, logoH: 18 },
   { name: "Cloudflare WAF", feed: "Edge traffic", y: 344, logo: "/logos/cloudflare.svg", logoW: 18, logoH: 18 },
 ] as { name: string; feed: string; y: number; logo?: string; logoW?: number; logoH?: number }[];
@@ -28,7 +28,7 @@ const N8N = { x: 520, y: 199 };
 const LAYA = { x: 700, y: 199 };
 
 const OUTS = [
-  { key: "iris", name: "DFIR-IRIS", sub: "TP + high confidence ticket", y: 78, logo: "/logos/dfir-iris.svg", accent: "#0EA5E9" },
+  { key: "iris", name: "DFIR-IRIS", sub: "TP + high confidence ticket", y: 78, logo: "/logos/dfir-iris.png", accent: "#0EA5E9" },
   { key: "analyst", name: "Analysts", sub: "Investigate IRIS tickets", y: 138, accent: "#0284C7" },
   { key: "notify", name: "Discord / Slack", sub: "SOC alert notifications", y: 236, logos: ["/logos/discord.svg", "/logos/slack.svg"], accent: "#6366F1" },
   { key: "contain", name: "FortiGate", sub: "Containment & isolation", y: 334, logo: "/logos/fortinet.svg", accent: "#DC2626" },
@@ -234,7 +234,7 @@ export function CorrelationConsole() {
 
             <g filter={n8nHot ? "url(#cg-glow)" : undefined}>
               <rect x={N8N.x - 28} y={N8N.y - 24} width="56" height="48" rx="14" fill={n8nHot ? "#FFF1F2" : "#FFFFFF"} stroke={n8nHot ? "#F43F5E" : "#FECDD3"} strokeWidth={n8nHot ? 2.2 : 1.4} />
-              <image href="/logos/n8n.svg" x={N8N.x - 11} y={N8N.y - 14} width="22" height="22" preserveAspectRatio="xMidYMid meet" />
+              <image href="/logos/n8n.png" x={N8N.x - 13} y={N8N.y - 12} width="26" height="18" preserveAspectRatio="xMidYMid meet" />
               <text x={N8N.x} y={N8N.y + 38} fill="#BE123C" fontSize="10.5" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">n8n SOAR</text>
               <text x={N8N.x} y={N8N.y + 50} fill="#64748B" fontSize="8" textAnchor="middle" fontFamily="var(--font-mono)">Enrich &amp; route</text>
             </g>
@@ -270,11 +270,16 @@ export function CorrelationConsole() {
                   </g>
                 );
               }
-              const boxW = 30; const boxX = OUT_X - 82;
+              const boxW = o.key === "iris" ? 46 : 30;
+              const boxX = OUT_X - 82;
+              const imgW = o.key === "iris" ? 34 : 18;
+              const imgH = o.key === "iris" ? 12 : 18;
+              const imgX = boxX + (boxW - imgW) / 2;
+              const imgY = o.y - imgH / 2;
               return (
                 <g key={o.key}>
                   <rect x={boxX} y={o.y - 14} width={boxW} height="28" rx="8" fill="#FFFFFF" stroke={on ? o.accent : "#E2E8F0"} strokeWidth={on ? 1.9 : 1} />
-                  <image href={o.logo} x={boxX + 6} y={o.y - 9} width="18" height="18" preserveAspectRatio="xMidYMid meet" />
+                  <image href={o.logo} x={imgX} y={imgY} width={imgW} height={imgH} preserveAspectRatio="xMidYMid meet" />
                   <text x={boxX + boxW + 10} y={o.y - 1} fill="#334155" fontSize="10.5" fontWeight="600" fontFamily="var(--font-mono)">{o.name}</text>
                   <text x={boxX + boxW + 10} y={o.y + 11} fill="#94A3B8" fontSize="8.2" fontFamily="var(--font-mono)">{o.sub}</text>
                 </g>

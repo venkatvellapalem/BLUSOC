@@ -115,7 +115,13 @@ WAZUH_API_PORT="${WAZUH_API_PORT:-55000}"
 WAZUH_EVENTS_PORT="${WAZUH_EVENTS_PORT:-1514}"
 WAZUH_REGISTRATION_PORT="${WAZUH_REGISTRATION_PORT:-1515}"
 IRIS_API_URL="${IRIS_API_URL:-https://soar-iris-01.blusoc.internal}"
-IRIS_API_KEY="${IRIS_API_KEY:-iris_api_token_placeholder}"
+IRIS_API_KEY="${IRIS_API_KEY:-}"
+if [ -z "${IRIS_API_KEY}" ] && [ "${DRY_RUN}" = false ]; then
+    log_error "IRIS_API_KEY is not set. Define it in deployment/.env before provisioning."
+    exit 1
+elif [ -z "${IRIS_API_KEY}" ]; then
+    IRIS_API_KEY="__DRY_RUN_IRIS_API_KEY__"
+fi
 
 log_info "Starting BLUSOC Step 02: Wazuh Provisioning..."
 

@@ -30,6 +30,13 @@ DEFAULT_TIMEOUT_SECONDS = 10
 DEFAULT_CUSTOMER_ID = 1
 DEFAULT_STATUS_ID = 1
 
+
+def _env_flag(name: str, default: bool) -> bool:
+    val = os.environ.get(name)
+    if val is None:
+        return default
+    return val.strip().lower() in {"1", "true", "yes", "on"}
+
 MOCK_GEOIP_DB: Dict[str, Dict[str, str]] = {
     "64.62.156.159": {
         "country": "United States of America",
@@ -420,12 +427,19 @@ def send_iris_alert(
     hook_url: str,
     api_key: str,
     timeout: int = DEFAULT_TIMEOUT_SECONDS,
-    verify_ssl: bool = False,
+    verify_ssl: Optional[bool] = None,
 ) -> requests.Response:
     """
     Transports payload to DFIR-IRIS endpoint via HTTP POST.
     Supplies Bearer Authorization and X-IRIS-AUTH headers.
+    TLS certificate verification is enabled by default; set IRIS_VERIFY_SSL=false
+    or pass --insecure only for trusted lab/self-signed environments.
     """
+    if verify_ssl is None:
+        verify_ssl = _env_flag("IRIS_VERIFY_SSL", True)
+    if not verify_ssl:
+        logger.warning("TLS certificate verification is disabled for IRIS endpoint requests.")
+
     headers = {
         "Authorization": f"Bearer {api_key}",
         "X-IRIS-AUTH": api_key,
@@ -444,43 +458,50 @@ def send_iris_alert(
     return response
 
 
-def parse_arguments(argv: List[str]) -> Tuple[str, str, str, bool, bool]:
+def parse_arguments(argv: List[str]) -> Tuple[str, str, str, bool, bool, bool]:
     """
     Parses command line arguments supporting both Wazuh standard integratord
     invocation and standalone CLI testing modes.
 
     Returns:
-      (alert_file, api_key, hook_url, test_mode, send_flag)
+      (alert_file, api_key, hook_url, test_mode, send_flag, verify_ssl)
     """
     if len(argv) > 1 and argv[1] in ("--test", "-t"):
         parser = argparse.ArgumentParser(description="BLUSOC DFIR-IRIS Integration Test CLI")
         parser.add_argument("--test", "-t", required=True, help="Path to sample alert JSON file")
         parser.add_argument(
             "--hook-url",
-            default="https://soar-iris-01.blusoc.internal/alerts/add",
+            default=os.environ.get("IRIS_API_URL", "https://soar-iris-01.blusoc.internal/alerts/add"),
             help="DFIR-IRIS webhook URL",
         )
-        parser.add_argument("--api-key", default="BLUSOC_TEST_API_KEY", help="DFIR-IRIS API key")
+        parser.add_argument("--api-key", default=os.environ.get("IRIS_API_KEY"), help="DFIR-IRIS API key")
         parser.add_argument("--send", action="store_true", help="Send HTTP request instead of dry-run")
+        parser.add_argument("--insecure", action="store_true", help="Disable TLS certificate verification (not recommended)")
         args = parser.parse_args(argv[1:])
-        return args.test, args.api_key, args.hook_url, True, args.send
+        api_key = args.api_key
+        if args.send and not api_key:
+            print("Error: --api-key or IRIS_API_KEY is required when --send is used.", file=sys.stderr)
+            sys.exit(1)
+        verify_ssl = False if args.insecure else _env_flag("IRIS_VERIFY_SSL", True)
+        return args.test, api_key or "", args.hook_url, True, args.send, verify_ssl
 
     if len(argv) >= 4:
-        return argv[1], argv[2], argv[3], False, True
+        verify_ssl = _env_flag("IRIS_VERIFY_SSL", True)
+        return argv[1], argv[2], argv[3], False, True, verify_ssl
 
     if len(argv) == 2 and not argv[1].startswith("-"):
-        return argv[1], "BLUSOC_TEST_API_KEY", "https://soar-iris-01.blusoc.internal/alerts/add", True, False
+        return argv[1], "", os.environ.get("IRIS_API_URL", "https://soar-iris-01.blusoc.internal/alerts/add"), True, False, _env_flag("IRIS_VERIFY_SSL", True)
 
     print(
         "Usage (Wazuh Integratord): python custom-iris.py <alert_file> <api_key> <hook_url>\n"
-        "Usage (CLI Test Mode):   python custom-iris.py --test <sample_alert.json> [--hook-url <url>] [--send]",
+        "Usage (CLI Test Mode):   python custom-iris.py --test <sample_alert.json> [--hook-url <url>] [--api-key <key>] [--send] [--insecure]",
         file=sys.stderr,
     )
     sys.exit(1)
 
 
 def main() -> int:
-    alert_file, api_key, hook_url, test_mode, should_send = parse_arguments(sys.argv)
+    alert_file, api_key, hook_url, test_mode, should_send, verify_ssl = parse_arguments(sys.argv)
 
     if not os.path.exists(alert_file):
         logger.error("Alert file does not exist: %s", alert_file)
@@ -504,8 +525,12 @@ def main() -> int:
         logger.info("Test mode dry-run completed successfully.")
         return 0
 
+    if not api_key:
+        logger.error("API key is required to send alerts. Provide argv[2], --api-key, or IRIS_API_KEY.")
+        return 1
+
     try:
-        response = send_iris_alert(payload, hook_url, api_key)
+        response = send_iris_alert(payload, hook_url, api_key, verify_ssl=verify_ssl)
         logger.info("Alert posted successfully. HTTP status: %d", response.status_code)
         return 0
     except requests.exceptions.RequestException as exc:

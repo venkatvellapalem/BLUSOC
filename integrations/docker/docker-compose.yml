@@ -50,7 +50,7 @@ services:
     environment:
       POSTGRES_DB: iris_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: blusoc_secure_password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
     ports:
       - "5432:5432"
     volumes:

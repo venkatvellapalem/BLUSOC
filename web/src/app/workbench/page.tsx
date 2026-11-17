@@ -132,7 +132,7 @@ export default function TriageSamplePage() {
                 </div>
               </div>
               <p className="text-sm sm:text-[15px] leading-relaxed text-brand-text-secondary">
-                A read-only, experiential walkthrough of one confirmed incident — from sensor ingestion and Wazuh correlation to n8n enrichment, Laya triage, and routed response. No actions to submit, no alerts to solve.
+                A read-only, experiential walkthrough of one confirmed incident  -  from sensor ingestion and Wazuh correlation to n8n enrichment, Laya triage, and routed response. No actions to submit, no alerts to solve.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-3 min-w-[260px]">
@@ -149,8 +149,8 @@ export default function TriageSamplePage() {
                 <div className="mt-1 text-sm font-bold text-orange-700">{alert.severity}</div>
               </div>
               <div className="rounded-xl border border-brand-border bg-white/80 p-3 shadow-subtle">
-                <div className="text-[10px] font-mono uppercase tracking-wider text-brand-text-muted">Dataset</div>
-                <div className="mt-1 text-sm font-bold text-brand-text-primary">67 alerts</div>
+                <div className="text-[10px] font-mono uppercase tracking-wider text-brand-text-muted">Experience</div>
+                <div className="mt-1 text-sm font-bold text-brand-text-primary">Read-only</div>
               </div>
             </div>
           </div>

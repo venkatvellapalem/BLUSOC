@@ -151,14 +151,14 @@ export default function FatigueLabPage() {
                 </div>
               </motion.div>
               <motion.p variants={fadeUp} custom={1} className="text-sm sm:text-[15px] leading-relaxed text-brand-text-secondary max-w-2xl">
-                Interactively tune Wazuh suppression rules and watch noise collapse into signal. Model the impact on alert volume, analyst response time, and SOC capacity — with qualifying alerts enriched by n8n and triaged by Laya.
+                Interactively tune Wazuh suppression rules and watch noise collapse into signal. Model the impact on alert volume, analyst response time, and SOC capacity  -  with qualifying alerts enriched by n8n and triaged by Laya.
               </motion.p>
               <motion.div variants={fadeUp} custom={2} className="flex flex-wrap items-center gap-2.5 pt-1">
                 <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
                   <Image src="/logos/wazuh.svg" alt="Wazuh" width={14} height={14} className="h-3.5 w-3.5" /> Wazuh 4.x
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
-                  <Image src="/logos/n8n.svg" alt="n8n" width={14} height={14} className="h-3.5 w-3.5" /> n8n SOAR
+                  <Image src="/logos/n8n.png" alt="n8n" width={14} height={14} className="h-3.5 w-3.5" /> n8n SOAR
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1.5 text-xs font-medium text-brand-text-secondary shadow-sm">
                   <Image src="/logos/laya.svg" alt="Laya" width={14} height={14} className="h-3.5 w-3.5" /> Laya
@@ -217,7 +217,7 @@ export default function FatigueLabPage() {
             <div>
               <h2 className="text-xl sm:text-2xl font-bold tracking-[-0.02em] text-brand-text-primary">How the noise was engineered out</h2>
               <p className="mt-1 text-sm text-brand-text-secondary max-w-3xl">
-                A concise view of the suppression strategy, routing, and measurable ROI — without drowning in raw telemetry.
+                A concise view of the suppression strategy, routing, and measurable ROI  -  without drowning in raw telemetry.
               </p>
             </div>
           </div>
@@ -250,7 +250,7 @@ export default function FatigueLabPage() {
               items={[
                 "14,280/day baseline reduced by targeted suppression while preserving 184 actionable incidents.",
                 "MTTR improved from ~42m to ~8m with ~32.5 analyst hours recovered daily.",
-                "Analysts investigate IRIS tickets — not raw Wazuh noise.",
+                "Analysts investigate IRIS tickets  -  not raw Wazuh noise.",
               ]}
             />
           </div>

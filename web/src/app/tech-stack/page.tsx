@@ -41,7 +41,7 @@ const SECTIONS: Section[] = [
         name: "n8n SOAR",
         subtitle: "Orchestration & enrichment workflows",
         description: "Receives qualifying alerts via custom-n8n integration (webhook, DLQ), enriches with multi-feed threat intel (VirusTotal, AbuseIPDB, OTX, etc.), and routes to Laya for verdicting.",
-        logo: "/logos/n8n.svg",
+        logo: "/logos/n8n.png",
         logoW: 28,
         logoH: 28,
         accent: "from-rose-50 to-white border-rose-100",
@@ -59,7 +59,7 @@ const SECTIONS: Section[] = [
         name: "DFIR-IRIS",
         subtitle: "Case & ticket management",
         description: "Receives tickets only for true positive, high-confidence alerts. Analysts investigate, document, and close cases in IRIS (no direct alerting from Wazuh).",
-        logo: "/logos/dfir-iris.svg",
+        logo: "/logos/dfir-iris.png",
         logoW: 28,
         logoH: 28,
         accent: "from-sky-50 to-white border-sky-100",
@@ -76,7 +76,7 @@ const SECTIONS: Section[] = [
         name: "CrowdStrike Falcon",
         subtitle: "Endpoint detection & response (EDR)",
         description: "High-fidelity endpoint telemetry and detections across workstations and servers, feeding process, identity, and threat signals into correlation.",
-        logo: "/logos/crowdstrike.svg",
+        logo: "/logos/crowdstrike.png",
         logoW: 28,
         logoH: 28,
         accent: "from-red-50 to-white border-red-100",
@@ -94,7 +94,7 @@ const SECTIONS: Section[] = [
         name: "Sophos",
         subtitle: "Endpoint protection",
         description: "Endpoint protection and malware prevention telemetry contributing detection and health signals for correlated analysis.",
-        logo: "/logos/sophos.svg",
+        logo: "/logos/sophos.png",
         logoW: 28,
         logoH: 28,
         accent: "from-sky-50 to-white border-sky-100",
@@ -288,7 +288,7 @@ export default function TechStackPage() {
             <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-brand-text-secondary">BLUSOC Stack</p>
             <h1 className="mt-4 text-3xl sm:text-5xl font-bold tracking-[-0.04em] text-brand-text-primary">Tech Stack</h1>
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-brand-text-secondary">
-              A deep view of the platforms, engineering artifacts, and web technologies behind BLUSOC — from sensors, Wazuh correlation, and n8n enrichment to Laya triage, DFIR-IRIS ticketing, notifications, containment, and this showcase site itself.
+              A deep view of the platforms, engineering artifacts, and web technologies behind BLUSOC  -  from sensors, Wazuh correlation, and n8n enrichment to Laya triage, DFIR-IRIS ticketing, notifications, containment, and this showcase site itself.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
