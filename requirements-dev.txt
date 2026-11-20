@@ -1,0 +1,2 @@
+-r integrations/sync-daemon/requirements.txt
+PyYAML==6.0.3

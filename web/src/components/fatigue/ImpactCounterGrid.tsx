@@ -1,16 +1,15 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 import {
   Activity,
-  Filter,
-  Clock,
-  Zap,
-  ShieldAlert,
   ArrowDownRight,
   ArrowUpRight,
+  Clock,
+  Filter,
   Minus,
+  ShieldAlert,
+  Zap,
 } from "lucide-react";
 
 export interface ImpactCounterGridProps {
@@ -47,7 +46,7 @@ export function ImpactCounterGrid({
       deltaType: dailyVolume < 14280 ? "positive" : "neutral",
       icon: Activity,
       iconBg: "bg-blue-50 text-blue-600 border-blue-200",
-      description: "Events reaching Tier-1 triage after engine rule processing.",
+      description: "Modeled events reaching the review queue.",
     },
     {
       id: "fp-rate",
@@ -55,15 +54,15 @@ export function ImpactCounterGrid({
       value: `${falsePositiveRate.toFixed(1)}%`,
       unit: "benign tickets",
       baseline: "98.7%",
-      target: "2.1%",
+      target: "2.2%",
       delta:
         dailyVolume === 14280
-          ? "Critical Noise Floor"
-          : `-${(98.7 - falsePositiveRate).toFixed(1)}% benign chatter`,
+          ? "Baseline benign share"
+          : `-${(98.7395 - falsePositiveRate).toFixed(1)} pp benign share`,
       deltaType: falsePositiveRate < 90 ? "positive" : "negative",
       icon: Filter,
       iconBg: "bg-purple-50 text-purple-600 border-purple-200",
-      description: "Share of tickets that resolve as benign health checks or framing artifacts.",
+      description: "Benign events as a share of the modeled queue.",
     },
     {
       id: "mttr",
@@ -74,12 +73,12 @@ export function ImpactCounterGrid({
       target: "8 min",
       delta:
         mttrMinutes === 42
-          ? "Extended Queue Latency"
+          ? "Baseline response time"
           : `-${Math.round(((42 - mttrMinutes) / 42) * 100)}% faster response`,
       deltaType: mttrMinutes <= 15 ? "positive" : mttrMinutes < 30 ? "neutral" : "negative",
       icon: Clock,
       iconBg: "bg-amber-50 text-amber-600 border-amber-200",
-      description: "Average minutes from sensor packet capture to analyst investigation.",
+      description: "Modeled response time as the queue gets smaller.",
     },
     {
       id: "hours-saved",
@@ -88,32 +87,29 @@ export function ImpactCounterGrid({
       unit: "daily capacity",
       baseline: "0.0 hrs",
       target: "32.5 hrs / day",
-      delta:
-        hoursSaved === 0
-          ? "0.0 hrs recovered"
-          : `+${(hoursSaved / 8).toFixed(1)} FTE equivalent capacity`,
+      delta: hoursSaved === 0 ? "0.0 hrs recovered" : `+${hoursSaved.toFixed(1)} modeled hours`,
       deltaType: hoursSaved > 0 ? "positive" : "neutral",
       icon: Zap,
       iconBg: "bg-emerald-50 text-emerald-600 border-emerald-200",
-      description: "Direct operational labor redirected from noise to proactive threat hunting.",
+      description: "Illustrative time recovered under this model.",
     },
     {
       id: "snr",
       title: "Signal to Noise Ratio",
       value: signalToNoiseRatio,
       unit: "signal : noise",
-      baseline: "1 : 77",
-      target: "48 : 1",
+      baseline: "1 : 78",
+      target: "45 : 1",
       delta:
-        signalToNoiseRatio === "1:77" || signalToNoiseRatio === "1 : 77"
-          ? "Adversary Activity Masked"
+        signalToNoiseRatio === "1:78" || signalToNoiseRatio === "1 : 78"
+          ? "Baseline signal ratio"
           : isTuned
-          ? "+3,696% fidelity gain"
-          : "Fidelity improving",
+            ? "Known noise filtered"
+            : "Signal ratio improving",
       deltaType: isTuned ? "positive" : dailyVolume < 10000 ? "neutral" : "negative",
       icon: ShieldAlert,
       iconBg: "bg-sky-50 text-sky-600 border-sky-200",
-      description: "Ratio of high-severity threat IOCs to non-actionable operational events.",
+      description: "Threat signals relative to benign events in the model.",
     },
   ];
 
@@ -122,23 +118,21 @@ export function ImpactCounterGrid({
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-sm font-bold uppercase tracking-wider text-brand-text-muted">
-            SOC Operational Impact Metrics
+            What changes in the model
           </h3>
           <p className="text-xs text-brand-text-secondary mt-0.5">
-            Real-time recalculation of key performance indicators based on active suppression rules
+            Illustrative outputs based on your active filters.
           </p>
         </div>
         <div className="hidden sm:flex items-center gap-2">
-          <span className="text-[11px] font-mono text-brand-text-muted">
-            Active Mode:
-          </span>
+          <span className="text-[11px] font-mono text-brand-text-muted">Active Mode:</span>
           <span
             className={`rounded-md px-2 py-0.5 font-mono text-[11px] font-bold border ${
               mode === "tuned"
                 ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                 : mode === "raw"
-                ? "bg-rose-50 text-rose-700 border-rose-200"
-                : "bg-amber-50 text-amber-700 border-amber-200"
+                  ? "bg-rose-50 text-rose-700 border-rose-200"
+                  : "bg-amber-50 text-amber-700 border-amber-200"
             }`}
           >
             {mode.toUpperCase()}
@@ -173,8 +167,8 @@ export function ImpactCounterGrid({
                       card.deltaType === "positive"
                         ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                         : card.deltaType === "negative"
-                        ? "bg-rose-50 text-rose-700 border-rose-200"
-                        : "bg-slate-100 text-slate-700 border-slate-200"
+                          ? "bg-rose-50 text-rose-700 border-rose-200"
+                          : "bg-slate-100 text-slate-700 border-slate-200"
                     }`}
                   >
                     {card.deltaType === "positive" && <ArrowUpRight className="h-3 w-3" />}
@@ -185,9 +179,7 @@ export function ImpactCounterGrid({
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-semibold text-brand-text-secondary">
-                    {card.title}
-                  </h4>
+                  <h4 className="text-xs font-semibold text-brand-text-secondary">{card.title}</h4>
                   <div className="mt-1 flex items-baseline gap-1.5">
                     <span className="font-mono text-2xl font-extrabold tracking-tight text-brand-text-primary">
                       {card.value}

@@ -1,169 +1,116 @@
-version: "3.8"
+# BLUSOC deployment for the stable DFIR-IRIS 2.4 image contract.
+# Upstream reference: https://github.com/dfir-iris/iris-web/tree/v2.4.29
+name: blusoc-iris
 
-# ==============================================================================
-# BLUSOC DFIR-IRIS Container Stack
-# Services: PostgreSQL, RabbitMQ, IRIS App (Django), IRIS Worker (Celery), Nginx
-# Subnet: 10.240.50.0/24 (RFC 1918)
-# ==============================================================================
+x-iris-runtime: &iris-runtime
+  image: ghcr.io/dfir-iris/iriswebapp_app:${IRIS_VERSION:?IRIS_VERSION is required}
+  restart: unless-stopped
+  env_file:
+    - path: application.env
+      format: raw
+  volumes:
+    - ./certificates/rootCA/irisRootCACert.pem:/etc/irisRootCACert.pem:ro
+    - ./certificates:/home/iris/certificates:ro
+    - ./certificates/ldap:/iriswebapp/certificates/ldap:ro
+    - iris_downloads:/home/iris/downloads
+    - iris_templates:/home/iris/user_templates
+    - iris_server_data:/home/iris/server_data
+  networks:
+    - iris-backend
 
 services:
   iris-db:
-    image: postgres:16-alpine
-    container_name: blusoc-iris-db
+    image: ghcr.io/dfir-iris/iriswebapp_db:${IRIS_VERSION:?IRIS_VERSION is required}
     restart: unless-stopped
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
-      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
+    env_file:
+      - path: database.env
+        format: raw
     volumes:
-      - iris_postgres_data:/var/lib/postgresql/data
+      - iris_database:/var/lib/postgresql/data
+    networks:
+      - iris-backend
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
       interval: 10s
       timeout: 5s
-      retries: 5
-    deploy:
-      resources:
-        limits:
-          memory: 2G
-    networks:
-      blusoc-net:
-        ipv4_address: 10.240.50.11
+      retries: 12
 
   iris-rabbitmq:
-    image: rabbitmq:3.13-alpine
-    container_name: blusoc-iris-rabbitmq
+    image: rabbitmq:4.2-alpine
     restart: unless-stopped
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:?RABBITMQ_DEFAULT_USER is required}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:?RABBITMQ_DEFAULT_PASS is required}
+    env_file:
+      - path: broker.env
+        format: raw
     volumes:
-      - iris_rabbitmq_data:/var/lib/rabbitmq
-    healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
-      interval: 15s
-      timeout: 10s
-      retries: 5
-    deploy:
-      resources:
-        limits:
-          memory: 512M
+      - iris_broker:/var/lib/rabbitmq
     networks:
-      blusoc-net:
-        ipv4_address: 10.240.50.12
+      - iris-backend
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
 
   iris-app:
-    image: dfiriris/iris-web:v2.4.15
-    container_name: blusoc-iris-app
-    restart: unless-stopped
+    <<: *iris-runtime
+    command: ["nohup", "./iris-entrypoint.sh", "iriswebapp"]
     depends_on:
       iris-db:
         condition: service_healthy
       iris-rabbitmq:
         condition: service_healthy
-    environment:
-      POSTGRES_HOST: iris-db
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
-      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
-      RABBITMQ_HOST: iris-rabbitmq
-      RABBITMQ_PORT: 5672
-      RABBITMQ_USER: ${RABBITMQ_DEFAULT_USER:?RABBITMQ_DEFAULT_USER is required}
-      RABBITMQ_PASS: ${RABBITMQ_DEFAULT_PASS:?RABBITMQ_DEFAULT_PASS is required}
-      SECRET_KEY: ${IRIS_SECRET_KEY:?IRIS_SECRET_KEY is required}
-      IRIS_SERVER_NAME: ${IRIS_SERVER_NAME:-soar-iris-01.blusoc.internal}
-    volumes:
-      - iris_user_data:/iriswebapp/dependencies
-      - iris_logs:/var/log/iris
-      - /opt/blusoc/iris/overlays:/iriswebapp/overlays:ro
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8000/alerts/filter || exit 1"]
-      interval: 20s
-      timeout: 10s
-      retries: 5
-      start_period: 40s
-    deploy:
-      resources:
-        limits:
-          memory: 2G
     networks:
-      blusoc-net:
-        ipv4_address: 10.240.50.13
+      - iris-backend
+      - iris-frontend
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/login', timeout=5)"]
+      start_period: 60s
+      interval: 10s
+      timeout: 8s
+      retries: 18
 
   iris-worker:
-    image: dfiriris/iris-web:v2.4.15
-    container_name: blusoc-iris-worker
-    restart: unless-stopped
-    command: ["celery", "-A", "iriswebapp", "worker", "-l", "INFO", "--concurrency=4"]
+    <<: *iris-runtime
+    networks:
+      - iris-backend
+      - iris-egress
+    command: ["./wait-for-iriswebapp.sh", "iris-app:8000", "./iris-entrypoint.sh", "iris-worker"]
     depends_on:
       iris-app:
-        condition: service_started
+        condition: service_healthy
       iris-rabbitmq:
         condition: service_healthy
-    environment:
-      POSTGRES_HOST: iris-db
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
-      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
-      RABBITMQ_HOST: iris-rabbitmq
-      RABBITMQ_PORT: 5672
-      RABBITMQ_USER: ${RABBITMQ_DEFAULT_USER:?RABBITMQ_DEFAULT_USER is required}
-      RABBITMQ_PASS: ${RABBITMQ_DEFAULT_PASS:?RABBITMQ_DEFAULT_PASS is required}
-      SECRET_KEY: ${IRIS_SECRET_KEY:?IRIS_SECRET_KEY is required}
-    volumes:
-      - iris_user_data:/iriswebapp/dependencies
-      - iris_logs:/var/log/iris
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-    networks:
-      blusoc-net:
-        ipv4_address: 10.240.50.14
 
   iris-nginx:
-    image: nginx:1.25-alpine
-    container_name: blusoc-iris-nginx
+    image: ghcr.io/dfir-iris/iriswebapp_nginx:${IRIS_VERSION:?IRIS_VERSION is required}
     restart: unless-stopped
     depends_on:
-      - iris-app
+      iris-app:
+        condition: service_healthy
+    environment:
+      IRIS_UPSTREAM_SERVER: iris-app
+      IRIS_UPSTREAM_PORT: "8000"
+      INTERFACE_HTTPS_PORT: ${IRIS_HTTPS_PORT:?IRIS_HTTPS_PORT is required}
+      SERVER_NAME: ${IRIS_SERVER_NAME:?IRIS_SERVER_NAME is required}
+      CERT_FILENAME: iris.crt
+      KEY_FILENAME: iris.key
+      IRIS_AUTHENTICATION_TYPE: local
     ports:
-      - "${IRIS_APP_PORT:-443}:443"
-      - "80:80"
+      - "${IRIS_BIND_ADDRESS:?IRIS_BIND_ADDRESS is required}:${IRIS_HTTPS_PORT}:${IRIS_HTTPS_PORT}"
     volumes:
-      - /opt/blusoc/iris/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - /opt/blusoc/iris/certs:/etc/nginx/certs:ro
-      - iris_logs:/var/log/nginx
-    healthcheck:
-      test: ["CMD-SHELL", "curl -k -f https://localhost/health || curl -f http://localhost:80/ || exit 0"]
-      interval: 15s
-      timeout: 5s
-      retries: 3
-    deploy:
-      resources:
-        limits:
-          memory: 512M
+      - ./certificates/web_certificates:/www/certs:ro
     networks:
-      blusoc-net:
-        ipv4_address: 10.240.50.10
+      - iris-frontend
 
 volumes:
-  iris_postgres_data:
-    name: blusoc_iris_postgres_data
-  iris_rabbitmq_data:
-    name: blusoc_iris_rabbitmq_data
-  iris_user_data:
-    name: blusoc_iris_user_data
-  iris_logs:
-    name: blusoc_iris_logs
+  iris_database:
+  iris_broker:
+  iris_downloads:
+  iris_templates:
+  iris_server_data:
 
 networks:
-  blusoc-net:
-    name: blusoc-net
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.240.50.0/24
-          gateway: 10.240.50.1
+  iris-backend:
+    internal: true
+  iris-frontend:
+  iris-egress:

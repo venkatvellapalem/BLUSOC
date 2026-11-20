@@ -1,59 +1,93 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from "framer-motion";
 import {
-  X,
-  Copy,
-  Check,
-  Terminal,
-  Cpu,
-  Layers,
-  Code2,
   Activity,
-  ShieldCheck,
-  AlertTriangle,
-  Server,
+  Check,
+  Code2,
+  Copy,
   FileCode,
+  Server,
   Sparkles,
-} from 'lucide-react';
-import { PIPELINE_STAGES, PipelineStageData } from './pipelineData';
+  Terminal,
+  X,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { PIPELINE_STAGES } from "./pipelineData";
 
 interface NodeDetailDrawerProps {
   selectedStageId: string | null;
   onClose: () => void;
 }
 
-export default function NodeDetailDrawer({
-  selectedStageId,
-  onClose,
-}: NodeDetailDrawerProps) {
-  const [activeTab, setActiveTab] = useState<'config' | 'logs' | 'health'>('config');
+export default function NodeDetailDrawer({ selectedStageId, onClose }: NodeDetailDrawerProps) {
+  const [activeTab, setActiveTab] = useState<"config" | "logs" | "health">("config");
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!selectedStageId) return;
+    const previousFocus = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusFrame = requestAnimationFrame(() =>
+      panelRef.current?.querySelector<HTMLButtonElement>("button")?.focus(),
+    );
+    const keepFocus = (event: KeyboardEvent) => {
+      if (event.key !== "Tab") return;
+      const controls = panelRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not(:disabled), [tabindex="0"]',
+      );
+      if (!controls?.length) return;
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", keepFocus);
+    return () => {
+      cancelAnimationFrame(focusFrame);
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", keepFocus);
+      if (previousFocus instanceof HTMLElement || previousFocus instanceof SVGElement)
+        previousFocus.focus();
+    };
+  }, [selectedStageId]);
 
   // Close on Escape key press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
   // Find stage data
   const stage = PIPELINE_STAGES.find((s) => s.id === selectedStageId);
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
     if (!stage) return;
-    navigator.clipboard.writeText(stage.configSnippet);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(stage.configSnippet);
+      setCopied(true);
+      setCopyError(false);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopyError(true);
+    }
   };
 
   return (
     <AnimatePresence>
       {selectedStageId && stage && (
-        <div className="fixed inset-x-0 bottom-0 top-16 z-[100] flex justify-end overflow-hidden">
+        <div className="fixed inset-0 z-[100] flex justify-end overflow-hidden">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -66,31 +100,35 @@ export default function NodeDetailDrawer({
 
           {/* Slide-over Drawer Panel */}
           <motion.div
-            initial={{ x: '100%' }}
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${stage.title} stage details`}
+            initial={{ x: "100%" }}
             animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 28, stiffness: 280 }}
             className="relative z-10 flex h-full w-full max-w-2xl flex-col border-l border-brand-border bg-white shadow-2xl"
           >
             {/* Drawer Header */}
             <div className="border-b border-brand-border bg-brand-canvas px-6 py-5">
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="inline-flex items-center gap-1.5 rounded-md bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 border border-blue-200">
                       Stage {stage.stageNumber} of 5
                     </span>
                     <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 border border-emerald-200">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      Operational
+                      Reference design
                     </span>
                   </div>
-                  <h2 className="text-lg font-bold text-brand-text-primary">
-                    {stage.title}
-                  </h2>
-                  <p className="text-xs text-brand-text-secondary">
-                    {stage.role}
-                  </p>
+                  {copyError && (
+                    <p role="status" className="text-xs text-rose-700">
+                      Copy unavailable. Select the configuration text to copy it manually.
+                    </p>
+                  )}
+                  <h2 className="text-lg font-bold text-brand-text-primary">{stage.title}</h2>
+                  <p className="text-xs text-brand-text-secondary">{stage.role}</p>
                 </div>
 
                 <button
@@ -102,76 +140,43 @@ export default function NodeDetailDrawer({
                 </button>
               </div>
 
-              {/* Operational Metrics Bar */}
-              <div className="mt-5 grid grid-cols-4 gap-2.5">
-                <div className="rounded-lg border border-brand-border bg-white p-2.5 shadow-subtle">
-                  <p className="text-[10px] font-semibold text-brand-text-muted uppercase tracking-wider">
-                    Throughput
-                  </p>
-                  <p className="mt-0.5 font-mono text-xs font-bold text-brand-text-primary">
-                    {stage.metrics.throughput}
-                  </p>
-                </div>
-                <div className="rounded-lg border border-brand-border bg-white p-2.5 shadow-subtle">
-                  <p className="text-[10px] font-semibold text-brand-text-muted uppercase tracking-wider">
-                    Latency
-                  </p>
-                  <p className="mt-0.5 font-mono text-xs font-bold text-brand-text-primary">
-                    {stage.metrics.latency}
-                  </p>
-                </div>
-                <div className="rounded-lg border border-brand-border bg-white p-2.5 shadow-subtle">
-                  <p className="text-[10px] font-semibold text-brand-text-muted uppercase tracking-wider">
-                    Drop Rate
-                  </p>
-                  <p className="mt-0.5 font-mono text-xs font-bold text-amber-600">
-                    {stage.metrics.dropRate}
-                  </p>
-                </div>
-                <div className="rounded-lg border border-brand-border bg-white p-2.5 shadow-subtle">
-                  <p className="text-[10px] font-semibold text-brand-text-muted uppercase tracking-wider">
-                    Buffer Load
-                  </p>
-                  <p className="mt-0.5 font-mono text-xs font-bold text-brand-text-primary">
-                    {stage.metrics.buffer}
-                  </p>
-                </div>
-              </div>
-
               {/* Navigation Tabs */}
               <div className="mt-5 flex gap-2 border-b border-brand-border -mb-5">
                 <button
-                  onClick={() => setActiveTab('config')}
+                  aria-pressed={activeTab === "config"}
+                  onClick={() => setActiveTab("config")}
                   className={`flex items-center gap-2 border-b-2 px-3 pb-3 text-xs font-semibold transition-colors ${
-                    activeTab === 'config'
-                      ? 'border-blue-600 text-blue-600'
-                      : 'border-transparent text-brand-text-secondary hover:text-brand-text-primary'
+                    activeTab === "config"
+                      ? "border-blue-600 text-blue-600"
+                      : "border-transparent text-brand-text-secondary hover:text-brand-text-primary"
                   }`}
                 >
                   <Code2 className="h-4 w-4" />
-                  <span>Configuration & Rules</span>
+                  <span>Examples</span>
                 </button>
                 <button
-                  onClick={() => setActiveTab('logs')}
+                  aria-pressed={activeTab === "logs"}
+                  onClick={() => setActiveTab("logs")}
                   className={`flex items-center gap-2 border-b-2 px-3 pb-3 text-xs font-semibold transition-colors ${
-                    activeTab === 'logs'
-                      ? 'border-blue-600 text-blue-600'
-                      : 'border-transparent text-brand-text-secondary hover:text-brand-text-primary'
+                    activeTab === "logs"
+                      ? "border-blue-600 text-blue-600"
+                      : "border-transparent text-brand-text-secondary hover:text-brand-text-primary"
                   }`}
                 >
                   <Terminal className="h-4 w-4" />
-                  <span>Telemetry Logs</span>
+                  <span>Sample logs</span>
                 </button>
                 <button
-                  onClick={() => setActiveTab('health')}
+                  aria-pressed={activeTab === "health"}
+                  onClick={() => setActiveTab("health")}
                   className={`flex items-center gap-2 border-b-2 px-3 pb-3 text-xs font-semibold transition-colors ${
-                    activeTab === 'health'
-                      ? 'border-blue-600 text-blue-600'
-                      : 'border-transparent text-brand-text-secondary hover:text-brand-text-primary'
+                    activeTab === "health"
+                      ? "border-blue-600 text-blue-600"
+                      : "border-transparent text-brand-text-secondary hover:text-brand-text-primary"
                   }`}
                 >
                   <Activity className="h-4 w-4" />
-                  <span>Health & Specs</span>
+                  <span>Details</span>
                 </button>
               </div>
             </div>
@@ -179,10 +184,10 @@ export default function NodeDetailDrawer({
             {/* Drawer Body */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
               {/* TAB 1: CONFIGURATION */}
-              {activeTab === 'config' && (
+              {activeTab === "config" && (
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex min-w-0 items-center gap-2">
                       <FileCode className="h-4 w-4 text-brand-text-muted" />
                       <span className="font-mono text-xs font-medium text-brand-text-secondary">
                         {stage.configTitle}
@@ -231,15 +236,13 @@ export default function NodeDetailDrawer({
                       <Sparkles className="h-4 w-4 text-blue-600" />
                       <span>Engineering Context</span>
                     </div>
-                    <p className="text-xs text-blue-800 leading-relaxed">
-                      {stage.description}
-                    </p>
+                    <p className="text-xs text-blue-800 leading-relaxed">{stage.description}</p>
                   </div>
 
                   {/* Sub-components list */}
                   <div className="space-y-2">
                     <h3 className="text-xs font-bold text-brand-text-primary uppercase tracking-wider">
-                      Active Sub-modules & Components
+                      Components in this design
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {stage.components.map((c, i) => (
@@ -257,25 +260,25 @@ export default function NodeDetailDrawer({
               )}
 
               {/* TAB 2: TELEMETRY LOGS */}
-              {activeTab === 'logs' && (
+              {activeTab === "logs" && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <p className="text-xs text-brand-text-secondary">
-                      Simulated real-time operational events from this stage daemon
+                      Illustrative events from this stage of the workflow
                     </p>
                     <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 border border-emerald-200">
-                      Live Stream
+                      Sample data
                     </span>
                   </div>
 
                   <div className="space-y-2">
                     {stage.logs.map((log, index) => {
                       const levelStyles = {
-                        INFO: 'bg-blue-50 text-blue-700 border-blue-200',
-                        WARN: 'bg-amber-50 text-amber-700 border-amber-200',
-                        DROP: 'bg-slate-100 text-slate-700 border-slate-300',
-                        ALERT: 'bg-orange-50 text-orange-700 border-orange-200',
-                        CRITICAL: 'bg-red-50 text-red-700 border-red-200',
+                        INFO: "bg-blue-50 text-blue-700 border-blue-200",
+                        WARN: "bg-amber-50 text-amber-700 border-amber-200",
+                        DROP: "bg-slate-100 text-slate-700 border-slate-300",
+                        ALERT: "bg-orange-50 text-orange-700 border-orange-200",
+                        CRITICAL: "bg-red-50 text-red-700 border-red-200",
                       }[log.level];
 
                       return (
@@ -285,13 +288,13 @@ export default function NodeDetailDrawer({
                         >
                           <div className="flex items-center justify-between text-[11px]">
                             <span className="text-brand-text-muted">{log.timestamp}</span>
-                            <span className={`rounded px-1.5 py-0.5 text-[10px] font-bold border ${levelStyles}`}>
+                            <span
+                              className={`rounded px-1.5 py-0.5 text-[10px] font-bold border ${levelStyles}`}
+                            >
                               {log.level}
                             </span>
                           </div>
-                          <p className="text-brand-text-primary break-all">
-                            {log.message}
-                          </p>
+                          <p className="text-brand-text-primary break-all">{log.message}</p>
                         </div>
                       );
                     })}
@@ -300,7 +303,7 @@ export default function NodeDetailDrawer({
               )}
 
               {/* TAB 3: HEALTH & SPECS */}
-              {activeTab === 'health' && (
+              {activeTab === "health" && (
                 <div className="space-y-4">
                   <div className="rounded-xl border border-brand-border bg-brand-surface p-4 space-y-3">
                     <h3 className="text-xs font-bold text-brand-text-primary uppercase tracking-wider">
@@ -310,10 +313,12 @@ export default function NodeDetailDrawer({
                       {stage.specs.map((s, i) => (
                         <div
                           key={i}
-                          className="flex items-center justify-between border-b border-brand-border/60 pb-2 text-xs"
+                          className="grid grid-cols-[6rem_minmax(0,1fr)] gap-4 border-b border-brand-border/60 pb-2 text-xs"
                         >
                           <span className="text-brand-text-secondary">{s.label}</span>
-                          <span className="font-mono font-medium text-brand-text-primary">{s.value}</span>
+                          <span className="text-right font-medium text-brand-text-primary">
+                            {s.value}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -322,7 +327,7 @@ export default function NodeDetailDrawer({
                   <div className="rounded-xl border border-brand-border bg-brand-canvas p-4 space-y-2">
                     <div className="flex items-center gap-2 text-xs font-bold text-brand-text-primary">
                       <Server className="h-4 w-4 text-brand-text-muted" />
-                      <span>Host Integration Stack</span>
+                      <span>Platforms in this design</span>
                     </div>
                     <p className="font-mono text-xs text-brand-text-secondary">
                       {stage.technology}
@@ -335,7 +340,7 @@ export default function NodeDetailDrawer({
             {/* Drawer Footer */}
             <div className="border-t border-brand-border bg-brand-canvas px-6 py-4 flex items-center justify-between text-xs text-brand-text-secondary">
               <span className="font-mono text-[11px] text-brand-text-muted">
-                BLUSOC SOC Platform 2026.11
+                BLUSOC reference workflow
               </span>
               <button
                 onClick={onClose}

@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          canvas: "#FAFBFC",
+          canvas: "#F7F9FC",
           surface: "#FFFFFF",
           "surface-2": "#F4F6F9",
           border: "#E7EBF1",
@@ -18,7 +18,7 @@ const config: Config = {
           muted: "#F2F5F8",
           "text-primary": "#0F172A",
           "text-secondary": "#475569",
-          "text-muted": "#94A3B8",
+          "text-muted": "#607087",
           accent: "#2563EB",
           "accent-soft": "#0EA5E9",
           signal: "#10B981",

@@ -1,0 +1,13 @@
+**/node_modules
+**/.next
+**/.env
+**/.env.*
+!**/.env.example
+.git
+.venv
+**/__pycache__
+**/*.tsbuildinfo
+docs
+deployment
+detection-engineering
+integrations

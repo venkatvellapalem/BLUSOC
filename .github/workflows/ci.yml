@@ -1,0 +1,64 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repository:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements-dev.txt
+            integrations/sync-daemon/requirements.txt
+      - run: npm ci
+      - run: python -m pip install -r requirements-dev.txt
+      - run: npm run verify:all
+      - name: Validate the rendered Compose configuration
+        shell: bash
+        run: |
+          python deployment/config.py init --env-file "$RUNNER_TEMP/blusoc.env"
+          python deployment/config.py render --env-file "$RUNNER_TEMP/blusoc.env" --output-dir "$RUNNER_TEMP/iris"
+          cp deployment/templates/docker-compose.iris.yml "$RUNNER_TEMP/iris/docker-compose.yml"
+          docker compose --project-directory "$RUNNER_TEMP/iris" --env-file "$RUNNER_TEMP/iris/compose.env" -f "$RUNNER_TEMP/iris/docker-compose.yml" config --quiet
+
+  web-container:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build the standalone web image
+        run: docker build -f web/Dockerfile -t blusoc-web:ci .
+      - name: Smoke-test the container
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d --name blusoc-web -p 127.0.0.1:3000:3000 blusoc-web:ci
+          trap 'docker logs blusoc-web; docker rm -f blusoc-web' EXIT
+          curl --fail --retry 15 --retry-connrefused --retry-delay 2 http://127.0.0.1:3000/ -o /dev/null
+          for route in pipeline tech-stack workbench fatigue-lab; do
+            curl --fail "http://127.0.0.1:3000/$route" -o /dev/null
+          done

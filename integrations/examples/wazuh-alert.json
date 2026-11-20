@@ -1,0 +1,20 @@
+{
+  "id": "demo-001",
+  "timestamp": "2026-11-20T10:00:00+00:00",
+  "agent": {
+    "name": "sensor-demo.blusoc.internal",
+    "ip": "10.240.1.10"
+  },
+  "rule": {
+    "id": "110001",
+    "level": 10,
+    "description": "ET DROP demonstration threat-intelligence match"
+  },
+  "data": {
+    "src_ip": "192.0.2.45",
+    "dest_ip": "10.240.0.20",
+    "src_port": 49181,
+    "dest_port": 443
+  },
+  "full_log": "DEMO: ET DROP signal from a documentation-only source address"
+}

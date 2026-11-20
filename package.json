@@ -2,17 +2,17 @@
   "name": "blusoc",
   "version": "1.0.0",
   "private": true,
-  "description": "Enterprise Blue-Team Engineering Monorepo and Interactive Threat Intelligence Platform",
+  "description": "Open-source detection engineering, integrations, and an interactive security operations showcase",
   "author": "BLUSOC Engineering Team",
   "license": "MIT",
   "workspaces": [
     "web"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=web",
+    "dev": "npm run dev --workspace=web --",
     "build": "npm run build --workspace=web",
     "build:all": "npm run build --workspace=web",
-    "start": "npm run start --workspace=web",
+    "start": "npm run start --workspace=web --",
     "lint": "npm run lint --workspace=web",
     "lint:all": "npm run lint --workspace=web",
     "typecheck": "npm run typecheck --workspace=web",
@@ -23,7 +23,13 @@
     "verify:data": "python scripts/verify_data.py",
     "verify:docs": "python scripts/verify_docs.py",
     "verify:sanitization": "python scripts/audit_repository_sanitization.py",
-    "verify:all": "python detection-engineering/wazuh/tests/validate_rules.py && python integrations/tests/test_integrations.py && python deployment/tests/validate_deployment_suite.py && python scripts/verify_data.py && python scripts/audit_repository_sanitization.py && npm run typecheck --workspace=web && npm run build --workspace=web"
+    "verify:all": "npm run lint && npm run typecheck && npm run data:check && npm run test:web-model && npm run test:rules && npm run test:integrations && npm run test:deployment && npm run verify:data && npm run verify:docs && npm run verify:sanitization && npm run build",
+    "data:check": "node scripts/sync_web_data.mjs",
+    "data:sync": "node scripts/sync_web_data.mjs --write",
+    "deploy:plan": "bash deployment/deploy.sh --dry-run",
+    "deploy:check": "python deployment/config.py check",
+    "deploy:soc": "bash deployment/deploy.sh",
+    "test:web-model": "node --test scripts/test_fatigue_model.mjs"
   },
   "keywords": [
     "blue-team",
@@ -36,7 +42,7 @@
     "nextjs"
   ],
   "engines": {
-    "node": ">=18.18.0",
-    "npm": ">=9.0.0"
+    "node": ">=22.14.0",
+    "npm": ">=10.0.0"
   }
 }

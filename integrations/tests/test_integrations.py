@@ -24,6 +24,7 @@ import threading
 import unittest
 from http.server import HTTPServer
 from pathlib import Path
+from unittest.mock import patch, Mock
 from typing import Any, Dict
 
 TESTS_DIR = Path(__file__).resolve().parent
@@ -62,17 +63,17 @@ class TestSeverityMapping(unittest.TestCase):
     def test_medium_severity_levels_6_to_8(self) -> None:
         for level in [6, 7, 8]:
             with self.subTest(level=level):
-                self.assertEqual(custom_iris.map_severity(level), 1)
+                self.assertEqual(custom_iris.map_severity(level), 4)
 
     def test_low_severity_levels_3_to_5(self) -> None:
         for level in [3, 4, 5]:
             with self.subTest(level=level):
-                self.assertEqual(custom_iris.map_severity(level), 4)
+                self.assertEqual(custom_iris.map_severity(level), 3)
 
     def test_informational_severity_below_level_3(self) -> None:
         for level in [0, 1, 2, -1]:
             with self.subTest(level=level):
-                self.assertEqual(custom_iris.map_severity(level), 3)
+                self.assertEqual(custom_iris.map_severity(level), 2)
 
 
 class TestLogTruncationBufferFix(unittest.TestCase):
@@ -119,9 +120,9 @@ class TestEnrichmentAndPublicPrivateDetection(unittest.TestCase):
         self.assertTrue(custom_iris.is_public_ip(known_attacker))
         enriched = custom_iris.enrich_ip(known_attacker)
         self.assertTrue(enriched["is_public"])
-        self.assertEqual(enriched["country"], "United States of America")
-        self.assertEqual(enriched["country_code"], "US")
-        self.assertIn("Hurricane Electric", enriched["asn"])
+        self.assertEqual(enriched["country"], "Unknown")
+        self.assertEqual(enriched["enrichment_source"], "not_queried")
+        self.assertEqual(enriched["asn"], "Unknown")
 
     def test_synthetic_public_ip_enrichment_fallback(self) -> None:
         arbitrary_public = "93.184.216.34"
@@ -133,7 +134,10 @@ class TestEnrichmentAndPublicPrivateDetection(unittest.TestCase):
 
 
 class TestPayloadGeneration(unittest.TestCase):
-    def setUp(self) -> None:
+    def setUp(self):
+        environment = patch.dict(os.environ, {"IRIS_IOC_IPV4_TYPE_ID": "76", "IRIS_IOC_IPV6_TYPE_ID": "77"})
+        environment.start()
+        self.addCleanup(environment.stop)
         self.sample_alert = {
             "id": "10042",
             "timestamp": "2026-11-10T14:30:00.000000+0000",
@@ -169,12 +173,12 @@ class TestPayloadGeneration(unittest.TestCase):
         self.assertEqual(payload["alert_source"], "Wazuh-BLUSOC")
         self.assertEqual(payload["alert_source_ref"], "10042")
         self.assertEqual(payload["alert_severity_id"], 5)
-        self.assertEqual(payload["alert_status_id"], 1)
+        self.assertEqual(payload["alert_status_id"], 2)
         self.assertEqual(payload["alert_customer_id"], 1)
 
         self.assertIn("[Wazuh L10] ET DROP Dshield Block Listed Source group 1", payload["alert_title"])
         self.assertIn("64.62.156.159:49181", payload["alert_description"])
-        self.assertIn("United States of America", payload["alert_description"])
+        self.assertIn("Country: Unknown", payload["alert_description"])
 
         context = payload["alert_context"]
         self.assertEqual(context["src_ip"], "64.62.156.159")
@@ -186,7 +190,7 @@ class TestPayloadGeneration(unittest.TestCase):
         self.assertGreater(context["raw_log_length"], 1500)
 
         iocs = payload["alert_iocs"]
-        self.assertTrue(any(ioc["ioc_value"] == "64.62.156.159" for ioc in iocs))
+        self.assertTrue(any(ioc["ioc_value"] == "64.62.156.159" and ioc["ioc_type_id"] == 76 for ioc in iocs))
 
     def test_all_67_sanitized_alerts_transform_cleanly(self) -> None:
         dataset_path = INTEGRATIONS_DIR.parent / "data" / "alerts_sanitized.json"
@@ -202,7 +206,7 @@ class TestPayloadGeneration(unittest.TestCase):
             self.assertIn("alert_title", transformed)
             self.assertIn("alert_description", transformed)
             self.assertEqual(transformed["alert_source"], "Wazuh-BLUSOC")
-            self.assertIn(transformed["alert_severity_id"], [1, 3, 4, 5, 6])
+            self.assertIn(transformed["alert_severity_id"], [2, 3, 4, 5, 6])
             self.assertIn("src_ip", transformed["alert_context"])
             self.assertIn("dest_ip", transformed["alert_context"])
             self.assertIn("src_geo", transformed["alert_context"])
@@ -227,7 +231,7 @@ class TestCLIExecution(unittest.TestCase):
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
             output = json.loads(result.stdout)
             self.assertEqual(output["alert_source"], "Wazuh-BLUSOC")
-            self.assertEqual(output["alert_severity_id"], 1)
+            self.assertEqual(output["alert_severity_id"], 4)
             self.assertIn("185.220.101.5", output["alert_context"]["src_ip"])
         finally:
             if os.path.exists(tmp_path):
@@ -250,7 +254,7 @@ class TestStatusSyncDaemon(unittest.TestCase):
         changes = self.daemon.process_alert_records(alerts)
         self.assertEqual(changes, 0)
         self.assertEqual(len(self.daemon.state_cache), 2)
-        self.assertEqual(self.daemon.state_cache["1"]["status_name"], "OPEN")
+        self.assertEqual(self.daemon.state_cache["1"]["status_name"], "UNSPECIFIED")
         self.assertEqual(self.daemon.state_cache["2"]["status_name"], "ASSIGNED")
 
     def test_state_transition_detection(self) -> None:
@@ -327,6 +331,49 @@ class TestMockIrisServerAndTransport(unittest.TestCase):
         daemon = iris_status_daemon.IrisStatusDaemon(endpoint_url=sync_endpoint)
         daemon.run_once()
         self.assertGreaterEqual(len(daemon.state_cache), 1)
+
+
+class TestUpstreamApiContract(unittest.TestCase):
+    def test_wazuh_uses_the_protected_environment_credential(self):
+        with patch.dict(os.environ, {"IRIS_API_KEY": "local-test-environment-token"}):
+            arguments = custom_iris.parse_arguments(["custom-iris", "alert.json", "blusoc-runtime", "https://localhost/alerts/add"])
+        self.assertEqual(arguments[1], "local-test-environment-token")
+
+    def test_paginated_nested_alerts(self):
+        responses = []
+        for page in (1, 2):
+            response = Mock()
+            response.json.return_value = {"status": "success", "data": {"alerts": [{"alert_id": page}], "next_page": 2 if page == 1 else None}}
+            responses.append(response)
+        daemon = iris_status_daemon.IrisStatusDaemon(api_key="test-only")
+        with patch.object(iris_status_daemon.requests, "get", side_effect=responses) as request:
+            self.assertEqual(len(daemon.fetch_alerts()), 2)
+            self.assertEqual(request.call_args_list[1].kwargs["params"]["page"], 2)
+
+    def test_state_survives_restart(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = str(Path(directory) / "state.sqlite3")
+            first = iris_status_daemon.IrisStatusDaemon(state_db=path)
+            first.process_alert_records([{"alert_id": 55, "alert_status_id": 2}])
+            first.close_db()
+            second = iris_status_daemon.IrisStatusDaemon(state_db=path)
+            self.assertEqual(second.state_cache["55"]["status_name"], "NEW")
+            self.assertEqual(second.process_alert_records([{"alert_id": 55, "alert_status_id": 6}]), 1)
+            second.close_db()
+
+    def test_api_error_is_not_success(self):
+        response = Mock()
+        response.json.return_value = {"status": "error"}
+        daemon = iris_status_daemon.IrisStatusDaemon(api_key="test-only")
+        with patch.object(iris_status_daemon.requests, "get", return_value=response):
+            with self.assertRaises(ValueError):
+                daemon.fetch_alerts()
+        with patch.object(custom_iris.requests, "post", return_value=response):
+            with self.assertRaises(custom_iris.requests.exceptions.HTTPError):
+                custom_iris.send_iris_alert({}, "https://localhost/alerts/add", "test-only")
+
+    def test_shared_address_space_is_not_public(self):
+        self.assertFalse(custom_iris.is_public_ip("100.64.0.1"))
 
 
 class TestZeroEmDashesConstraint(unittest.TestCase):

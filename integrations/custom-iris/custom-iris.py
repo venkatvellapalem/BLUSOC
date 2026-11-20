@@ -15,6 +15,7 @@ CLI Test Mode:
 """
 
 import argparse
+from datetime import datetime, timezone
 import ipaddress
 import json
 import logging
@@ -28,7 +29,7 @@ import requests
 MAX_LOG_LENGTH = 4000
 DEFAULT_TIMEOUT_SECONDS = 10
 DEFAULT_CUSTOMER_ID = 1
-DEFAULT_STATUS_ID = 1
+DEFAULT_STATUS_ID = 2
 
 
 def _env_flag(name: str, default: bool) -> bool:
@@ -37,66 +38,10 @@ def _env_flag(name: str, default: bool) -> bool:
         return default
     return val.strip().lower() in {"1", "true", "yes", "on"}
 
-MOCK_GEOIP_DB: Dict[str, Dict[str, str]] = {
-    "64.62.156.159": {
-        "country": "United States of America",
-        "country_code": "US",
-        "city": "San Jose",
-        "asn": "AS6939 Hurricane Electric LLC",
-    },
-    "185.220.101.5": {
-        "country": "Germany",
-        "country_code": "DE",
-        "city": "Frankfurt",
-        "asn": "AS205100 Zwiebelfreunde",
-    },
-    "45.154.255.88": {
-        "country": "Netherlands",
-        "country_code": "NL",
-        "city": "Amsterdam",
-        "asn": "AS44592 Media Land LLC",
-    },
-    "194.26.29.112": {
-        "country": "United Kingdom",
-        "country_code": "GB",
-        "city": "London",
-        "asn": "AS212238 Datacamp Limited",
-    },
-    "198.51.100.25": {
-        "country": "Documentation Network",
-        "country_code": "TEST",
-        "city": "Test City",
-        "asn": "AS64496 TEST-NET-2",
-    },
-    "198.51.100.242": {
-        "country": "India",
-        "country_code": "IN",
-        "city": "Mumbai",
-        "asn": "AS133929 Corporate Gateway",
-    },
-    "203.0.113.42": {
-        "country": "India",
-        "country_code": "IN",
-        "city": "Hyderabad",
-        "asn": "AS133929 Corporate Gateway",
-    },
-}
-
-SYNTHETIC_GEO_POOLS: List[Dict[str, str]] = [
-    {"country": "United States of America", "country_code": "US", "city": "Ashburn", "asn": "AS16509 Amazon.com"},
-    {"country": "Germany", "country_code": "DE", "city": "Berlin", "asn": "AS24940 Hetzner Online GmbH"},
-    {"country": "Netherlands", "country_code": "NL", "city": "Amsterdam", "asn": "AS60781 LeaseWeb Netherlands"},
-    {"country": "United Kingdom", "country_code": "GB", "city": "London", "asn": "AS13030 Initial Group"},
-    {"country": "Singapore", "country_code": "SG", "city": "Singapore", "asn": "AS4637 Telstra Global"},
-    {"country": "Japan", "country_code": "JP", "city": "Tokyo", "asn": "AS2516 KDDI Corporation"},
-    {"country": "Canada", "country_code": "CA", "city": "Montreal", "asn": "AS16276 OVH SAS"},
-    {"country": "Australia", "country_code": "AU", "city": "Sydney", "asn": "AS4826 Vocus Pty Ltd"},
-]
-
-
 def setup_logger() -> logging.Logger:
     logger = logging.getLogger("custom-iris")
     logger.setLevel(logging.INFO)
+    logger.propagate = False
     if not logger.handlers:
         formatter = logging.Formatter(
             "%(asctime)s [%(levelname)s] [custom-iris] %(message)s",
@@ -121,23 +66,16 @@ logger = setup_logger()
 
 
 def map_severity(wazuh_level: int) -> int:
-    """
-    Translates Wazuh rule levels into DFIR-IRIS severity IDs.
-    - Level >= 12: Critical (severity_id = 6)
-    - Level 9 to 11: High (severity_id = 5)
-    - Level 6 to 8: Medium (severity_id = 1)
-    - Level 3 to 5: Low (severity_id = 4)
-    - Level < 3: Informational (severity_id = 3)
-    """
+    """Use the default severity IDs seeded by IRIS 2.4: Info=2, Low=3, Medium=4, High=5, Critical=6."""
     if wazuh_level >= 12:
         return 6
     if wazuh_level >= 9:
         return 5
     if wazuh_level >= 6:
-        return 1
-    if wazuh_level >= 3:
         return 4
-    return 3
+    if wazuh_level >= 3:
+        return 3
+    return 2
 
 
 def truncate_log(log_text: str, max_chars: int = MAX_LOG_LENGTH) -> str:
@@ -154,71 +92,27 @@ def truncate_log(log_text: str, max_chars: int = MAX_LOG_LENGTH) -> str:
 
 
 def is_public_ip(ip_str: str) -> bool:
-    """
-    Validates whether an IP address belongs to a routable public block.
-    Internal RFC 1918, RFC 5737 test subnets, loopbacks, and link-local are marked private.
-    """
     try:
-        ip = ipaddress.ip_address(ip_str.strip())
-        return not (
-            ip.is_private
-            or ip.is_loopback
-            or ip.is_reserved
-            or ip.is_multicast
-            or ip.is_link_local
-            or ip.is_unspecified
-        )
-    except ValueError:
+        address = ipaddress.ip_address(ip_str.strip())
+        return address.is_global and not address.is_multicast
+    except (ValueError, AttributeError):
         return False
 
 
 def enrich_ip(ip_str: Optional[str]) -> Dict[str, Any]:
-    """
-    Enriches IP with public/private classification and mock GeoIP metadata.
-    """
-    if not ip_str or not isinstance(ip_str, str):
-        return {
-            "ip": None,
-            "is_public": False,
-            "classification": "unknown",
-            "country": "Unknown",
-            "country_code": "XX",
-            "city": "Unknown",
-            "asn": "Unknown",
-        }
-
-    clean_ip = ip_str.strip()
-    public_status = is_public_ip(clean_ip)
-
-    if not public_status:
-        return {
-            "ip": clean_ip,
-            "is_public": False,
-            "classification": "internal_private",
-            "country": "Internal Network",
-            "country_code": "RFC1918",
-            "city": "BLUSOC Datacenter",
-            "asn": "AS-INTERNAL",
-        }
-
-    if clean_ip in MOCK_GEOIP_DB:
-        entry = MOCK_GEOIP_DB[clean_ip].copy()
-        entry["ip"] = clean_ip
-        entry["is_public"] = True
-        entry["classification"] = "external_public"
-        return entry
-
-    try:
-        octets = [int(p) for p in clean_ip.split(".") if p.isdigit()]
-        index = sum(octets) % len(SYNTHETIC_GEO_POOLS)
-    except Exception:
-        index = 0
-
-    pool_entry = SYNTHETIC_GEO_POOLS[index].copy()
-    pool_entry["ip"] = clean_ip
-    pool_entry["is_public"] = True
-    pool_entry["classification"] = "external_public"
-    return pool_entry
+    """Classify the address without inventing GeoIP or reputation results."""
+    clean = ip_str.strip() if isinstance(ip_str, str) else None
+    public = is_public_ip(clean) if clean else False
+    return {
+        "ip": clean,
+        "is_public": public,
+        "classification": "public" if public else "internal_private" if clean else "unknown",
+        "country": "Unknown" if public or not clean else "Internal Network",
+        "country_code": "XX",
+        "city": "Unknown",
+        "asn": "Unknown",
+        "enrichment_source": "not_queried",
+    }
 
 
 def extract_telemetry_fields(alert_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -318,7 +212,7 @@ def build_iris_payload(
 ) -> Dict[str, Any]:
     """
     Transforms raw Wazuh alert data into DFIR-IRIS /alerts/add REST format.
-    Applies 4000-char truncation cap, GeoIP enrichment, severity translation,
+    Applies the 4000-character description cap, address classification, severity translation,
     and IOC mapping.
     """
     rule_block = alert_data.get("rule", {})
@@ -344,8 +238,8 @@ def build_iris_payload(
     dest_geo = enrich_ip(dest_ip)
 
     agent_block = alert_data.get("agent", {})
-    agent_name = agent_block.get("name", "corp-sensor-01.blusoc.internal") if isinstance(agent_block, dict) else "corp-sensor-01.blusoc.internal"
-    agent_ip = agent_block.get("ip", "10.240.0.10") if isinstance(agent_block, dict) else "10.240.0.10"
+    agent_name = agent_block.get("name", "Unknown sensor") if isinstance(agent_block, dict) else "Unknown sensor"
+    agent_ip = agent_block.get("ip", "Unknown") if isinstance(agent_block, dict) else "Unknown"
     alert_id = str(alert_data.get("id", "0"))
     rule_id = str(rule_block.get("id", signature_id))
 
@@ -365,19 +259,17 @@ def build_iris_payload(
     ]
     description = "\n".join(description_lines)
 
-    iocs: List[Dict[str, str]] = []
-    if src_ip:
-        iocs.append({
-            "ioc_value": src_ip,
-            "ioc_type": "ip",
-            "ioc_description": f"Source IP ({src_geo['country']})",
-        })
-    if dest_ip and dest_geo["is_public"]:
-        iocs.append({
-            "ioc_value": dest_ip,
-            "ioc_type": "ip",
-            "ioc_description": "Destination Public IP",
-        })
+    iocs: List[Dict[str, Any]] = []
+    for value, ioc_description in ((src_ip, "Source IP"), (dest_ip if dest_geo["is_public"] else None, "Destination Public IP")):
+        if not value:
+            continue
+        try:
+            version = ipaddress.ip_address(value).version
+        except ValueError:
+            continue
+        type_id = os.environ.get(f"IRIS_IOC_IPV{version}_TYPE_ID")
+        if type_id and type_id.isdigit() and int(type_id) > 0:
+            iocs.append({"ioc_value": value, "ioc_type_id": int(type_id), "ioc_description": ioc_description})
 
     mitre_block = rule_block.get("mitre", {})
     tags: List[str] = ["Wazuh", f"Level-{wazuh_level}"]
@@ -388,14 +280,13 @@ def build_iris_payload(
         elif isinstance(mitre_ids, str):
             tags.append(mitre_ids)
 
-    timestamp = alert_data.get("timestamp", "2026-11-10T00:00:00.000000+0000")
+    timestamp = alert_data.get("timestamp") or datetime.now(timezone.utc).isoformat()
 
     payload = {
         "alert_title": title,
         "alert_description": description,
         "alert_source": "Wazuh-BLUSOC",
         "alert_source_ref": alert_id,
-        "alert_source_link": f"https://siem-core-01.blusoc.internal:20443/app/wazuh#/manager/?tab=alerts&id={alert_id}",
         "alert_severity_id": iris_severity_id,
         "alert_status_id": DEFAULT_STATUS_ID,
         "alert_customer_id": customer_id,
@@ -455,6 +346,9 @@ def send_iris_alert(
         verify=verify_ssl,
     )
     response.raise_for_status()
+    body = response.json()
+    if not isinstance(body, dict) or body.get("status") not in ("success", "Success"):
+        raise requests.exceptions.HTTPError("IRIS rejected the alert submission", response=response)
     return response
 
 
@@ -487,7 +381,7 @@ def parse_arguments(argv: List[str]) -> Tuple[str, str, str, bool, bool, bool]:
 
     if len(argv) >= 4:
         verify_ssl = _env_flag("IRIS_VERIFY_SSL", True)
-        return argv[1], argv[2], argv[3], False, True, verify_ssl
+        return argv[1], os.environ.get("IRIS_API_KEY") or argv[2], argv[3], False, True, verify_ssl
 
     if len(argv) == 2 and not argv[1].startswith("-"):
         return argv[1], "", os.environ.get("IRIS_API_URL", "https://soar-iris-01.blusoc.internal/alerts/add"), True, False, _env_flag("IRIS_VERIFY_SSL", True)
@@ -518,7 +412,11 @@ def main() -> int:
         logger.error("Failed to parse alert file JSON: %s", exc)
         return 1
 
-    payload = build_iris_payload(alert_data, max_log_length=MAX_LOG_LENGTH)
+    if not isinstance(alert_data, dict):
+        logger.error("The alert JSON must be an object.")
+        return 1
+
+    payload = build_iris_payload(alert_data, max_log_length=MAX_LOG_LENGTH, customer_id=int(os.environ.get("IRIS_CUSTOMER_ID", str(DEFAULT_CUSTOMER_ID))))
 
     if test_mode and not should_send:
         print(json.dumps(payload, indent=2))

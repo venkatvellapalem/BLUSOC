@@ -14,6 +14,7 @@ import os
 import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Any, Dict, List
+from urllib.parse import parse_qs, urlsplit
 
 logging.basicConfig(
     level=logging.INFO,
@@ -56,7 +57,18 @@ class MockIrisHandler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         path = self.path.split("?")[0]
         if path in ("/alerts/filter", "/alerts", "/api/v1/alerts"):
-            self._send_json(200, {"status": "success", "data": STORED_ALERTS})
+            query = parse_qs(urlsplit(self.path).query)
+            try:
+                page = max(1, int(query.get("page", ["1"])[0]))
+                per_page = min(100, max(1, int(query.get("per_page", ["100"])[0])))
+            except ValueError:
+                self._send_json(400, {"status": "error", "message": "Invalid pagination"})
+                return
+            start = (page - 1) * per_page
+            self._send_json(200, {"status": "success", "data": {
+                "alerts": STORED_ALERTS[start:start + per_page], "total": len(STORED_ALERTS),
+                "current_page": page, "next_page": page + 1 if start + per_page < len(STORED_ALERTS) else None,
+            }})
         elif path in ("/health", "/"):
             self._send_json(200, {"status": "healthy", "service": "blusoc-iris-mock"})
         else:
@@ -81,7 +93,7 @@ class MockIrisHandler(BaseHTTPRequestHandler):
             stored_entry = {
                 "alert_id": new_id,
                 "alert_title": payload.get("alert_title", "Untitled Alert"),
-                "alert_status_id": payload.get("alert_status_id", 1),
+                "alert_status_id": payload.get("alert_status_id", 2),
                 "alert_severity_id": payload.get("alert_severity_id", 3),
                 "alert_owner_id": None,
                 "context": payload.get("alert_context", {}),
@@ -117,9 +129,9 @@ class MockIrisHandler(BaseHTTPRequestHandler):
 
 
 def run_server(port: int = 8000) -> None:
-    server_address = ("0.0.0.0", port)
+    server_address = (os.environ.get("MOCK_BIND_ADDRESS", "127.0.0.1"), port)
     httpd = HTTPServer(server_address, MockIrisHandler)
-    logger.info("BLUSOC Mock DFIR-IRIS server listening on http://0.0.0.0:%d", port)
+    logger.info("BLUSOC Mock DFIR-IRIS server listening on http://%s:%d", *server_address)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

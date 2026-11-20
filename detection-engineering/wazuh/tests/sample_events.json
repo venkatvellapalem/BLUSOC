@@ -31,7 +31,7 @@
     "test_id": "TC-NOISE-003",
     "description": "Suricata ethertype unknown framing anomaly on sensor interface",
     "category": "noise_suppression",
-    "expected_rule_id": "86611",
+    "expected_rule_id": "110011",
     "expected_level": 0,
     "expected_status": "suppressed",
     "payload": {
@@ -44,7 +44,7 @@
     "test_id": "TC-NOISE-004",
     "description": "Suricata hardware TCP checksum offload warning",
     "category": "noise_suppression",
-    "expected_rule_id": "86612",
+    "expected_rule_id": "110012",
     "expected_level": 0,
     "expected_status": "suppressed",
     "payload": {
@@ -57,7 +57,7 @@
     "test_id": "TC-NOISE-005",
     "description": "Suricata asymmetric flow protocol warning from DMZ mirror",
     "category": "noise_suppression",
-    "expected_rule_id": "86613",
+    "expected_rule_id": "110013",
     "expected_level": 0,
     "expected_status": "suppressed",
     "payload": {
@@ -112,7 +112,7 @@
     "test_id": "TC-PROXY-001",
     "description": "Office 365 benign login through corporate egress proxy primary",
     "category": "proxy_tuning",
-    "expected_rule_id": "91578",
+    "expected_rule_id": "110078",
     "expected_level": 0,
     "expected_status": "suppressed",
     "payload": {
@@ -130,7 +130,7 @@
     "test_id": "TC-PROXY-002",
     "description": "Office 365 benign login through corporate egress proxy secondary",
     "category": "proxy_tuning",
-    "expected_rule_id": "91578",
+    "expected_rule_id": "110078",
     "expected_level": 0,
     "expected_status": "suppressed",
     "payload": {
@@ -148,7 +148,7 @@
     "test_id": "TC-PROXY-003",
     "description": "Office 365 credential stuffing attack from untrusted foreign ASN",
     "category": "account_takeover",
-    "expected_rule_id": "91580",
+    "expected_rule_id": "110080",
     "expected_level": 10,
     "expected_status": "actionable_alert",
     "payload": {
@@ -228,7 +228,7 @@
     "test_id": "TC-THREAT-005",
     "description": "Suricata real-time DPI detection of ET DROP blocklist source",
     "category": "threat_intel",
-    "expected_rule_id": "86601",
+    "expected_rule_id": "110001",
     "expected_level": 10,
     "expected_status": "actionable_alert",
     "payload": {
@@ -242,7 +242,7 @@
     "test_id": "TC-THREAT-006",
     "description": "Suricata real-time DPI detection of CINS Army reputation threat",
     "category": "threat_intel",
-    "expected_rule_id": "86601",
+    "expected_rule_id": "110001",
     "expected_level": 10,
     "expected_status": "actionable_alert",
     "payload": {
@@ -292,6 +292,36 @@
     "payload": {
       "hostname": "corp-linux-02.blusoc.internal",
       "log": "Host-based anomaly detection: Trojaned version of file '/usr/bin/md5sum' detected."
+    }
+  },
+  {
+    "test_id": "TC-REGRESSION-001",
+    "description": "A malware alert with an empty hostname must not be treated as a heartbeat",
+    "category": "regression",
+    "expected_rule_id": "100011",
+    "expected_level": 8,
+    "expected_status": "alert",
+    "payload": {
+      "vendor": "CrowdStrike",
+      "hostname": "",
+      "event_simpleName": "DetectionSummaryEvent",
+      "severity": "HIGH",
+      "log": "Malicious binary detected on an unnamed host"
+    }
+  },
+  {
+    "test_id": "TC-REGRESSION-002",
+    "description": "A failed login outside the exact proxy allowlist remains visible",
+    "category": "regression",
+    "expected_rule_id": "110080",
+    "expected_level": 10,
+    "expected_status": "alert",
+    "payload": {
+      "integration": "office365",
+      "office365": {
+        "ClientIP": "198.51.100.99",
+        "ResultStatus": "Failed"
+      }
     }
   }
 ]

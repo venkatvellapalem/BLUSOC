@@ -45,8 +45,8 @@
     <group>crowdstrike,informational,sensor_event,</group>
   </rule>
 
-  <!-- Rule 86601: Suricata DPI confirmed ET DROP / CINS threat actor IP (Level 10) -->
-  <rule id="86601" level="10">
+  <!-- Rule 110001: Suricata DPI confirmed ET DROP / CINS threat actor IP (Level 10) -->
+  <rule id="110001" level="10">
     <match>ET DROP|ET CINS|Spamhaus DROP|Dshield</match>
     <description>Suricata: Confirmed ET DROP or CINS Army threat actor IP address detected on perimeter interface</description>
     <mitre>

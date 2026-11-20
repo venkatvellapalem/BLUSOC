@@ -1,21 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Sliders,
-  Check,
-  Copy,
-  ChevronDown,
-  ChevronUp,
-  FileCode,
-  Shield,
-  Layers,
-  Sparkles,
-  AlertOctagon,
-  Eye,
-  Info,
-} from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, ChevronDown, ChevronUp, Copy, FileCode, Info, Layers, Sliders } from "lucide-react";
+import { useState } from "react";
 
 export interface SuppressionRule {
   id: string;
@@ -51,14 +38,14 @@ export const SUPPRESSION_RULES: SuppressionRule[] = [
     sensor: "Workstation & Server Endpoints",
     level: 0,
     xmlPath: "detection-engineering/wazuh/rules/01_suppression_rules.xml",
-    summary:
-      "Silences agent keepalives and unmapped ephemeral container teardown telemetry where hostname is empty, dash, or UNKNOWN.",
+    summary: "Filters AgentPing and Heartbeat events with an empty or placeholder hostname.",
     rationale:
-      "CrowdStrike Falcon streaming connectors stream continuous heartbeat telemetry. When containers terminate or endpoints roam, hostname fields arrive empty. Default SIEM rules evaluate these as anomalous unassigned hosts (Level 3 to 7). Dropping these at Level 0 in memory eliminates 6,840 noise alerts daily while downstream child rule 100011 continues alerting on confirmed malicious binaries.",
+      "The rule checks the vendor, hostname, and heartbeat event name together. An empty hostname alone does not suppress a threat event. Its modeled contribution is 6,840 events per day.",
     rawXml: `<rule id="100010" level="0">
   <decoded_as>json</decoded_as>
   <field name="vendor">^CrowdStrike$</field>
   <field name="hostname">^$|^-$|^UNKNOWN$|^null$</field>
+  <field name="event_simpleName">^AgentPing$|^Heartbeat$</field>
   <description>CrowdStrike Falcon: Suppress parent telemetry stream and null-hostname agent status floods</description>
   <group>crowdstrike,noise_suppression,parent_rule,</group>
 </rule>`,
@@ -72,26 +59,26 @@ export const SUPPRESSION_RULES: SuppressionRule[] = [
     },
   },
   {
-    id: "rule-86611",
-    ruleNumber: 86611,
+    id: "rule-110011",
+    ruleNumber: 110011,
     name: "Suricata Ethertype Unknown Suppression",
-    component: "Suricata 7.x DPI Wire Sniffer",
+    component: "Suricata network telemetry",
     eventsPerDay: 3210,
     percentage: 22.5,
-    sensor: "Perimeter DMZ Mirrored 10Gbps Links",
+    sensor: "Mirrored network traffic",
     level: 0,
     xmlPath: "detection-engineering/wazuh/rules/01_suppression_rules.xml",
     summary:
-      "Filters IEEE 1588 Precision Time Protocol, VLAN trunking anomalies, and hardware checksum offload artifacts.",
+      "Filters known link-layer framing warnings; inspect the XML for the companion checksum rule.",
     rationale:
-      "The perimeter wire sniffer monitors high-bandwidth 10Gbps mirrored trunk links. High traffic bursts cause hardware NIC checksum offloading where frame checksums appear corrupt before NIC calculation. Additionally, IEEE 1588 PTP frames (0x88f7) trigger generic link-layer warnings. Silencing these diagnostic decoders at Level 0 removes 3,210 daily tickets without attenuating ET DROP or CINS Army threat IP detections.",
-    rawXml: `<rule id="86611" level="0">
+      "This example filters the specific Suricata diagnostic strings shown below. Confirm these patterns are benign for your own sensor before enabling suppression. The model assigns this group 3,210 daily events.",
+    rawXml: `<rule id="110011" level="0">
   <match>SURICATA Ethertype unknown</match>
   <description>Suricata: Suppress benign ethertype unknown and non-standard link-layer frame warnings</description>
   <group>suricata,noise_suppression,link_layer,</group>
 </rule>
 
-<rule id="86612" level="0">
+<rule id="110012" level="0">
   <match>SURICATA TCP invalid checksum|SURICATA UDP invalid checksum</match>
   <description>Suricata: Suppress hardware checksum offload artifacts on high-throughput sensor interfaces</description>
   <group>suricata,noise_suppression,interface_artifacts,</group>
@@ -106,8 +93,8 @@ export const SUPPRESSION_RULES: SuppressionRule[] = [
     },
   },
   {
-    id: "rule-91578",
-    ruleNumber: 91578,
+    id: "rule-110078",
+    ruleNumber: 110078,
     name: "O365 Corporate Egress Proxy Whitelist",
     component: "Microsoft 365 / Azure AD",
     eventsPerDay: 2980,
@@ -118,8 +105,8 @@ export const SUPPRESSION_RULES: SuppressionRule[] = [
     summary:
       "Distinguishes sanctioned corporate egress proxies (198.51.100.14, 198.51.100.242) from external credential stuffing.",
     rationale:
-      "Corporate workstations on 10.240.10.0/24 route cloud authentication through dual egress proxies. Standard SIEM rules flag multiple concurrent logins from identical IPs as brute-force or impossible travel. Overwriting rule 91578 to Level 0 for authorized proxy IPs silences 2,980 false account takeover alarms daily, while companion rule 91580 escalates non-proxy failed logins to Level 10.",
-    rawXml: `<rule id="91578" level="0" overwrite="yes">
+      "The example matches two sanitized corporate proxy addresses exactly. Replace them with your verified egress addresses and assess the event scope before use. This model assigns the rule 2,980 daily events.",
+    rawXml: `<rule id="110078" level="0">
   <decoded_as>json</decoded_as>
   <field name="integration">^office365$</field>
   <field name="office365.ClientIP">^198\\.51\\.100\\.14$|^198\\.51\\.100\\.242$</field>
@@ -148,7 +135,7 @@ export const SUPPRESSION_RULES: SuppressionRule[] = [
     summary:
       "Drops automated edge health checks and synthetic uptime monitoring probes from triggering perimeter alarms.",
     rationale:
-      "Cloudflare edge PoPs and synthetic uptime monitoring probes poll public origin listeners every 10 seconds. Generic WAF decoders flag these automated user-agents as reconnaissance scanners. Level 0 suppression eliminates 1,066 daily probe tickets while genuine HTTP exploit attacks (SQLi, XSS, RCE) trigger Level 10 to 12 alerts.",
+      "The rule matches the configured source and known probe user-agent prefixes. Validate those identifiers against your own traffic. Its modeled contribution is 1,066 daily events.",
     rawXml: `<rule id="100550" level="0">
   <decoded_as>json</decoded_as>
   <field name="source">^cloudflare$|^CLOUDFLARE WAF$</field>
@@ -180,8 +167,9 @@ export function RuleOptimizerMatrix({
   onEnableAll,
   onDisableAll,
 }: RuleOptimizerMatrixProps) {
-  const [expandedRuleId, setExpandedRuleId] = useState<string | null>("rule-100010");
+  const [expandedRuleId, setExpandedRuleId] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [copyError, setCopyError] = useState(false);
 
   const totalBaseline = 14280;
   const actionableBase = 184;
@@ -197,14 +185,24 @@ export function RuleOptimizerMatrix({
   const totalNoiseMax = totalBaseline - actionableBase; // 14,096
   const noiseReductionPercent = ((suppressedVolume / totalNoiseMax) * 100).toFixed(1);
 
-  const handleCopy = (id: string, text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
+  const handleCopy = async (id: string, text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      setCopyError(false);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch {
+      setCopyError(true);
+    }
   };
 
   return (
     <div className="space-y-6">
+      {copyError && (
+        <p role="status" className="text-sm text-rose-700">
+          Copy unavailable. Select the rule text to copy it manually.
+        </p>
+      )}
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -213,11 +211,12 @@ export function RuleOptimizerMatrix({
               <Sliders className="h-4 w-4" />
             </span>
             <h3 className="text-lg font-bold text-brand-text-primary tracking-tight">
-              Suppression Rule Matrix & Real-Time Engine Simulator
+              Choose what reaches the queue
             </h3>
           </div>
           <p className="text-xs sm:text-sm text-brand-text-secondary mt-1">
-            Toggle individual detection rules to model their exact impact on daily noise and analyst workload.
+            Toggle individual detection rules to model their illustrative impact on daily noise and
+            analyst workload.
           </p>
         </div>
 
@@ -247,23 +246,28 @@ export function RuleOptimizerMatrix({
             <div className="flex items-center gap-2">
               <Layers className="h-4 w-4 text-brand-text-muted" />
               <h4 className="text-xs font-bold uppercase tracking-wider text-brand-text-secondary">
-                Daily Telemetry Volume Distribution (14,280 Baseline Events)
+                Daily queue composition
               </h4>
             </div>
             <p className="text-xs text-brand-text-muted">
-              Visual proportional breakdown of suppressed noise, remaining un-tuned noise, and actionable attacks.
+              Visual proportional breakdown of suppressed noise, remaining un-tuned noise, and
+              alerts for review.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <div className="text-right">
-              <span className="text-[11px] text-brand-text-muted block font-mono">Current Ingest:</span>
+              <span className="text-[11px] text-brand-text-muted block font-mono">
+                Current queue:
+              </span>
               <span className="font-mono text-sm font-bold text-brand-text-primary">
                 {currentVolume.toLocaleString()} / 14,280 alerts
               </span>
             </div>
             <div className="rounded-md border border-brand-border bg-brand-muted px-2.5 py-1 text-center">
-              <span className="block text-[10px] text-brand-text-muted font-mono uppercase">Noise Eliminated</span>
+              <span className="block text-[10px] text-brand-text-muted font-mono uppercase">
+                Known noise filtered
+              </span>
               <span className="font-mono text-xs font-bold text-emerald-700">
                 {noiseReductionPercent}%
               </span>
@@ -303,7 +307,7 @@ export function RuleOptimizerMatrix({
             <div
               style={{ width: `${(actionableBase / totalBaseline) * 100}%`, minWidth: "14px" }}
               className="h-full bg-emerald-600 rounded-sm transition-all duration-300 relative group cursor-pointer"
-              title={`Actionable Attack Telemetry: ${actionableBase} incidents/day (Always preserved)`}
+              title={`Review queue: ${actionableBase} alerts/day (180 threat signals and four benign events)`}
             />
           </div>
 
@@ -318,7 +322,13 @@ export function RuleOptimizerMatrix({
                       isActive ? rule.color.bar : "bg-slate-300 opacity-60"
                     }`}
                   />
-                  <span className={isActive ? "text-brand-text-primary font-medium" : "text-brand-text-muted line-through"}>
+                  <span
+                    className={
+                      isActive
+                        ? "text-brand-text-primary font-medium"
+                        : "text-brand-text-muted line-through"
+                    }
+                  >
                     Rule {rule.ruleNumber} ({rule.eventsPerDay.toLocaleString()})
                   </span>
                 </div>
@@ -337,7 +347,7 @@ export function RuleOptimizerMatrix({
             <div className="flex items-center gap-1.5 ml-auto">
               <span className="h-2.5 w-2.5 rounded-sm bg-emerald-600" />
               <span className="text-emerald-800 font-bold">
-                Actionable Attacks ({actionableBase})
+                Alerts for review ({actionableBase})
               </span>
             </div>
           </div>
@@ -355,7 +365,9 @@ export function RuleOptimizerMatrix({
               key={rule.id}
               layout
               className={`rounded-xl border transition-all duration-200 bg-brand-surface ${
-                isActive ? "border-brand-border shadow-card" : "border-slate-200/80 bg-slate-50/50 opacity-80"
+                isActive
+                  ? "border-brand-border shadow-card"
+                  : "border-slate-200/80 bg-slate-50/50 opacity-80"
               }`}
             >
               {/* Card Header & Switch */}
@@ -388,7 +400,9 @@ export function RuleOptimizerMatrix({
                       <span className="font-mono text-xs font-bold text-brand-text-primary">
                         Rule ID {rule.ruleNumber}
                       </span>
-                      <span className={`rounded-md px-2 py-0.5 font-mono text-[10px] font-semibold border ${rule.color.pill}`}>
+                      <span
+                        className={`rounded-md px-2 py-0.5 font-mono text-[10px] font-semibold border ${rule.color.pill}`}
+                      >
                         {rule.component}
                       </span>
                       <span className="rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 font-mono text-[10px] text-slate-700">
@@ -399,9 +413,7 @@ export function RuleOptimizerMatrix({
                       </span>
                     </div>
 
-                    <h4 className="text-base font-bold text-brand-text-primary">
-                      {rule.name}
-                    </h4>
+                    <h4 className="text-base font-bold text-brand-text-primary">{rule.name}</h4>
 
                     <p className="text-xs sm:text-sm text-brand-text-secondary leading-relaxed">
                       {rule.summary}
@@ -413,7 +425,7 @@ export function RuleOptimizerMatrix({
                 <div className="flex sm:flex-row md:flex-col items-center md:items-end justify-between gap-3 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-brand-border">
                   <div className="text-left md:text-right">
                     <span className="block text-[10px] uppercase font-mono text-brand-text-muted">
-                      Suppressed Noise Volume
+                      Modeled daily impact
                     </span>
                     <div className="flex items-baseline gap-1.5 md:justify-end">
                       <span

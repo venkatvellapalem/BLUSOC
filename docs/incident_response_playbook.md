@@ -1,5 +1,8 @@
 # BLUSOC Incident Response Playbook & Standard Operating Procedures
 
+> Reference procedures: adapt these response targets and approval thresholds to your organization. The deployment suite does not install notification or containment automation, and the status monitor does not synchronize case state back to Wazuh.
+
+
 This document defines the Tier-1 and Tier-2 Standard Operating Procedures (SOPs) for the BLUSOC Security Operations Center. It establishes systematic triage workflows, investigation checklists, automated containment thresholds, and case closure standards for alerts ingested into DFIR-IRIS.
 
 ---

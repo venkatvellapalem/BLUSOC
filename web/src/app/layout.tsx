@@ -1,25 +1,28 @@
-import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
-import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { MotionPreferences } from "@/components/MotionPreferences";
+import { Navbar } from "@/components/Navbar";
+import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
+const plusJakartaSans = localFont({
+  src: "../fonts/plusjakartasans.ttf",
+  weight: "200 800",
   variable: "--font-jakarta",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
+const jetbrainsMono = localFont({
+  src: "../fonts/jetbrainsmono.ttf",
+  weight: "100 800",
   variable: "--font-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "BLUSOC | Enterprise Blue-Team Engineering & Detection Operations",
+  title: "BLUSOC | Cut through the noise",
   description:
-    "Production-grade Wazuh detection rules, Python middleware integrations, and an interactive light-themed SOC telemetry lab showcasing detection and response engineering.",
+    "Explore how security alerts become meaningful signals. Interactive detection and response demos, open-source Wazuh rules, and practical deployment guides.",
   keywords: [
     "SOC",
     "Detection Engineering",
@@ -40,15 +43,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-screen bg-brand-canvas font-sans text-brand-text-primary antialiased flex flex-col relative overflow-x-hidden">
-        {/* Subtle top ambient wash */}
-        <div aria-hidden="true" className="pointer-events-none fixed -top-40 -left-40 w-[40rem] h-[40rem] rounded-full bg-blue-100/40 blur-3xl" />
-
-        {/* Global Navigation Bar */}
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <Navbar />
 
         {/* Main Application Body */}
-        <main className="flex-1 relative z-10">
-          {children}
+        <main id="main-content" className="flex-1 relative" tabIndex={-1}>
+          <MotionPreferences>{children}</MotionPreferences>
         </main>
 
         {/* Global Application Footer */}

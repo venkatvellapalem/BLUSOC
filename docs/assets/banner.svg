@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" fill="none" role="img" aria-labelledby="title description">
+<title id="title">BLUSOC: security operations, made visible</title>
+<desc id="description">A blue signal diagram connects multiple event sources into one clear response.</desc>
+<rect width="1280" height="320" rx="18" fill="#F0F5FE"/>
+<path d="M800 45C970 45 915 160 1035 160M800 110C970 110 915 160 1035 160M800 210C970 210 915 160 1035 160M800 275C970 275 915 160 1035 160" stroke="#C2D4F3" stroke-width="2"/>
+<path d="M800 110C970 110 915 160 1035 160H1175" stroke="#2463EB" stroke-width="3"/>
+<circle cx="800" cy="45" r="8" fill="#D9E5FA"/><circle cx="800" cy="110" r="8" fill="#2463EB"/><circle cx="800" cy="210" r="8" fill="#D9E5FA"/><circle cx="800" cy="275" r="8" fill="#D9E5FA"/>
+<rect x="1009" y="134" width="52" height="52" rx="14" fill="#2463EB"/>
+<path d="m1024 160 9 9 15-18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1175" cy="160" r="8" fill="#2463EB"/>
+<text x="64" y="135" font-family="Arial,sans-serif" font-size="72" font-weight="700" letter-spacing="-3" fill="#14243D">BLUSOC</text>
+<text x="67" y="184" font-family="Arial,sans-serif" font-size="23" fill="#53637A">Security operations, made visible.</text>
+<text x="67" y="258" font-family="Arial,sans-serif" font-size="14" fill="#2463EB">DETECTION RULES / INTEGRATIONS / INTERACTIVE DEMOS</text>
+</svg>

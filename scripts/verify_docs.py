@@ -1,96 +1,66 @@
 #!/usr/bin/env python3
-"""
-BLUSOC Documentation Verification Script
-
-Validates:
-1. File existence and size.
-2. Zero occurrences of em dash (\u2014) or en dash (\u2013).
-3. Code block balance (fenced ``` tags).
-4. Sanitization compliance (RFC 1918, RFC 5737, synthetic domains).
-"""
-
-import os
+"""Check maintained documentation, local links, anchors, and fenced code blocks."""
+from pathlib import Path
 import re
 import sys
+from urllib.parse import unquote, urlsplit
 
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-DOC_FILES = [
-    os.path.join(REPO_ROOT, "README.md"),
-    os.path.join(REPO_ROOT, "docs", "architecture.md"),
-    os.path.join(REPO_ROOT, "docs", "incident_response_playbook.md"),
+ROOT = Path(__file__).resolve().parents[1]
+DOCUMENTS = [
+    "README.md", "CONTRIBUTING.md", "SECURITY.md", "HANDOFF.md",
+    "deployment/README.md", "docs/architecture.md", "docs/web-deployment.md",
+    "docs/incident_response_playbook.md",
+    "integrations/README.md",
 ]
 
-def check_file(path: str) -> bool:
-    print(f"\nEvaluating: {path}")
-    if not os.path.exists(path):
-        print(f"  [FAIL] File does not exist: {path}")
-        return False
 
-    size = os.path.getsize(path)
-    if size < 500:
-        print(f"  [FAIL] File size suspiciously small: {size} bytes")
-        return False
-    print(f"  [PASS] File exists, size: {size} bytes")
+def slug(text):
+    text = re.sub(r"[^\w\s-]", "", text.strip().lower())
+    return re.sub(r"\s+", "-", text)
 
-    with open(path, "r", encoding="utf-8") as f:
-        content = f.read()
 
-    # Check for em dashes (\u2014) and en dashes (\u2013)
-    em_dashes = content.count("\u2014")
-    en_dashes = content.count("\u2013")
-    if em_dashes > 0:
-        print(f"  [FAIL] Found {em_dashes} em dash (\\u2014) characters!")
-        # locate lines
-        for idx, line in enumerate(content.splitlines(), start=1):
-            if "\u2014" in line:
-                print(f"    Line {idx}: {line[:100]}")
-        return False
-    else:
-        print("  [PASS] Zero em dashes (\\u2014) found.")
+def check_document(name):
+    path = ROOT / name
+    errors = []
+    if not path.is_file():
+        return [f"{name}: missing file"]
+    content = path.read_text(encoding="utf-8")
+    fence = None
+    prose = []
+    for number, line in enumerate(content.splitlines(), 1):
+        match = re.match(r"\s*(`{3,}|~{3,})", line)
+        if match:
+            marker = match[1][0]
+            fence = None if fence == marker else marker if fence is None else fence
+        elif fence is None:
+            prose.append((number, line))
+    if fence:
+        errors.append(f"{name}: unclosed code fence")
+    if not any(line.startswith("# ") for _, line in prose):
+        errors.append(f"{name}: missing document title")
+    for number, line in prose:
+        for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", line):
+            parsed = urlsplit(target.strip("<>"))
+            if parsed.scheme or parsed.netloc:
+                continue
+            linked = (path.parent / unquote(parsed.path)).resolve() if parsed.path else path
+            if not linked.exists():
+                errors.append(f"{name}:{number}: missing local link {parsed.path}")
+            elif parsed.fragment and linked.suffix == ".md":
+                headings = re.findall(r"^#{1,6}\s+(.+)$", linked.read_text(encoding="utf-8"), re.MULTILINE)
+                if unquote(parsed.fragment) not in {slug(heading) for heading in headings}:
+                    errors.append(f"{name}:{number}: unknown anchor {parsed.fragment}")
+    return errors
 
-    if en_dashes > 0:
-        print(f"  [FAIL] Found {en_dashes} en dash (\\u2013) characters!")
-        for idx, line in enumerate(content.splitlines(), start=1):
-            if "\u2013" in line:
-                print(f"    Line {idx}: {line[:100]}")
-        return False
-    else:
-        print("  [PASS] Zero en dashes (\\u2013) found.")
-
-    # Check fenced code block balance
-    code_block_count = content.count("```")
-    if code_block_count % 2 != 0:
-        print(f"  [FAIL] Unbalanced code blocks (count: {code_block_count})")
-        return False
-    print(f"  [PASS] Fenced code blocks balanced ({code_block_count // 2} blocks)")
-
-    # Check for forbidden raw external private names or unsanitized indicators if any
-    if "example.com" in content:
-        print("  [WARN] example.com found, prefer blusoc.internal")
-
-    print(f"  [PASS] {os.path.basename(path)} passed all checks.")
-    return True
 
 def main():
-    print("=" * 65)
-    print("BLUSOC DOCUMENTATION VERIFICATION HARNESS")
-    print("=" * 65)
+    errors = [error for name in DOCUMENTS for error in check_document(name)]
+    if errors:
+        print("\n".join(errors), file=sys.stderr)
+        return 1
+    print(f"Checked {len(DOCUMENTS)} maintained documents: local links, anchors, titles, and code fences.")
+    return 0
 
-    all_passed = True
-    for path in DOC_FILES:
-        if not check_file(path):
-            all_passed = False
-
-    print("\n" + "=" * 65)
-    if all_passed:
-        print("RESULT: ALL DOCUMENTATION VERIFICATION CHECKS PASSED (100%)")
-        print("=" * 65)
-        sys.exit(0)
-    else:
-        print("RESULT: VERIFICATION FAILED")
-        print("=" * 65)
-        sys.exit(1)
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
